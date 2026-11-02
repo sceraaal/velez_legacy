@@ -6,6 +6,26 @@ Le voci più recenti stanno in alto.
 
 ---
 
+## 2026-11-02 – Strumenti per lavorare con l'AI
+
+**Decisione**
+- `CLAUDE.md` con le regole per Claude, che rimanda ai documenti in `docs/`.
+- `docs/design.md` come guida di stile unica.
+- Plugin **frontend-design** (ufficiale Anthropic) attivato per il progetto in
+  `.claude/settings.json`.
+- **Context7** (documentazione aggiornata delle librerie) configurato in `.mcp.json`,
+  senza chiave; una chiave gratuita alza i limiti di uso, se un giorno servisse.
+
+**Perché:** un solo posto per ogni regola, e documentazione sempre aggiornata per
+React, Vite e Supabase, che cambiano spesso.
+
+**Non adottati:** `AGENTS.md` (duplicherebbe `CLAUDE.md`; da aggiungere solo se si
+usano altri assistenti AI), Figma MCP (non disegniamo in Figma), Superpowers (il
+metodo piano/implementazione/revisione/rifinitura è già scritto in `CLAUDE.md`).
+Caveman non è nel repository: si installa per utente, non per progetto.
+
+---
+
 ## 2026-11-02 – Tecnologie: React + Supabase + Cloudflare Pages
 
 **Decisione**

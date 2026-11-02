@@ -33,4 +33,6 @@ Per fermarla: `Ctrl+C` nel terminale.
 ## Documentazione
 
 - [Regole del progetto](docs/regole-progetto.md): orari, servizi, regole di prenotazione
+- [Guida di stile](docs/design.md): colori, caratteri e componenti
 - [Registro delle decisioni](docs/decisioni.md): le scelte fatte e il perché
+- [CLAUDE.md](CLAUDE.md): istruzioni per lavorare al progetto con Claude
