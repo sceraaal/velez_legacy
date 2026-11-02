@@ -1,0 +1,125 @@
+.service-menu {
+  max-width: 40rem;
+  margin: 0 auto;
+  padding: var(--space-5) var(--space-4) 0;
+}
+
+.service-menu__heading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.service-menu__title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: 2.5rem;
+}
+
+.service-menu__hint {
+  margin: 0;
+  font-size: 0.8125rem;
+  color: var(--color-text-muted);
+}
+
+/* --- Filtri --- */
+.service-menu__filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+}
+
+.filter-chip {
+  min-height: 44px;
+  padding: 0 14px;
+  border: 1px solid var(--color-line-strong);
+  background: none;
+  color: var(--color-text-secondary);
+  font: inherit;
+  font-size: 0.8125rem;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+}
+
+/* Il filtro attivo è pieno d'oro */
+.filter-chip[aria-pressed='true'] {
+  border-color: var(--color-gold);
+  background-color: var(--color-gold);
+  color: var(--color-black);
+  font-weight: 600;
+}
+
+/* --- Schede --- */
+.service-menu__list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin: var(--space-4) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.service-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px var(--space-3);
+  border: 1px solid var(--color-line);
+  background-color: var(--color-surface);
+}
+
+.service-card--selected {
+  border-color: var(--color-gold);
+}
+
+.service-card__info {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.service-card__name {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 1.375rem;
+  line-height: 1.1;
+}
+
+.service-card__meta,
+.service-card__note {
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+}
+
+.service-card__note {
+  font-size: 0.8125rem;
+}
+
+.service-card__price {
+  color: var(--color-gold);
+}
+
+/* Il bottone rotondo "+": diventa pieno d'oro con la spunta quando è scelto */
+.service-card__toggle {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--color-line-button);
+  border-radius: 50%;
+  background: none;
+  color: var(--color-gold);
+  cursor: pointer;
+}
+
+.service-card--selected .service-card__toggle {
+  border-color: var(--color-gold);
+  background-color: var(--color-gold);
+  color: var(--color-black);
+}
