@@ -26,6 +26,15 @@
 
   --radius: 2px;
 
+  /* Velo nero semitrasparente sopra l'immagine di sfondo: rende leggibile il
+     testo. Più il numero finale è alto (da 0 a 1), più il velo è scuro. */
+  --veil-light: rgba(11, 11, 11, 0.55);
+  --veil-dark: rgba(11, 11, 11, 0.78);
+  /* Fondo dei riquadri (cornici e fondo pagina) sopra l'immagine */
+  --veil-panel: rgba(11, 11, 11, 0.85);
+  /* Ombra scura attorno ai titoli che stanno direttamente sopra l'immagine */
+  --shadow-text: 0 0 12px rgba(0, 0, 0, 0.9), 0 0 3px rgba(0, 0, 0, 0.9);
+
   color-scheme: dark;
 }
 
@@ -45,10 +54,15 @@ html {
   }
 }
 
+/* Il nero di base resta su <html>, così si vede subito anche prima che
+   l'immagine di sfondo sia arrivata */
+html {
+  background-color: var(--color-black);
+}
+
 body {
   margin: 0;
   min-height: 100vh;
-  background-color: var(--color-black);
   color: var(--color-ivory);
   font-family: var(--font-body);
   font-size: 1.0625rem;
@@ -60,4 +74,27 @@ body {
 :focus-visible {
   outline: 2px solid var(--color-gold-light);
   outline-offset: 2px;
+}
+
+/* Sfondo barocco su tutta la pagina.
+   Usiamo un elemento finto (::before) fisso dietro a tutto invece di
+   "background-attachment: fixed", che su iPhone non funziona.
+   z-index: -1 lo mette sotto al contenuto; il gradiente è il velo scuro. */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(var(--veil-light), var(--veil-dark)),
+    url('./assets/sfondo-barocco-800.webp') center / cover no-repeat;
+}
+
+/* Sugli schermi larghi serve l'immagine più grande, altrimenti è sgranata */
+@media (min-width: 48rem) {
+  body::before {
+    background:
+      linear-gradient(var(--veil-light), var(--veil-dark)),
+      url('./assets/sfondo-barocco-1254.webp') center / cover no-repeat;
+  }
 }

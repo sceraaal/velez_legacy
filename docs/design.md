@@ -21,9 +21,18 @@ CSS elencate sotto. Così, se un colore cambia, si modifica in un punto solo
 - Logo: `src/assets/logo-velez-legacy.webp` (640×640 px, ricavato dal file
   originale di Nicolas). È quadrato con lo sfondo di marmo: nella pagina viene
   ritagliato a cerchio.
+- **Sfondo della pagina**: la versione barocca ricca del logo (colonne, statue,
+  angeli, drappi rossi, leone), scelta da Nicolas il 2026-11-02. Sta ferma dietro
+  a tutta la pagina, coperta da un velo nero (`--veil-light` → `--veil-dark`).
+  Due misure in `src/assets/`: `sfondo-barocco-800.webp` (circa 150 KB) per i
+  telefoni e `sfondo-barocco-1254.webp` (circa 290 KB) dai 768 px in su.
+- **Regola di leggibilità**: il testo non sta mai direttamente sull'immagine.
+  Cornici e fondo pagina hanno il fondo `--veil-panel`; i pochi titoli fuori
+  dalle cornici (es. "Il Listino") hanno l'ombra `--shadow-text`.
 - Icona del sito e icona per la schermata home del telefono:
-  `public/favicon.png` (64 px) e `public/apple-touch-icon.png` (180 px).
-- Se Nicolas manda una versione nuova del logo, vanno rigenerati tutti e tre i file.
+  `public/favicon.png` (64 px) e `public/apple-touch-icon.png` (180 px), dal logo
+  rotondo.
+- Se Nicolas manda una versione nuova del logo, vanno rigenerati questi file.
 
 ## Colori
 
@@ -71,8 +80,8 @@ si legge male sul telefono.
   qualsiasi riquadro importante: oggi la parte alta e il listino.
 - **Fregio** (`Ornament.jsx`): linea con due foglie e un rombo al centro, tra il logo
   e la frase e nel fondo pagina.
-- **Parte alta** (`Hero.jsx`): logo, fregio, frase in corsivo, bottone "Prenota"
-  pieno d'oro, orari.
+- **Parte alta** (`Hero.jsx`): logo, fregio, frase in
+  corsivo, bottone "Prenota" pieno d'oro, orari.
 - **Listino** (`PriceList.jsx`): titolo "Il Listino", poi per ogni sezione un titolo
   tra due filetti e le righe "nome ...... prezzo" con la durata sotto.
 - **Servizio tecnico**: prezzo "da €20" e la nota in corsivo "Prezzo finale dopo
@@ -84,10 +93,7 @@ si legge male sul telefono.
   esempio "Scelga il servizio", "La aspettiamo", "Il Suo appuntamento".
 - **Indirizzo**: Via Mario Alfani 84, 84098 Pontecagnano Faiano (SA), mostrato in
   fondo alla pagina.
-- **Logo**: per ora non c'è una versione con lo sfondo trasparente, quindi il marmo
-  viene ritagliato a cerchio. Nicolas lo conferma più avanti.
 
 ## Da decidere con Nicolas
 
 - Se mettere un link alla mappa sotto l'indirizzo.
-- La conferma definitiva sul logo con lo sfondo trasparente.

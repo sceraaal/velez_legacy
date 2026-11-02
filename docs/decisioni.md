@@ -6,6 +6,25 @@ Le voci più recenti stanno in alto.
 
 ---
 
+## 2026-11-02 – Immagine barocca come sfondo di tutta la pagina
+
+**Decisione**
+- La versione barocca ricca del logo (colonne, statue, angeli, drappi rossi,
+  leone) fa da sfondo fisso a tutta la pagina, coperta da un velo nero.
+- In testata resta il logo rotondo. Cornici e fondo pagina hanno un fondo nero
+  semitrasparente, i titoli fuori dalle cornici un'ombra scura.
+
+**Perché:** Nicolas ha visto due anteprime e ha scelto questa. Il velo, i fondi
+delle cornici e le ombre servono a tenere leggibili prezzi e testi.
+
+**Da sapere:** l'immagine pesa circa 150 KB sul telefono e 290 KB sul computer.
+Sul telefono se ne vede la fascia centrale. Dietro al logo si intravede di nuovo
+la scritta "VELEZ LEGACY": Nicolas l'ha vista nell'anteprima.
+
+**Scartata:** l'immagine solo in testata al posto del logo rotondo.
+
+---
+
 ## 2026-11-02 – Stile: "Barocco classico" con il logo di Nicolas
 
 **Decisione**
