@@ -82,11 +82,12 @@ si legge male sul telefono.
 
 - **Tono**: ai clienti si dà del **Lei** (deciso da Nicolas il 2026-11-02). Per
   esempio "Scelga il servizio", "La aspettiamo", "Il Suo appuntamento".
-- **Indirizzo**: Via Mario Alfani 84, mostrato in fondo alla pagina.
+- **Indirizzo**: Via Mario Alfani 84, 84098 Pontecagnano Faiano (SA), mostrato in
+  fondo alla pagina.
 - **Logo**: per ora non c'è una versione con lo sfondo trasparente, quindi il marmo
   viene ritagliato a cerchio. Nicolas lo conferma più avanti.
 
 ## Da decidere con Nicolas
 
-- La città (e il CAP) da aggiungere all'indirizzo, e se mettere un link alla mappa.
+- Se mettere un link alla mappa sotto l'indirizzo.
 - La conferma definitiva sul logo con lo sfondo trasparente.
