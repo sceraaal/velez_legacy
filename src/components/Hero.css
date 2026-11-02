@@ -2,7 +2,7 @@
   /* Stessa larghezza della cornice del listino */
   max-width: 31rem;
   margin: var(--space-4) var(--space-4) 0;
-  padding: var(--space-3) var(--space-3) var(--space-5);
+  padding: var(--space-6) var(--space-4) var(--space-5);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -23,12 +23,11 @@
   line-height: 0;
 }
 
-/* Il logo barocco occupa tutta la larghezza della cornice; height: auto
-   mantiene le proporzioni (è quadrato) */
+/* Il logo è quadrato con lo sfondo di marmo: il cerchio taglia gli angoli */
 .hero__logo {
-  display: block;
-  width: 100%;
+  width: min(240px, 64vw);
   height: auto;
+  border-radius: 50%;
 }
 
 .hero__ornament {

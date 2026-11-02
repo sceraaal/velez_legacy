@@ -6,20 +6,22 @@ Le voci più recenti stanno in alto.
 
 ---
 
-## 2026-11-02 – Logo barocco ricco in testata
+## 2026-11-02 – Immagine barocca come sfondo di tutta la pagina
 
 **Decisione**
-- Nella parte alta, al posto del logo rotondo, c'è la versione barocca ricca del
-  logo (colonne, statue, angeli, drappi rossi, leone), intera e a colori pieni.
-- Il resto della pagina resta su fondo nero. Icona del sito e della schermata
-  home restano quelle del logo rotondo.
+- La versione barocca ricca del logo (colonne, statue, angeli, drappi rossi,
+  leone) fa da sfondo fisso a tutta la pagina, coperta da un velo nero.
+- In testata resta il logo rotondo. Cornici e fondo pagina hanno un fondo nero
+  semitrasparente, i titoli fuori dalle cornici un'ombra scura.
 
-**Perché:** Nicolas ha visto due anteprime e ha scelto questa ("nettamente
-meglio"). L'immagine si vede tutta e il listino resta leggibile.
+**Perché:** Nicolas ha visto due anteprime e ha scelto questa. Il velo, i fondi
+delle cornici e le ombre servono a tenere leggibili prezzi e testi.
 
-**Scartata:** l'immagine come sfondo di tutta la pagina. Andava scurita molto per
-leggere il testo, ripeteva il nome dietro al logo, sul telefono se ne vedeva solo
-una striscia e pesava il doppio.
+**Da sapere:** l'immagine pesa circa 150 KB sul telefono e 290 KB sul computer.
+Sul telefono se ne vede la fascia centrale. Dietro al logo si intravede di nuovo
+la scritta "VELEZ LEGACY": Nicolas l'ha vista nell'anteprima.
+
+**Scartata:** l'immagine solo in testata al posto del logo rotondo.
 
 ---
 

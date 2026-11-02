@@ -11,6 +11,8 @@
   font-weight: 400;
   font-size: 1.75rem;
   color: var(--color-gold);
+  /* Il titolo sta direttamente sopra l'immagine: l'ombra lo stacca dallo sfondo */
+  text-shadow: var(--shadow-text);
 }
 
 .price-list__subtitle {
@@ -18,6 +20,7 @@
   text-align: center;
   font-style: italic;
   color: var(--color-muted);
+  text-shadow: var(--shadow-text);
 }
 
 .price-list__frame {
