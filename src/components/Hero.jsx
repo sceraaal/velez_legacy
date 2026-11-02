@@ -1,27 +1,31 @@
+import BaroqueFrame from './BaroqueFrame.jsx'
+import Ornament from './Ornament.jsx'
+import logo from '../assets/logo-velez-legacy.webp'
 import './Hero.css'
 
-// La parte alta della pagina: marchio, frase d'apertura e bottone "Prenota".
-// Quando Nicolas ci darà una foto in bianco e nero, andrà come sfondo di
-// .hero (vedi Hero.css).
+// La parte alta della pagina: il logo di Nicolas dentro una cornice barocca,
+// la frase di presentazione, il bottone Prenota e gli orari.
+// Il logo sta dentro <h1>: per Google e per i lettori di schermo il titolo della
+// pagina è il testo alternativo del logo, "Velez Legacy Barber".
 
 function Hero() {
   return (
-    <section className="hero">
-      <p className="hero__brand">VELEZ</p>
-
-      <div className="hero__content">
-        <p className="hero__eyebrow">— LEGACY BARBER</p>
-        <h1 className="hero__title">
-          Il dettaglio
-          <br />
-          <em>fa la differenza.</em>
-        </h1>
-        <p className="hero__text">Tagli e rituali di barba su appuntamento, firmati Nicolas.</p>
-        <a className="hero__cta" href="#servizi">
-          PRENOTA ORA
-        </a>
-      </div>
-    </section>
+    <BaroqueFrame as="section" className="hero">
+      <h1 className="hero__title">
+        <img className="hero__logo" src={logo} alt="Velez Legacy Barber" width="240" height="240" />
+      </h1>
+      <Ornament className="hero__ornament" />
+      <p className="hero__tagline">
+        L'arte del barbiere,
+        <br />
+        con la cura di una sartoria.
+      </p>
+      {/* Per ora porta al listino: al passo 4 aprirà la prenotazione */}
+      <a className="hero__cta" href="#listino">
+        PRENOTA
+      </a>
+      <p className="hero__hours">Martedì – Sabato · 8:00 – 20:00</p>
+    </BaroqueFrame>
   )
 }
 

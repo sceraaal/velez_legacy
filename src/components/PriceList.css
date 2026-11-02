@@ -1,0 +1,104 @@
+.price-list {
+  max-width: 34rem;
+  margin: 0 auto;
+  padding: var(--space-6) var(--space-4) 0;
+}
+
+.price-list__title {
+  margin: 0;
+  text-align: center;
+  font-family: var(--font-decorative);
+  font-weight: 400;
+  font-size: 1.75rem;
+  color: var(--color-gold);
+}
+
+.price-list__subtitle {
+  margin: var(--space-2) 0 var(--space-4);
+  text-align: center;
+  font-style: italic;
+  color: var(--color-muted);
+}
+
+.price-list__frame {
+  padding: var(--space-5) var(--space-4) var(--space-4);
+}
+
+.price-list__group + .price-list__group {
+  margin-top: var(--space-5);
+}
+
+/* Titolo della sezione tra due filetti: i filetti sono ::before e ::after,
+   due linee "finte" create dal CSS ai lati del testo */
+.price-list__group-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 var(--space-1);
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.875rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-gold-light);
+}
+
+.price-list__group-title::before,
+.price-list__group-title::after {
+  content: '';
+  flex-grow: 1;
+  height: 1px;
+  background-color: var(--color-gold-dark);
+}
+
+.price-list__items {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.service {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 12px 0;
+  border-bottom: 1px dotted var(--color-line);
+}
+
+.service:last-child {
+  border-bottom: none;
+}
+
+.service__line {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+}
+
+.service__name {
+  font-size: 1.1875rem;
+  font-weight: 500;
+}
+
+.service__dots {
+  flex-grow: 1;
+  min-width: var(--space-3);
+  border-bottom: 1px dotted var(--color-gold-dark);
+  transform: translateY(-4px);
+}
+
+.service__price {
+  font-family: var(--font-display);
+  font-size: 1.125rem;
+  white-space: nowrap;
+  color: var(--color-gold);
+}
+
+.service__detail {
+  font-size: 1rem;
+  color: var(--color-muted);
+}
+
+.service__detail--note {
+  font-style: italic;
+}

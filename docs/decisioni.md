@@ -6,25 +6,28 @@ Le voci più recenti stanno in alto.
 
 ---
 
-## 2026-11-02 – Listino: stile "Dark luxury"
+## 2026-11-02 – Stile: "Barocco classico" con il logo di Nicolas
 
 **Decisione**
-- Tra i tre mockup, Simona ha scelto per ora la proposta C, "Dark luxury": nero
-  profondo, oro champagne, Cormorant Garamond + Manrope, servizi come schede con
-  il bottone "+" e una barra in basso con durata e prezzo totali.
-- Caratteri salvati nel progetto con `@fontsource` invece di Google Fonts.
+- Nicolas ha scelto la proposta A, "Barocco classico", della tavola dei mockup:
+  nero e oro, Cinzel Decorative, Cinzel ed EB Garamond, listino come una carta
+  con nome, puntini e prezzo.
+- Al posto della scritta del nome c'è il suo logo. Le cornici barocche (con le
+  volute negli angoli) sono anche attorno al listino, come ha chiesto.
+- Il logo è anche l'icona del sito e della schermata home del telefono.
+- Caratteri salvati nel progetto con `@fontsource`, non caricati da Google.
 - I dati dei servizi stanno in `src/data/services.js`, separati dalla grafica.
-- I servizi scelti sono tenuti in `App.jsx`, perché servono sia al listino sia
-  alla barra in basso.
+- Ai clienti si dà del **Lei**: è il tono che Nicolas vuole per il salone.
 
-**Perché:** lo stile C è il più vicino al "lusso" richiesto; i caratteri locali
-evitano di inviare a Google l'indirizzo IP dei clienti (in Germania un sito è stato
-sanzionato per questo); i dati separati si potranno spostare nel database al passo 3
-senza toccare la pagina. Scegliere i servizi dal listino prepara già la
-prenotazione del passo 4.
+**Perché:** è la proposta che Nicolas ha approvato. I caratteri locali evitano di
+inviare a Google l'indirizzo IP dei clienti (in Germania un sito è stato sanzionato
+per questo). I dati separati si potranno spostare nel database al passo 3 senza
+toccare la pagina.
 
-**Prima proposta scartata:** listino impaginato come la carta di un ristorante con
-Cinzel e Lato. Lo stile va ancora confermato con Nicolas.
+**Scartate:** la proposta C "Dark luxury" (scelta provvisoria di Simona prima della
+risposta di Nicolas) e la prima versione a "carta di ristorante" con Cinzel e Lato.
+La scelta dei servizi con il bottone "+" della proposta C potrà tornare, in stile
+barocco, con la prenotazione del passo 4, se serve.
 
 ---
 

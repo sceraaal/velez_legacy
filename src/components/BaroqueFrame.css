@@ -1,0 +1,37 @@
+/* Doppio filetto: il bordo oro scuro e, 5px più fuori, un secondo filetto più tenue */
+.baroque-frame {
+  position: relative;
+  border: 1px solid var(--color-gold-dark);
+  outline: 1px solid var(--color-line);
+  outline-offset: 5px;
+}
+
+.baroque-frame__corner {
+  position: absolute;
+  width: 56px;
+  height: 56px;
+}
+
+.baroque-frame__corner--top-left {
+  top: -2px;
+  left: -2px;
+}
+
+/* scaleX(-1) specchia in orizzontale, scaleY(-1) in verticale */
+.baroque-frame__corner--top-right {
+  top: -2px;
+  right: -2px;
+  transform: scaleX(-1);
+}
+
+.baroque-frame__corner--bottom-left {
+  bottom: -2px;
+  left: -2px;
+  transform: scaleY(-1);
+}
+
+.baroque-frame__corner--bottom-right {
+  right: -2px;
+  bottom: -2px;
+  transform: scale(-1, -1);
+}

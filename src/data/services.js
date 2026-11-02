@@ -1,6 +1,5 @@
-// Il listino di Nicolas, diviso in sezioni.
-// Questo file contiene solo i DATI: come vengono mostrati lo decide ServiceMenu.jsx.
-// "shortName" è l'etichetta corta usata nei filtri in cima al listino.
+// Il listino di Nicolas, diviso in sezioni (come nel mockup "Barocco classico").
+// Questo file contiene solo i DATI: come vengono mostrati lo decide PriceList.jsx.
 // Al passo 3 questi dati si sposteranno nel database Supabase.
 //
 // Per ogni servizio:
@@ -12,7 +11,6 @@
 export const serviceCategories = [
   {
     id: 'luxury',
-    shortName: 'Luxury',
     name: 'Esperienze Luxury',
     services: [
       { id: 'luxury-cut', name: 'Luxury Cut Experience', price: 25, duration: 50 },
@@ -22,26 +20,17 @@ export const serviceCategories = [
   },
   {
     id: 'taglio',
-    shortName: 'Taglio',
     name: 'Taglio',
     services: [
       { id: 'taglio-barber', name: 'Taglio Barber', price: 18, duration: 30 },
       { id: 'taglio-under-14', name: 'Taglio Barber Under 14', price: 15, duration: 30 },
       { id: 'taglio-ritual', name: 'Taglio + Ritual', price: 20, duration: 40 },
-    ],
-  },
-  {
-    id: 'taglio-barba',
-    shortName: 'Taglio e barba',
-    name: 'Taglio e barba',
-    services: [
       { id: 'taglio-barba', name: 'Taglio Barber + Barba', price: 23, duration: 45 },
       { id: 'taglio-rituals-barba', name: 'Taglio Barber + Rituals + Barba', price: 25, duration: 45 },
     ],
   },
   {
     id: 'barba',
-    shortName: 'Barba',
     name: 'Barba e rasatura',
     services: [
       { id: 'barba-city-man', name: 'Barba City Man', price: 10, duration: 15 },
@@ -50,9 +39,8 @@ export const serviceCategories = [
     ],
   },
   {
-    id: 'colore',
-    shortName: 'Colore',
-    name: 'Colore',
+    id: 'tecnici',
+    name: 'Servizi tecnici',
     services: [
       { id: 'colorazione', name: 'Colorazione Uomo', price: 20, duration: 30, fromPrice: true },
       { id: 'tonalizzante', name: 'Tonalizzante', price: 30, duration: 30, fromPrice: true },
@@ -60,7 +48,6 @@ export const serviceCategories = [
   },
   {
     id: 'extra',
-    shortName: 'Extra',
     name: 'Extra',
     services: [{ id: 'patch-occhi', name: 'Patch Occhi', price: 3, duration: 10 }],
   },

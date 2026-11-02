@@ -1,8 +1,8 @@
 # Guida di stile – Velez Legacy Barber
 
-> **Stile scelto (per ora): proposta C, "Dark luxury"**, dalla tavola dei mockup.
-> Da confermare con Nicolas. Se Nicolas ha un logo o colori della sua insegna,
-> vanno confrontati con questa palette e aggiornati qui.
+> **Stile scelto da Nicolas: proposta A, "Barocco classico"**, dalla tavola dei
+> mockup, con il suo logo al posto della scritta e cornici barocche anche attorno
+> al listino.
 
 Ogni pagina dell'app usa **solo** i valori di questo documento, tramite le variabili
 CSS elencate sotto. Così, se un colore cambia, si modifica in un punto solo
@@ -10,32 +10,37 @@ CSS elencate sotto. Così, se un colore cambia, si modifica in un punto solo
 
 ## Personalità
 
-- **Lusso scuro e silenzioso**: nero profondo, oro champagne usato con misura,
-  molto spazio vuoto. L'eleganza viene dalla calma, non dagli effetti.
-- **Un carattere classico per i titoli** (corsivo per l'accento), uno moderno e
-  pulito per tutto il resto.
+- **Barocco elegante**: nero profondo, oro, cornici con volute negli angoli e
+  fregi tra le sezioni. Le decorazioni stanno ai bordi: il contenuto resta pulito
+  e facile da leggere.
+- **Il logo è il protagonista** della parte alta della pagina.
 - **Prima il telefono**: quasi tutti i clienti prenoteranno dal cellulare.
+
+## Logo e icone
+
+- Logo: `src/assets/logo-velez-legacy.webp` (640×640 px, ricavato dal file
+  originale di Nicolas). È quadrato con lo sfondo di marmo: nella pagina viene
+  ritagliato a cerchio.
+- Icona del sito e icona per la schermata home del telefono:
+  `public/favicon.png` (64 px) e `public/apple-touch-icon.png` (180 px).
+- Se Nicolas manda una versione nuova del logo, vanno rigenerati tutti e tre i file.
 
 ## Colori
 
 | Nome | Variabile CSS | Valore | Uso |
 | --- | --- | --- | --- |
-| Nero | `--color-black` | `#050505` | Sfondo della pagina, testo sui bottoni dorati |
-| Superficie | `--color-surface` | `#0F0E0C` | Sfondo delle schede dei servizi |
-| Superficie alta | `--color-surface-raised` | `#141210` | Sfondo della parte alta (hero) |
-| Linea | `--color-line` | `#221F1A` | Bordo delle schede e separatori |
-| Linea forte | `--color-line-strong` | `#3A352D` | Bordo dei filtri |
-| Linea bottone | `--color-line-button` | `#5A5244` | Bordo del bottone "+" (solo decorativo) |
-| Oro champagne | `--color-gold` | `#D8C08A` | Accenti, prezzi, bottoni principali |
-| Oro chiaro | `--color-gold-light` | `#F0DFB4` | Passaggio del mouse, contorno di focus |
-| Testo | `--color-text` | `#ECE8E1` | Testo principale |
-| Testo secondario | `--color-text-secondary` | `#B3ADA3` | Paragrafi di presentazione, filtri |
-| Testo tenue | `--color-text-muted` | `#8E887E` | Durate, note, suggerimenti |
+| Nero | `--color-black` | `#0B0B0B` | Sfondo della pagina, testo sui bottoni dorati |
+| Carbone | `--color-surface` | `#17140F` | Sfondo di riquadri (es. riepilogo della prenotazione) |
+| Linea | `--color-line` | `#3A2E14` | Filetti tenui, separatori tra le righe |
+| Oro scuro | `--color-gold-dark` | `#8C6D2C` | Bordi delle cornici, filetti, puntini. **Mai testo** |
+| Oro | `--color-gold` | `#C9A54C` | Titoli, prezzi, volute, bottone principale |
+| Oro chiaro | `--color-gold-light` | `#E3C878` | Titoli delle sezioni, passaggio del mouse, focus |
+| Avorio | `--color-ivory` | `#F3EAD8` | Testo principale |
+| Grigio caldo | `--color-muted` | `#A89F8E` | Durate, note, orari |
 
 **Leggibilità (contrasto):** il minimo consigliato per il testo è 4,5:1.
-Sul nero: testo 16,7:1, oro 11,5:1, secondario 9,1:1, tenue 5,8:1; il nero sui
-bottoni dorati 11,5:1. La "linea bottone" arriva a 2,6:1, per questo non si usa mai
-per il testo: il bottone "+" si riconosce dall'icona dorata.
+Sul nero: avorio 16,5:1, oro chiaro 12,0:1, oro 8,4:1, grigio caldo 7,5:1. L'oro
+scuro arriva a 4,1:1, per questo si usa solo per elementi decorativi.
 
 ## Caratteri
 
@@ -43,50 +48,46 @@ Gratuiti e **salvati dentro il progetto** con i pacchetti `@fontsource` (importa
 `src/main.jsx`), non caricati dai server di Google: così il telefono del cliente non
 invia il suo indirizzo IP a Google.
 
-| Uso | Carattere | Variabile CSS | Pesi usati |
-| --- | --- | --- | --- |
-| Titoli e nomi dei servizi | [Cormorant Garamond](https://fonts.google.com/specimen/Cormorant+Garamond) | `--font-display` | 300, 300 corsivo, 500 |
-| Testo, bottoni, prezzi | [Manrope](https://fonts.google.com/specimen/Manrope) | `--font-body` | 400, 600 |
-
-| Elemento | Dimensione | Carattere |
+| Uso | Carattere | Variabile CSS |
 | --- | --- | --- |
-| Titolo principale (hero) | da 3rem a 4rem, secondo lo schermo | Cormorant 300 |
-| Titolo di sezione | 2.5rem (40 px) | Cormorant 300 |
-| Nome del servizio | 1.375rem (22 px) | Cormorant 500 |
-| Testo | 1rem (16 px) | Manrope 400 |
-| Etichette, durate, note | 0.75–0.875rem (12–14 px) | Manrope |
+| Titoli grandi ("Il Listino") | [Cinzel Decorative](https://fonts.google.com/specimen/Cinzel+Decorative) | `--font-decorative` |
+| Titoli delle sezioni, prezzi, bottoni | [Cinzel](https://fonts.google.com/specimen/Cinzel) | `--font-display` |
+| Testo, nomi dei servizi | [EB Garamond](https://fonts.google.com/specimen/EB+Garamond) | `--font-body` |
 
-Le etichette brevi (marchio, filtri, bottoni) sono in maiuscolo con le lettere
-spaziate: è parte dello stile del mockup.
+Cinzel ha solo lettere maiuscole: per questo "da €20" appare come "DA €20".
+Il testo normale è a 17 px: EB Garamond è un carattere piccolo e sotto quella misura
+si legge male sul telefono.
 
 ## Spaziature e forme
 
-- **Spaziature** (`--space-1` … `--space-6`): 4, 8, 16, 24, 40, 64 px.
-- **Angoli vivi** su schede, filtri e bottoni; l'unico elemento rotondo è il
-  bottone "+".
-- **Zone da toccare**: bottoni e filtri alti almeno 44 px, per il dito.
+- **Spaziature** (`--space-1` … `--space-6`): 4, 8, 16, 24, 32, 48 px.
+- **Angoli**: 2 px (`--radius`), quasi vivi.
+- **Zone da toccare**: bottoni e link alti almeno 44 px, per il dito.
 
 ## Componenti
 
-- **Hero** (`Hero.jsx`): marchio "VELEZ", frase d'apertura con la seconda riga in
-  corsivo oro, breve presentazione e bottone "Prenota ora" con solo il bordo oro.
-  Qui andrà la foto in bianco e nero di Nicolas al lavoro.
-- **Filtri** (`ServiceMenu.jsx`): bottoni con bordo; quello attivo è pieno d'oro.
-- **Scheda servizio** (`ServiceCard.jsx`): nome in Cormorant, durata e prezzo sotto
-  (prezzo in oro), bottone rotondo "+" a destra. Scelta: bordo oro e bottone pieno
-  d'oro con la spunta.
-- **Servizio tecnico**: prezzo "da €20" e la nota "Prezzo finale dopo consulenza in
-  salone".
-- **Barra di prenotazione** (`BookingBar.jsx`): fissa in basso, dorata, compare
-  quando si sceglie almeno un servizio. Mostra numero di servizi, durata totale e
-  prezzo totale ("da" se c'è un servizio tecnico).
+- **Cornice barocca** (`BaroqueFrame.jsx`): doppio filetto (oro scuro dentro,
+  linea tenue 5 px fuori) con una voluta dorata in ogni angolo. Si riusa per
+  qualsiasi riquadro importante: oggi la parte alta e il listino.
+- **Fregio** (`Ornament.jsx`): linea con due foglie e un rombo al centro, tra il logo
+  e la frase e nel fondo pagina.
+- **Parte alta** (`Hero.jsx`): logo, fregio, frase in corsivo, bottone "Prenota"
+  pieno d'oro, orari.
+- **Listino** (`PriceList.jsx`): titolo "Il Listino", poi per ogni sezione un titolo
+  tra due filetti e le righe "nome ...... prezzo" con la durata sotto.
+- **Servizio tecnico**: prezzo "da €20" e la nota in corsivo "Prezzo finale dopo
+  consulenza in salone".
+
+## Testi e dati del salone
+
+- **Tono**: ai clienti si dà del **Lei** (deciso da Nicolas il 2026-11-02). Per
+  esempio "Scelga il servizio", "La aspettiamo", "Il Suo appuntamento".
+- **Indirizzo**: Via Mario Alfani 84, 84098 Pontecagnano Faiano (SA), mostrato in
+  fondo alla pagina.
+- **Logo**: per ora non c'è una versione con lo sfondo trasparente, quindi il marmo
+  viene ritagliato a cerchio. Nicolas lo conferma più avanti.
 
 ## Da decidere con Nicolas
 
-- Conferma dello stile Dark luxury.
-- Una foto in bianco e nero per la parte alta della pagina.
-- Ha già un logo? In che formato?
-- Tono dei testi: "tu" o "Lei" con i clienti? Va bene la frase "Il dettaglio fa
-  la differenza."?
-- Indirizzo del salone, da mostrare in fondo alla pagina.
-- Le sezioni del listino (Luxury, Taglio, Taglio e barba, Barba, Colore, Extra).
+- Se mettere un link alla mappa sotto l'indirizzo.
+- La conferma definitiva sul logo con lo sfondo trasparente.
