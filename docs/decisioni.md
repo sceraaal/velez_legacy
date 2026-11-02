@@ -6,6 +6,23 @@ Le voci più recenti stanno in alto.
 
 ---
 
+## 2026-11-02 – Logo barocco ricco in testata
+
+**Decisione**
+- Nella parte alta, al posto del logo rotondo, c'è la versione barocca ricca del
+  logo (colonne, statue, angeli, drappi rossi, leone), intera e a colori pieni.
+- Il resto della pagina resta su fondo nero. Icona del sito e della schermata
+  home restano quelle del logo rotondo.
+
+**Perché:** Nicolas ha visto due anteprime e ha scelto questa ("nettamente
+meglio"). L'immagine si vede tutta e il listino resta leggibile.
+
+**Scartata:** l'immagine come sfondo di tutta la pagina. Andava scurita molto per
+leggere il testo, ripeteva il nome dietro al logo, sul telefono se ne vedeva solo
+una striscia e pesava il doppio.
+
+---
+
 ## 2026-11-02 – Stile: "Barocco classico" con il logo di Nicolas
 
 **Decisione**

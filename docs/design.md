@@ -18,12 +18,18 @@ CSS elencate sotto. Così, se un colore cambia, si modifica in un punto solo
 
 ## Logo e icone
 
-- Logo: `src/assets/logo-velez-legacy.webp` (640×640 px, ricavato dal file
-  originale di Nicolas). È quadrato con lo sfondo di marmo: nella pagina viene
-  ritagliato a cerchio.
+- Logo nella parte alta: la versione barocca ricca (colonne, statue, angeli,
+  drappi rossi, leone), scelta da Nicolas il 2026-11-02:
+  `src/assets/logo-barocco-800.webp` (800×800 px, circa 150 KB). 800 px bastano
+  per essere nitida anche sugli schermi ad alta risoluzione, senza pesare troppo
+  sui telefoni.
+- L'immagine si usa **solo in testata**, mai come sfondo dietro il testo: è troppo
+  ricca e il listino diventerebbe difficile da leggere.
 - Icona del sito e icona per la schermata home del telefono:
-  `public/favicon.png` (64 px) e `public/apple-touch-icon.png` (180 px).
-- Se Nicolas manda una versione nuova del logo, vanno rigenerati tutti e tre i file.
+  `public/favicon.png` (64 px) e `public/apple-touch-icon.png` (180 px). Sono
+  ricavate dal logo rotondo, più semplice: a 64 px la versione ricca non si
+  leggerebbe.
+- Se Nicolas manda una versione nuova del logo, vanno rigenerati questi file.
 
 ## Colori
 
@@ -71,8 +77,8 @@ si legge male sul telefono.
   qualsiasi riquadro importante: oggi la parte alta e il listino.
 - **Fregio** (`Ornament.jsx`): linea con due foglie e un rombo al centro, tra il logo
   e la frase e nel fondo pagina.
-- **Parte alta** (`Hero.jsx`): logo, fregio, frase in corsivo, bottone "Prenota"
-  pieno d'oro, orari.
+- **Parte alta** (`Hero.jsx`): logo barocco a tutta larghezza, fregio, frase in
+  corsivo, bottone "Prenota" pieno d'oro, orari.
 - **Listino** (`PriceList.jsx`): titolo "Il Listino", poi per ogni sezione un titolo
   tra due filetti e le righe "nome ...... prezzo" con la durata sotto.
 - **Servizio tecnico**: prezzo "da €20" e la nota in corsivo "Prezzo finale dopo
@@ -84,10 +90,7 @@ si legge male sul telefono.
   esempio "Scelga il servizio", "La aspettiamo", "Il Suo appuntamento".
 - **Indirizzo**: Via Mario Alfani 84, 84098 Pontecagnano Faiano (SA), mostrato in
   fondo alla pagina.
-- **Logo**: per ora non c'è una versione con lo sfondo trasparente, quindi il marmo
-  viene ritagliato a cerchio. Nicolas lo conferma più avanti.
 
 ## Da decidere con Nicolas
 
 - Se mettere un link alla mappa sotto l'indirizzo.
-- La conferma definitiva sul logo con lo sfondo trasparente.

@@ -1,10 +1,11 @@
 import BaroqueFrame from './BaroqueFrame.jsx'
 import Ornament from './Ornament.jsx'
-import logo from '../assets/logo-velez-legacy.webp'
+import logo from '../assets/logo-barocco-800.webp'
 import './Hero.css'
 
-// La parte alta della pagina: il logo di Nicolas dentro una cornice barocca,
-// la frase di presentazione, il bottone Prenota e gli orari.
+// La parte alta della pagina: il logo barocco di Nicolas (con colonne, statue e
+// drappi) dentro una cornice barocca, la frase di presentazione, il bottone
+// Prenota e gli orari.
 // Il logo sta dentro <h1>: per Google e per i lettori di schermo il titolo della
 // pagina è il testo alternativo del logo, "Velez Legacy Barber".
 
@@ -12,7 +13,9 @@ function Hero() {
   return (
     <BaroqueFrame as="section" className="hero">
       <h1 className="hero__title">
-        <img className="hero__logo" src={logo} alt="Velez Legacy Barber" width="240" height="240" />
+        {/* width e height dicono al browser le proporzioni prima che l'immagine
+            arrivi, così la pagina non "salta" mentre si carica */}
+        <img className="hero__logo" src={logo} alt="Velez Legacy Barber" width="800" height="800" />
       </h1>
       <Ornament className="hero__ornament" />
       <p className="hero__tagline">
