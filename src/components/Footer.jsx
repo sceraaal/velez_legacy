@@ -1,14 +1,15 @@
+import Ornament from './Ornament.jsx'
 import './Footer.css'
 
-// Il fondo pagina: orari e informazioni pratiche.
-// L'indirizzo del salone va aggiunto qui quando Nicolas ce lo conferma.
+// Il fondo pagina. L'indirizzo del salone andrà qui quando Nicolas ce lo conferma;
+// il link "Accedi o registrati" arriverà con la Fase 1.
 
 function Footer() {
   return (
     <footer className="footer">
-      <h2 className="footer__title">ORARI</h2>
+      <Ornament className="footer__ornament" />
+      <p className="footer__name">VELEZ LEGACY BARBER</p>
       <p className="footer__line">Martedì – Sabato · 8:00 – 20:00</p>
-      <p className="footer__line">Pagamento in salone</p>
     </footer>
   )
 }
