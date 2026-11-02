@@ -17,6 +17,7 @@ Le voci più recenti stanno in alto.
 - Il logo è anche l'icona del sito e della schermata home del telefono.
 - Caratteri salvati nel progetto con `@fontsource`, non caricati da Google.
 - I dati dei servizi stanno in `src/data/services.js`, separati dalla grafica.
+- Ai clienti si dà del **Lei**: è il tono che Nicolas vuole per il salone.
 
 **Perché:** è la proposta che Nicolas ha approvato. I caratteri locali evitano di
 inviare a Google l'indirizzo IP dei clienti (in Germania un sito è stato sanzionato

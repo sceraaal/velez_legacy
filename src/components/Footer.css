@@ -25,3 +25,9 @@
   margin: 0;
   color: var(--color-muted);
 }
+
+/* <address> è in corsivo per default: lo riportiamo al testo normale */
+.footer__address {
+  font-style: normal;
+  color: var(--color-ivory);
+}

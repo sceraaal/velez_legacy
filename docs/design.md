@@ -78,9 +78,15 @@ si legge male sul telefono.
 - **Servizio tecnico**: prezzo "da €20" e la nota in corsivo "Prezzo finale dopo
   consulenza in salone".
 
+## Testi e dati del salone
+
+- **Tono**: ai clienti si dà del **Lei** (deciso da Nicolas il 2026-11-02). Per
+  esempio "Scelga il servizio", "La aspettiamo", "Il Suo appuntamento".
+- **Indirizzo**: Via Mario Alfani 84, mostrato in fondo alla pagina.
+- **Logo**: per ora non c'è una versione con lo sfondo trasparente, quindi il marmo
+  viene ritagliato a cerchio. Nicolas lo conferma più avanti.
+
 ## Da decidere con Nicolas
 
-- Tono dei testi: "tu" o "Lei" con i clienti?
-- Indirizzo del salone, da mostrare in fondo alla pagina.
-- Una versione del logo con lo sfondo trasparente, se ce l'ha (oggi il marmo
-  viene ritagliato a cerchio).
+- La città (e il CAP) da aggiungere all'indirizzo, e se mettere un link alla mappa.
+- La conferma definitiva sul logo con lo sfondo trasparente.
