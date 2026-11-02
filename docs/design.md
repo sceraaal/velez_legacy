@@ -34,7 +34,9 @@ sopra. L'oro scuro arriva a 4,1:1, per questo si usa solo per elementi decorativ
 
 ## Caratteri
 
-Tutti gratuiti, da [Google Fonts](https://fonts.google.com/).
+Tutti gratuiti. Sono **salvati dentro il progetto** con i pacchetti `@fontsource/cinzel`
+e `@fontsource/lato` (importati in `src/main.jsx`), non caricati dai server di
+Google: così il telefono del cliente non invia il suo indirizzo IP a Google.
 
 | Uso | Carattere | Variabile CSS | Note |
 | --- | --- | --- | --- |
@@ -65,15 +67,20 @@ ingrandiscono la pagina quando si tocca un campo.
 - **Bottone principale** (es. "Prenota"): sfondo oro, testo nero, maiuscolo con un
   po' di spazio tra le lettere. Al tocco diventa oro chiaro.
 - **Bottone secondario** (es. "Annulla"): sfondo trasparente, bordo e testo oro.
-- **Scheda servizio** (listino): sfondo carbone, bordo oro scuro; nome in avorio,
-  prezzo in oro allineato a destra, durata in grigio caldo sotto il nome.
-- **Servizio tecnico**: prezzo scritto come "da €20" con una nota in grigio caldo:
-  "Prezzo finale dopo consulenza in salone".
+- **Riga del listino**: impaginata come la carta di un ristorante. Nome in avorio a
+  sinistra, una fila di puntini oro scuro, prezzo in oro (grassetto) a destra;
+  durata in grigio caldo sotto il nome. Niente schede: le sezioni sono separate
+  da un titolo in Cinzel con un filetto oro scuro sotto.
+- **Cornice del titolo**: il nome dentro due filetti (oro all'interno, oro scuro
+  all'esterno) con un fregio barocco sopra e sotto. È l'unico elemento vistoso.
+- **Servizio tecnico**: prezzo scritto come "da €20", con una nota in corsivo grigio
+  caldo sotto la sezione: "Il prezzo finale si decide in salone, dopo una breve
+  consulenza".
 - **Separatore**: una linea sottile oro scuro, con un piccolo ornamento al centro.
 
 ## Variabili CSS
 
-Da copiare in `src/index.css` quando costruiamo il listino (passo 2):
+Sono definite in `src/index.css`:
 
 ```css
 :root {
@@ -104,3 +111,5 @@ Da copiare in `src/index.css` quando costruiamo il listino (passo 2):
 - Ha già un logo? In che formato?
 - I colori del listino stampato o dell'insegna, da confrontare con questa palette.
 - Tono dei testi: "tu" o "Lei" con i clienti?
+- Le sezioni del listino (Esperienze Luxury, Taglio, Taglio e barba, Barba e
+  rasatura, Colore, Extra) e il loro ordine.

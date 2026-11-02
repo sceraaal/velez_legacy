@@ -6,6 +6,21 @@ Le voci più recenti stanno in alto.
 
 ---
 
+## 2026-11-02 – Listino: impaginazione e caratteri
+
+**Decisione**
+- Listino impaginato come la carta di un ristorante (nome, puntini, prezzo), con i
+  servizi raggruppati in sezioni. Sezioni e ordine da confermare con Nicolas.
+- Caratteri salvati nel progetto con `@fontsource` invece di Google Fonts.
+- I dati dei servizi stanno in `src/data/services.js`, separati dalla grafica.
+
+**Perché:** la carta di un ristorante comunica cura più delle schede tutte uguali;
+i caratteri locali evitano di inviare a Google l'indirizzo IP dei clienti (in
+Germania un sito è stato sanzionato per questo); i dati separati si potranno
+spostare nel database al passo 3 senza toccare la pagina.
+
+---
+
 ## 2026-11-02 – Strumenti per lavorare con l'AI
 
 **Decisione**

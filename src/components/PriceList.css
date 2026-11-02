@@ -1,0 +1,67 @@
+.price-list {
+  max-width: 34rem;
+  margin: 0 auto;
+  padding: 0 var(--space-3) var(--space-6);
+}
+
+.price-list__section + .price-list__section {
+  margin-top: var(--space-5);
+}
+
+.price-list__title {
+  margin: 0 0 var(--space-3);
+  padding-bottom: var(--space-2);
+  border-bottom: 1px solid var(--color-gold-dark);
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 1.5rem;
+  color: var(--color-gold);
+}
+
+.price-list__items {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.service + .service {
+  margin-top: var(--space-3);
+}
+
+/* Nome, puntini e prezzo sulla stessa riga, allineati alla base del testo */
+.service__line {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+}
+
+.service__name {
+  color: var(--color-ivory);
+}
+
+/* I puntini occupano tutto lo spazio libero tra nome e prezzo */
+.service__dots {
+  flex: 1;
+  min-width: var(--space-4);
+  border-bottom: 2px dotted var(--color-gold-dark);
+  transform: translateY(-0.3em);
+}
+
+.service__price {
+  white-space: nowrap;
+  font-weight: 700;
+  color: var(--color-gold);
+}
+
+.service__duration {
+  display: block;
+  font-size: 0.875rem;
+  color: var(--color-muted);
+}
+
+.price-list__note {
+  margin: var(--space-3) 0 0;
+  font-size: 0.875rem;
+  font-style: italic;
+  color: var(--color-muted);
+}
