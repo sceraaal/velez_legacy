@@ -6,6 +6,28 @@ Le voci più recenti stanno in alto.
 
 ---
 
+## 2026-11-02 – Listino: stile "Dark luxury"
+
+**Decisione**
+- Tra i tre mockup, Simona ha scelto per ora la proposta C, "Dark luxury": nero
+  profondo, oro champagne, Cormorant Garamond + Manrope, servizi come schede con
+  il bottone "+" e una barra in basso con durata e prezzo totali.
+- Caratteri salvati nel progetto con `@fontsource` invece di Google Fonts.
+- I dati dei servizi stanno in `src/data/services.js`, separati dalla grafica.
+- I servizi scelti sono tenuti in `App.jsx`, perché servono sia al listino sia
+  alla barra in basso.
+
+**Perché:** lo stile C è il più vicino al "lusso" richiesto; i caratteri locali
+evitano di inviare a Google l'indirizzo IP dei clienti (in Germania un sito è stato
+sanzionato per questo); i dati separati si potranno spostare nel database al passo 3
+senza toccare la pagina. Scegliere i servizi dal listino prepara già la
+prenotazione del passo 4.
+
+**Prima proposta scartata:** listino impaginato come la carta di un ristorante con
+Cinzel e Lato. Lo stile va ancora confermato con Nicolas.
+
+---
+
 ## 2026-11-02 – Strumenti per lavorare con l'AI
 
 **Decisione**
