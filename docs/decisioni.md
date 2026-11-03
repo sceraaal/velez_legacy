@@ -6,6 +6,28 @@ Le voci più recenti stanno in alto.
 
 ---
 
+## 2026-11-03 – Il listino nel database Supabase
+
+**Decisione**
+- Progetto Supabase nella regione Central EU (Frankfurt), piano Free, con
+  l'account di Simona.
+- Due tabelle, `service_categories` e `services`, con `id` testuali leggibili.
+- Il sito legge con la chiave pubblica; le regole RLS permettono solo di leggere.
+- Le tabelle si creano copiando i file di `supabase/migrations/` nell'SQL Editor
+  del pannello (niente Supabase CLI per ora).
+- `src/data/services.js` è stato tolto: i prezzi stanno solo nel database.
+
+**Perché:** i prezzi si cambiano dal pannello senza toccare il codice, ed è la base
+per le prenotazioni del passo 4. Francoforte è nell'UE (GDPR) e vicina all'Italia.
+L'SQL Editor non richiede programmi in più. Un solo posto per i prezzi evita
+listini diversi tra sito e database.
+
+**Scartate:** la regione Stoccolma proposta di default (va bene per il GDPR, ma
+più lontana); la Supabase CLI (strumento in più da imparare, si potrà adottare se
+il database cresce); tenere `services.js` come riserva.
+
+---
+
 ## 2026-11-02 – Immagine barocca come sfondo di tutta la pagina
 
 **Decisione**
@@ -35,7 +57,8 @@ la scritta "VELEZ LEGACY": Nicolas l'ha vista nell'anteprima.
   volute negli angoli) sono anche attorno al listino, come ha chiesto.
 - Il logo è anche l'icona del sito e della schermata home del telefono.
 - Caratteri salvati nel progetto con `@fontsource`, non caricati da Google.
-- I dati dei servizi stanno in `src/data/services.js`, separati dalla grafica.
+- I dati dei servizi stanno separati dalla grafica (oggi nel database, vedi
+  `docs/database.md`).
 - Ai clienti si dà del **Lei**: è il tono che Nicolas vuole per il salone.
 
 **Perché:** è la proposta che Nicolas ha approvato. I caratteri locali evitano di

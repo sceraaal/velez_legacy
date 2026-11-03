@@ -105,3 +105,11 @@
 .service__detail--note {
   font-style: italic;
 }
+
+/* Messaggi di caricamento e di errore, al posto del listino */
+.price-list__message {
+  margin: var(--space-4) 0;
+  text-align: center;
+  font-style: italic;
+  color: var(--color-muted);
+}
