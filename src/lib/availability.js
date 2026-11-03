@@ -80,6 +80,18 @@ export function formatTime(minutes) {
   return `${Math.floor(minutes / 60)}:${String(minutes % 60).padStart(2, '0')}`
 }
 
+const dayFormatter = new Intl.DateTimeFormat('it-IT', {
+  weekday: 'long',
+  day: 'numeric',
+  month: 'long',
+  timeZone: TIME_ZONE,
+})
+
+// Un istante scritto per il cliente: "mercoledì 11 novembre, ore 10:00"
+export function formatDateTime(date) {
+  return `${dayFormatter.format(date)}, ore ${formatTime(toRome(date).minutes)}`
+}
+
 // --- Orari liberi -------------------------------------------------------------
 
 // Gli orari di inizio possibili per un giorno, per un appuntamento che occupa

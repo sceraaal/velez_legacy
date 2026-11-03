@@ -6,6 +6,32 @@ Le voci più recenti stanno in alto.
 
 ---
 
+## 2026-11-03 – Le prenotazioni della prova (passo 4)
+
+**Decisione**
+- Calendario e orari fatti a mano, senza librerie esterne.
+- Tutte le regole (giorni, orari, mezz'ore, preavviso di 1 ora, 30 giorni,
+  sovrapposizioni, ferie) le controlla il **database**, nella funzione
+  `create_booking`. Il sito ripete solo i controlli sui dati del cliente, per
+  dare subito un messaggio chiaro.
+- La durata si arrotonda alla mezz'ora successiva (50 minuti occupano 1 ora).
+- Per la prova il cliente prenota **senza account**: lascia nome, cognome,
+  telefono ed email a ogni prenotazione. Registrazione e login arrivano nella
+  Fase 1.
+- La pagina di prenotazione resta **solo in locale, con dati di prova**, finché non
+  ci sono il testo dell'informativa privacy e il login. La casella "Ho letto e
+  accetto l'informativa" oggi non porta a nessun testo.
+
+**Perché:** un calendario fatto a mano pesa poco ed è facile da capire e
+modificare. Le regole nel database non si possono aggirare dal sito, e due
+clienti nello stesso istante non riescono a prendere lo stesso orario. Senza
+informativa non si possono raccogliere dati veri di clienti (GDPR).
+
+**Scartate:** librerie di calendario già pronte (pesanti e difficili da adattare
+allo stile barocco); controlli solo nel sito (aggirabili).
+
+---
+
 ## 2026-11-03 – Il listino nel database Supabase
 
 **Decisione**

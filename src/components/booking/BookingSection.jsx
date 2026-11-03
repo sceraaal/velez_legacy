@@ -1,31 +1,26 @@
-import { useEffect, useState } from 'react'
-import { fetchBusyPeriods } from '../../lib/bookingApi.js'
+import { useEffect, useRef, useState } from 'react'
+import { createBooking, fetchBusyPeriods } from '../../lib/bookingApi.js'
 import { fetchPriceList } from '../../lib/priceList.js'
 import {
+  formatDateTime,
   fromRome,
   getBookingWindow,
   getFreeSlots,
   roundUpToSlot,
-  formatTime,
 } from '../../lib/availability.js'
 import { formatDuration, formatPrice } from '../../utils/format.js'
 import BaroqueFrame from '../BaroqueFrame.jsx'
 import ServicePicker from './ServicePicker.jsx'
 import MonthCalendar from './MonthCalendar.jsx'
 import TimeSlots from './TimeSlots.jsx'
+import CustomerForm from './CustomerForm.jsx'
+import BookingConfirmation from './BookingConfirmation.jsx'
 import './Booking.css'
 
-// La sezione "Prenota": il cliente sceglie servizi, giorno e orario.
+// La sezione "Prenota": il cliente sceglie servizi, giorno e orario, scrive
+// i suoi dati e conferma.
 // Questo componente è il "genitore": tiene lo stato (cosa è stato scelto) e
 // lo passa ai componenti figli, che si occupano solo di mostrarlo.
-// Nella parte 4c qui sotto arriverà il modulo con i dati del cliente.
-
-const dayFormatter = new Intl.DateTimeFormat('it-IT', {
-  weekday: 'long',
-  day: 'numeric',
-  month: 'long',
-  timeZone: 'Europe/Rome',
-})
 
 function BookingSection() {
   // Dati che arrivano dal database
@@ -37,6 +32,14 @@ function BookingSection() {
   const [selectedIds, setSelectedIds] = useState([])
   const [selectedDay, setSelectedDay] = useState(null)
   const [selectedSlot, setSelectedSlot] = useState(null)
+
+  // Invio della prenotazione
+  const [sending, setSending] = useState(false)
+  const [submitError, setSubmitError] = useState(null) // messaggio da mostrare, o null
+  const [confirmed, setConfirmed] = useState(null) // { booking, services, firstName } dopo il salvataggio
+
+  // ref = un "segnaposto" per raggiungere la sezione nella pagina e scorrere fin lì
+  const sectionRef = useRef(null)
 
   // La "finestra" dei giorni prenotabili: calcolata una volta all'apertura
   const [bookingWindow] = useState(() => getBookingWindow())
@@ -88,10 +91,57 @@ function BookingSection() {
   function selectDay(day) {
     setSelectedDay(day)
     setSelectedSlot(null)
+    setSubmitError(null)
+  }
+
+  function selectSlot(minutes) {
+    setSelectedSlot(minutes)
+    setSubmitError(null)
+  }
+
+  // Il cliente ha premuto "Conferma" e i suoi dati sono a posto.
+  // async/await: aspettiamo la risposta del database prima di andare avanti.
+  async function submitBooking(customer) {
+    setSending(true)
+    setSubmitError(null)
+    try {
+      const booking = await createBooking({
+        serviceIds: selectedIds,
+        startsAt: fromRome(selectedDay, selectedSlot),
+        customer,
+      })
+      setConfirmed({ booking, services: chosen, firstName: customer.firstName.trim() })
+      // La conferma è più corta del modulo: riportiamo il cliente in cima alla sezione
+      sectionRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    } catch (error) {
+      setSubmitError(error.message)
+      // Se nel frattempo qualcuno ha preso l'orario, ricarichiamo gli orari
+      // occupati: così l'orario sparisce e il cliente ne sceglie un altro.
+      if (error.slotTaken) {
+        setSelectedSlot(null)
+        try {
+          const from = fromRome(bookingWindow.first, 0)
+          const to = fromRome(bookingWindow.last, 24 * 60)
+          setBusy(await fetchBusyPeriods(from, to))
+        } catch (reloadError) {
+          console.error('Orari non aggiornati:', reloadError)
+        }
+      }
+    } finally {
+      // finally: si esegue sempre, che sia andata bene o male
+      setSending(false)
+    }
+  }
+
+  // "Nuova prenotazione": si ricomincia da capo. Ricarichiamo la pagina, così
+  // anche gli orari occupati sono aggiornati (compreso quello appena preso).
+  function startOver() {
+    window.location.hash = 'prenota'
+    window.location.reload()
   }
 
   return (
-    <section id="prenota" className="booking" aria-labelledby="prenota-titolo">
+    <section ref={sectionRef} id="prenota" className="booking" aria-labelledby="prenota-titolo">
       <h2 id="prenota-titolo" className="booking__title">
         Prenota
       </h2>
@@ -108,7 +158,16 @@ function BookingSection() {
           </p>
         )}
 
-        {status === 'ready' && (
+        {status === 'ready' && confirmed && (
+          <BookingConfirmation
+            booking={confirmed.booking}
+            services={confirmed.services}
+            firstName={confirmed.firstName}
+            onNewBooking={startOver}
+          />
+        )}
+
+        {status === 'ready' && !confirmed && (
           <>
             <ServicePicker categories={categories} selectedIds={selectedIds} onToggle={toggleService} />
 
@@ -123,18 +182,31 @@ function BookingSection() {
             )}
 
             {selectedDay && (
-              <TimeSlots slots={daySlots} selectedSlot={selectedSlot} onSelect={setSelectedSlot} />
+              <TimeSlots slots={daySlots} selectedSlot={selectedSlot} onSelect={selectSlot} />
             )}
+
+            {/* Il messaggio d'errore sta fuori dal modulo: resta visibile anche
+                quando l'orario viene tolto perché preso da un altro cliente */}
+            {submitError && (
+              <p className="booking__error" role="alert">
+                {submitError}
+              </p>
+            )}
+
+            {/* Il modulo resta sempre "montato" e viene solo nascosto finché non
+                c'è un orario: così, se l'orario sparisce, il cliente non perde
+                quello che ha già scritto */}
+            <CustomerForm hidden={selectedSlot === null} sending={sending} onSubmit={submitBooking} />
           </>
         )}
       </BaroqueFrame>
 
       {/* Riepilogo fisso in fondo allo schermo, appena c'è almeno un servizio */}
-      {chosen.length > 0 && (
+      {chosen.length > 0 && !confirmed && (
         <div className="booking-summary" aria-live="polite">
           <p className="booking-summary__line">
             {selectedDay && selectedSlot !== null
-              ? `${dayFormatter.format(fromRome(selectedDay, selectedSlot))}, ore ${formatTime(selectedSlot)}`
+              ? formatDateTime(fromRome(selectedDay, selectedSlot))
               : `${chosen.length} ${chosen.length === 1 ? 'servizio' : 'servizi'} · ${formatDuration(totalMinutes)}`}
           </p>
           <p className="booking-summary__price">{formatPrice(totalPrice, hasFromPrice)}</p>

@@ -18,3 +18,51 @@ export async function fetchBusyPeriods(from, to) {
   // Trasformiamo le date da testo a oggetti Date, più comodi per i calcoli
   return data.map((period) => ({ from: new Date(period.busy_from), to: new Date(period.busy_to) }))
 }
+
+// Errore "parlante" da mostrare al cliente.
+// slotTaken = true quando l'orario è stato preso da qualcun altro nel frattempo:
+// in quel caso il sito ricarica gli orari occupati.
+export class BookingError extends Error {
+  constructor(message, { slotTaken = false } = {}) {
+    super(message)
+    this.slotTaken = slotTaken
+  }
+}
+
+// Salva la prenotazione chiamando la funzione create_booking del database.
+// Tutte le regole (orari, giorni, sovrapposizioni) le controlla il database:
+// il sito non può aggirarle. Restituisce il riepilogo per la conferma.
+export async function createBooking({ serviceIds, startsAt, customer }) {
+  if (!supabase) {
+    throw new BookingError('La prenotazione non è disponibile al momento. La preghiamo di riprovare più tardi.')
+  }
+
+  const { data, error } = await supabase.rpc('create_booking', {
+    p_service_ids: serviceIds,
+    p_starts_at: startsAt.toISOString(),
+    p_first_name: customer.firstName,
+    p_last_name: customer.lastName,
+    p_phone: customer.phone,
+    p_email: customer.email,
+    p_privacy_accepted: customer.privacyAccepted,
+  })
+
+  if (error) {
+    // P0001 è il codice degli errori scritti da noi nella funzione
+    // ("raise exception ..."): il messaggio è già in italiano, con il Lei.
+    if (error.code === 'P0001') {
+      throw new BookingError(error.message, { slotTaken: error.message.includes('orario non è') })
+    }
+    // Qualsiasi altro problema (rete, database fermo...): messaggio generico.
+    console.error('Prenotazione non riuscita:', error)
+    throw new BookingError('Non siamo riusciti a salvare la prenotazione. La preghiamo di riprovare.')
+  }
+
+  return {
+    id: data.id,
+    startsAt: new Date(data.starts_at),
+    endsAt: new Date(data.ends_at),
+    totalPrice: Number(data.total_price),
+    fromPrice: data.from_price,
+  }
+}

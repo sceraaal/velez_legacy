@@ -53,10 +53,16 @@ livello superiore e curato.
 ## Lato cliente
 
 - Registrazione con nome, cognome, telefono, email e accettazione dell'informativa
-  privacy.
+  privacy. Nella prova (passo 4) non c'è ancora l'account: il cliente scrive
+  questi dati nel modulo di ogni prenotazione.
+- Telefono: da 9 a 15 cifre, con un "+" facoltativo all'inizio e spazi ammessi.
+  Email: deve avere la forma nome@dominio.it.
 - Prenotazione al massimo 30 giorni prima e al minimo 1 ora prima, se ci sono slot
   liberi.
-- Conferma automatica, senza approvazione di Nicolas.
+- Conferma automatica, senza approvazione di Nicolas. Dopo l'invio il cliente vede
+  la schermata "Appuntamento confermato" con giorno, ora, servizi e prezzo.
+- Se l'orario viene preso da un altro cliente mentre compila il modulo, vede un
+  messaggio, gli orari si aggiornano e ne sceglie un altro senza riscrivere i dati.
 - Disdetta o spostamento possibili fino a 1 ora prima dell'appuntamento.
 - Promemoria SMS 1 giorno prima e 2 ore prima (Fase 2; solo promemoria, nessuna
   risposta richiesta).
