@@ -84,6 +84,12 @@ si legge male sul telefono.
   corsivo, bottone "Prenota" pieno d'oro, orari.
 - **Listino** (`PriceList.jsx`): titolo "Il Listino", poi per ogni sezione un titolo
   tra due filetti e le righe "nome ...... prezzo" con la durata sotto.
+- **Prenotazione** (`src/components/booking/`): sezione "Prenota" con titolo e
+  cornice come il listino. Ogni passo (I Suoi servizi, Il giorno, L'orario) ha
+  il titolo tra due filetti. Servizi con casella oro (`accent-color`); calendario
+  a 7 colonne, giorni senza orari liberi spenti; orari come bottoni con bordo oro
+  scuro. Scelta attiva = fondo oro e testo nero. Riepilogo fisso in fondo allo
+  schermo con fondo `--color-surface`.
 - **Servizio tecnico**: prezzo "da €20" e la nota in corsivo "Prezzo finale dopo
   consulenza in salone".
 

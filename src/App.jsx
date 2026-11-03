@@ -1,9 +1,9 @@
 import Hero from './components/Hero.jsx'
 import PriceList from './components/PriceList.jsx'
+import BookingSection from './components/booking/BookingSection.jsx'
 import Footer from './components/Footer.jsx'
 
-// La pagina principale: parte alta con il logo, listino e fondo pagina.
-// Al passo 4 aggiungeremo la pagina di prenotazione (scelta di giorno e ora).
+// La pagina principale: parte alta con il logo, listino, prenotazione e fondo pagina.
 
 function App() {
   return (
@@ -11,6 +11,7 @@ function App() {
       <main>
         <Hero />
         <PriceList />
+        <BookingSection />
       </main>
       <Footer />
     </>

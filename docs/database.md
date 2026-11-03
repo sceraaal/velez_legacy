@@ -92,9 +92,15 @@ modifica "riesce" ma cambia zero righe; con la migrazione 2 viene rifiutato con
   rimettilo a `true`.
 - **Vedere le prenotazioni**: Table Editor → `bookings` (i servizi di ognuna in
   `booking_services`).
-- **Bloccare ferie o un impegno**: Table Editor → `blocked_periods` → Insert row,
-  con inizio e fine (attenzione al fuso orario: il pannello mostra gli orari in
-  UTC, cioè un'ora indietro rispetto all'Italia d'inverno e due d'estate).
+- **Bloccare ferie o un impegno**: dall'SQL Editor, scrivendo l'ora italiana in
+  chiaro (il Table Editor mostra gli orari in UTC, un'ora indietro d'inverno e due
+  d'estate, ed è facile sbagliare):
+  ```sql
+  insert into public.blocked_periods (starts_at, ends_at, reason)
+  values ('2026-11-04 08:00 Europe/Rome', '2026-11-04 20:00 Europe/Rome', 'ferie');
+  ```
+  Per più giorni di fila basta mettere il primo giorno alle 8:00 e l'ultimo alle
+  20:00. Per togliere un blocco: Table Editor → `blocked_periods` → cancella la riga.
 - **Aggiungere un servizio**: Table Editor → `services` → Insert row. Servono
   `id` (nuovo, in minuscolo con i trattini), `category_id`, `name`, `price`,
   `duration_minutes`, `position`.
