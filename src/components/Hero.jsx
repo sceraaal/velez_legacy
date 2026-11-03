@@ -20,8 +20,8 @@ function Hero() {
         <br />
         con la cura di una sartoria.
       </p>
-      {/* Per ora porta al listino: al passo 4 aprirà la prenotazione */}
-      <a className="hero__cta" href="#listino">
+      {/* Porta alla sezione di prenotazione, più in basso nella stessa pagina */}
+      <a className="hero__cta" href="#prenota">
         PRENOTA
       </a>
       <p className="hero__hours">Martedì – Sabato · 8:00 – 20:00</p>

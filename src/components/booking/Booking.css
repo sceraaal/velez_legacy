@@ -1,0 +1,236 @@
+/* Sezione "Prenota": stessa larghezza e stessi titoli del listino */
+.booking {
+  max-width: 34rem;
+  margin: 0 auto;
+  padding: var(--space-6) var(--space-4) 0;
+}
+
+.booking__title {
+  margin: 0;
+  text-align: center;
+  font-family: var(--font-decorative);
+  font-weight: 400;
+  font-size: 1.75rem;
+  color: var(--color-gold);
+  text-shadow: var(--shadow-text);
+}
+
+.booking__subtitle {
+  margin: var(--space-2) 0 var(--space-4);
+  text-align: center;
+  font-style: italic;
+  color: var(--color-muted);
+  text-shadow: var(--shadow-text);
+}
+
+.booking__frame {
+  padding: var(--space-5) var(--space-4) var(--space-4);
+}
+
+.booking__message {
+  margin: var(--space-3) 0;
+  text-align: center;
+  font-style: italic;
+  color: var(--color-muted);
+}
+
+/* Ogni passo (servizi, giorno, orario) è un <fieldset>: un gruppo di scelte.
+   Togliamo il bordo grigio che il browser gli mette di suo. */
+.booking-step {
+  margin: 0;
+  padding: 0;
+  border: none;
+  min-width: 0;
+}
+
+.booking-step + .booking-step {
+  margin-top: var(--space-5);
+}
+
+/* Titolo del passo tra due filetti, come le sezioni del listino */
+.booking-step__title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  margin-bottom: var(--space-3);
+  padding: 0;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.875rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-gold-light);
+}
+
+.booking-step__title::before,
+.booking-step__title::after {
+  content: '';
+  flex-grow: 1;
+  height: 1px;
+  background-color: var(--color-gold-dark);
+}
+
+/* --- Scelta dei servizi --- */
+
+.service-picker__group + .service-picker__group {
+  margin-top: var(--space-3);
+}
+
+.service-picker__group-title {
+  margin: 0 0 var(--space-1);
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 0.8125rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+/* Ogni servizio è una riga toccabile di almeno 48px (comoda col dito) */
+.service-picker__option {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: 12px;
+  align-items: center;
+  min-height: 48px;
+  padding: var(--space-1) 0;
+  border-bottom: 1px dotted var(--color-line);
+  cursor: pointer;
+}
+
+.service-picker__checkbox {
+  grid-row: span 2;
+  width: 20px;
+  height: 20px;
+  margin: 0;
+  /* accent-color colora la spunta del browser con il nostro oro */
+  accent-color: var(--color-gold);
+}
+
+.service-picker__name {
+  font-size: 1.125rem;
+}
+
+.service-picker__meta {
+  font-size: 0.9375rem;
+  color: var(--color-muted);
+}
+
+/* --- Calendario --- */
+
+.calendar + .calendar {
+  margin-top: var(--space-4);
+}
+
+.calendar__month {
+  margin: 0 0 var(--space-2);
+  text-align: center;
+  font-family: var(--font-display);
+  letter-spacing: 0.1em;
+  color: var(--color-gold);
+}
+
+/* 7 colonne uguali: da lunedì a domenica */
+.calendar__grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: var(--space-1);
+}
+
+.calendar__weekday {
+  text-align: center;
+  font-size: 0.8125rem;
+  color: var(--color-muted);
+}
+
+.calendar__day {
+  aspect-ratio: 1;
+  min-height: 40px;
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius);
+  background: none;
+  color: var(--color-ivory);
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  cursor: pointer;
+}
+
+.calendar__day:hover:not(:disabled) {
+  border-color: var(--color-gold);
+}
+
+/* Giorni senza orari liberi: spenti e non cliccabili */
+.calendar__day:disabled {
+  border-color: transparent;
+  color: var(--color-line);
+  cursor: default;
+}
+
+.calendar__day--selected {
+  border-color: var(--color-gold);
+  background-color: var(--color-gold);
+  color: var(--color-black);
+}
+
+/* --- Orari --- */
+
+.time-slots {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(5.5rem, 1fr));
+  gap: var(--space-2);
+}
+
+.time-slots__slot {
+  min-height: 44px;
+  border: 1px solid var(--color-gold-dark);
+  border-radius: var(--radius);
+  background: none;
+  color: var(--color-ivory);
+  font-family: var(--font-display);
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.time-slots__slot:hover {
+  border-color: var(--color-gold);
+}
+
+.time-slots__slot--selected {
+  border-color: var(--color-gold);
+  background-color: var(--color-gold);
+  color: var(--color-black);
+}
+
+/* --- Riepilogo in fondo allo schermo --- */
+/* sticky: resta attaccato al fondo dello schermo mentre si scorre la sezione */
+.booking-summary {
+  position: sticky;
+  bottom: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-top: var(--space-4);
+  padding: var(--space-3) var(--space-4);
+  border-top: 1px solid var(--color-gold-dark);
+  background-color: var(--color-surface);
+}
+
+.booking-summary__line {
+  margin: 0;
+}
+
+/* La prima lettera maiuscola: "Mercoledì 11 novembre" */
+.booking-summary__line::first-letter {
+  text-transform: uppercase;
+}
+
+.booking-summary__price {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.125rem;
+  white-space: nowrap;
+  color: var(--color-gold);
+}
