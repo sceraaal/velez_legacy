@@ -34,8 +34,11 @@ RLS è attiva su entrambe le tabelle. Il sito usa la chiave **pubblica**
 - leggere tutte le categorie;
 - leggere i servizi con `is_active = true`.
 
-Non c'è nessuna regola per aggiungere, modificare o cancellare: dal sito non si può
-cambiare nulla. La chiave **segreta** non si usa e non va mai nel codice.
+Non c'è nessuna regola per aggiungere, modificare o cancellare, e in più i ruoli
+`anon` e `authenticated` hanno solo il permesso SELECT (migrazione 2): dal sito non
+si può cambiare nulla. Due protezioni: senza la migrazione 2 un tentativo di
+modifica "riesce" ma cambia zero righe; con la migrazione 2 viene rifiutato con
+`permission denied`. La chiave **segreta** non si usa e non va mai nel codice.
 
 ## Come si fa a…
 
@@ -53,6 +56,8 @@ cambiare nulla. La chiave **segreta** non si usa e non va mai nel codice.
 - `supabase/migrations/` – le modifiche alla struttura del database, una per file,
   in ordine di data. Ogni file si lancia **una volta sola** nell'SQL Editor.
   - `20261103120000_listino.sql` – tabelle del listino e regole RLS.
+  - `20261103130000_listino_solo_lettura.sql` – toglie ai ruoli `anon` e
+    `authenticated` i permessi di modifica che Supabase può dare in automatico.
 - `supabase/seed.sql` – i dati iniziali del listino (2026-11-03). Serve solo per
   un database nuovo: i prezzi aggiornati stanno nel database, non qui.
 
