@@ -1,0 +1,10 @@
+/* Fascia in cima: fondo oro e testo nero, come il bottone principale,
+   così si nota subito */
+.test-banner {
+  margin: 0;
+  padding: var(--space-2) var(--space-3);
+  background-color: var(--color-gold);
+  color: var(--color-black);
+  text-align: center;
+  font-size: 0.9375rem;
+}
