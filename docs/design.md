@@ -90,6 +90,14 @@ si legge male sul telefono.
   a 7 colonne, giorni senza orari liberi spenti; orari come bottoni con bordo oro
   scuro. Scelta attiva = fondo oro e testo nero. Riepilogo fisso in fondo allo
   schermo con fondo `--color-surface`.
+- **Modulo dati cliente** (`CustomerForm.jsx`): passo "I Suoi dati". Etichette in
+  Cinzel maiuscolo grigio caldo, caselle con fondo nero e bordo oro scuro, alte
+  48 px, testo a 17 px (sotto i 16 px l'iPhone ingrandisce la pagina). Errori in
+  corsivo oro chiaro sotto il campo. Bottone "Conferma la prenotazione" pieno
+  d'oro, come il bottone "Prenota" in alto.
+- **Conferma** (`BookingConfirmation.jsx`): titolo "Appuntamento confermato" in
+  Cinzel Decorative, giorno e ora in oro chiaro, servizi, prezzo, nota sul
+  pagamento in salone e bottone secondario (solo bordo) "Nuova prenotazione".
 - **Servizio tecnico**: prezzo "da €20" e la nota in corsivo "Prezzo finale dopo
   consulenza in salone".
 
