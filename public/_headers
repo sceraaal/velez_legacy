@@ -1,0 +1,10 @@
+# Regole di Cloudflare Pages per le intestazioni delle pagine.
+# Sul link di prova (indirizzo che finisce in .pages.dev) chiediamo a Google e
+# agli altri motori di ricerca di NON mostrare il sito nei risultati.
+# Non vale per il dominio vero, quando ci sarà.
+https://:project.pages.dev/*
+  X-Robots-Tag: noindex
+
+# Anche le anteprime dei rami (es. abc123.velez-legacy.pages.dev)
+https://:version.:project.pages.dev/*
+  X-Robots-Tag: noindex
