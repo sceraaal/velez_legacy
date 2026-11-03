@@ -14,6 +14,10 @@ spostarlo; Nicolas gestisce la sua agenda da un'area riservata.
 
 Serve [Node.js](https://nodejs.org/) (versione LTS).
 
+La prima volta crea il file `.env.local` copiando `.env.example` e mettendoci
+l'indirizzo e la chiave pubblica del progetto Supabase (pannello Supabase →
+bottone Connect). Senza questo file il listino non si carica.
+
 ```bash
 npm install     # scarica le librerie (solo la prima volta o dopo un aggiornamento)
 npm run dev     # avvia l'app su http://localhost:5173
@@ -34,5 +38,6 @@ Per fermarla: `Ctrl+C` nel terminale.
 
 - [Regole del progetto](docs/regole-progetto.md): orari, servizi, regole di prenotazione
 - [Guida di stile](docs/design.md): colori, caratteri e componenti
+- [Database](docs/database.md): tabelle, regole di sicurezza, come cambiare un prezzo
 - [Registro delle decisioni](docs/decisioni.md): le scelte fatte e il perché
 - [CLAUDE.md](CLAUDE.md): istruzioni per lavorare al progetto con Claude

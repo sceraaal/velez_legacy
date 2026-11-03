@@ -11,6 +11,7 @@ vetrina: deve trasmettere un servizio curato e di livello superiore.
 
 - Regole dell'app (orari, servizi, prenotazioni, fasi): [docs/regole-progetto.md](docs/regole-progetto.md)
 - Guida di stile (colori, caratteri, componenti): [docs/design.md](docs/design.md)
+- Database (tabelle, RLS): [docs/database.md](docs/database.md)
 - Decisioni prese e motivi: [docs/decisioni.md](docs/decisioni.md)
 
 Se una richiesta contraddice uno di questi documenti, segnalalo prima di procedere.
@@ -65,7 +66,9 @@ npm run build    # crea la versione da mettere online (cartella dist)
 
 ## Struttura
 
-- `src/` – il codice dell'app (componenti React e stili)
+- `src/` – il codice dell'app (componenti React e stili); `src/lib/` il
+  collegamento a Supabase
+- `supabase/` – i file SQL del database (vedi `docs/database.md`)
 - `public/` – file statici (icone)
 - `docs/` – documentazione del progetto
 
