@@ -98,6 +98,13 @@ si legge male sul telefono.
 - **Conferma** (`BookingConfirmation.jsx`): titolo "Appuntamento confermato" in
   Cinzel Decorative, giorno e ora in oro chiaro, servizi, prezzo, nota sul
   pagamento in salone e bottone secondario (solo bordo) "Nuova prenotazione".
+- **Area clienti** (`src/components/account/`): sezione "Area clienti" con la
+  stessa cornice della prenotazione. Linguette Accedi / Registrati (attiva = fondo
+  oro, testo nero), stesse caselle ed errori del modulo dati cliente, link
+  testuale in corsivo oro chiaro ("Ha dimenticato la password?"), messaggi di
+  conferma su fondo `--color-surface` con filetto oro a sinistra, bottone "Esci"
+  secondario (solo bordo). In alto a destra della pagina il link "Accedi" / "Il
+  mio account" in Cinzel maiuscolo oro chiaro.
 - **Servizio tecnico**: prezzo "da €20" e la nota in corsivo "Prezzo finale dopo
   consulenza in salone".
 

@@ -6,6 +6,30 @@ Le voci più recenti stanno in alto.
 
 ---
 
+## 2026-11-07 – Login dei clienti con email e password (Fase 1, passo 1)
+
+**Decisione**
+- Il cliente entra con email e password (scelta di Simona il 2026-11-05), con
+  conferma dell'email obbligatoria e recupero della password via email.
+- I dati del cliente stanno in `customers`, creati da un trigger alla
+  registrazione; l'email resta solo nell'account di Supabase Auth.
+- Per ora il cliente non può modificare i suoi dati dal sito: si aggiungerà con
+  una migrazione nuova e gli stessi controlli della registrazione.
+- Nessuna libreria per le pagine: l'area clienti è una sezione della stessa pagina.
+
+**Perché:** email e password è il metodo che i clienti conoscono già. La
+conferma dell'email impedisce di registrarsi con l'indirizzo di un altro. Il
+trigger fa sì che non possa esistere un cliente senza i suoi dati.
+
+**Scartate:** codice di 6 cifre via email (consigliato da Claude perché senza
+password) e link via email (su iPhone si apre fuori dall'icona salvata); login
+con Google o Apple (più configurazione; Apple richiede un account a pagamento).
+
+**Da sapere:** i link delle email (conferma e nuova password) sul telefono si
+aprono nel browser, non nell'icona salvata sulla schermata home.
+
+---
+
 ## 2026-11-03 – Le prenotazioni della prova (passo 4)
 
 **Decisione**

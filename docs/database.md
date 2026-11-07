@@ -50,6 +50,22 @@ della prenotazione** (se un prezzo cambia, le prenotazioni vecchie restano giust
 
 `starts_at`, `ends_at`, `reason` (nota interna). In quei periodi non si prenota.
 
+### `customers` – i profili dei clienti (Fase 1, passo 1)
+
+| Colonna | Tipo | Note |
+| --- | --- | --- |
+| `id` | uuid, chiave primaria → `auth.users.id` | lo stesso codice dell'account |
+| `first_name`, `last_name` | testo | |
+| `phone` | testo | stessi controlli di `create_booking` |
+| `privacy_accepted_at` | data e ora | prova del consenso all'informativa |
+| `created_at` | data e ora | |
+
+Email e password stanno solo negli account di Supabase Auth (`auth.users`, la
+password cifrata). Il profilo lo crea il trigger `on_auth_user_created` con la
+funzione `create_customer_profile`, leggendo nome, cognome, telefono e consenso
+che il sito manda alla registrazione. Un account creato a mano dal pannello
+(senza questi dati) non ha profilo: servirà per l'account di Nicolas.
+
 ## Funzioni
 
 - `get_busy_periods(da, a)` – restituisce solo inizio e fine dei periodi occupati
@@ -66,6 +82,10 @@ Entrambe sono `security definer`: lavorano con i permessi di chi le ha create,
 così il visitatore può prenotare senza poter leggere la tabella `bookings`.
 
 ## Sicurezza (RLS)
+
+`customers`: chi ha fatto il login legge **solo la propria riga**; nessuno
+(nemmeno il cliente) può aggiungere o modificare righe dal sito. I visitatori
+non vedono nulla.
 
 RLS è attiva su entrambe le tabelle. Il sito usa la chiave **pubblica**
 (`sb_publishable_...`), cioè il ruolo `anon`, che può solo:
@@ -101,6 +121,15 @@ modifica "riesce" ma cambia zero righe; con la migrazione 2 viene rifiutato con
   ```
   Per più giorni di fila basta mettere il primo giorno alle 8:00 e l'ultimo alle
   20:00. Per togliere un blocco: Table Editor → `blocked_periods` → cancella la riga.
+- **Vedere i clienti registrati**: Table Editor → `customers`; le email sono in
+  Authentication → Users.
+- **Creare un cliente di prova senza email**: Authentication → Users → Add user →
+  Create new user, con "Auto Confirm User" acceso. Poi, nell'SQL Editor:
+  ```sql
+  insert into public.customers (id, first_name, last_name, phone, privacy_accepted_at)
+  select id, 'Prova', 'Due', '3330000000', now() from auth.users
+  where email = 'email-del-cliente-di-prova@esempio.it';
+  ```
 - **Aggiungere un servizio**: Table Editor → `services` → Insert row. Servono
   `id` (nuovo, in minuscolo con i trattini), `category_id`, `name`, `price`,
   `duration_minutes`, `position`.
@@ -113,17 +142,33 @@ modifica "riesce" ma cambia zero righe; con la migrazione 2 viene rifiutato con
   - `20261103130000_listino_solo_lettura.sql` – toglie ai ruoli `anon` e
     `authenticated` i permessi di modifica che Supabase può dare in automatico.
   - `20261103140000_prenotazioni.sql` – prenotazioni, blocchi e le due funzioni.
+  - `20261107120000_clienti.sql` – profili dei clienti e trigger di registrazione.
 - `supabase/seed.sql` – i dati iniziali del listino (2026-11-03). Serve solo per
   un database nuovo: i prezzi aggiornati stanno nel database, non qui.
 
 Quando cambiamo la struttura (per esempio le prenotazioni al passo 4) aggiungiamo
 un nuovo file in `supabase/migrations/`, non modifichiamo quelli già lanciati.
 
+## Impostazioni del login (pannello Supabase)
+
+- Authentication → Sign In / Providers → **Email**: attivo, "Confirm email"
+  acceso, lunghezza minima della password **8** (lo stesso numero sta in
+  `src/lib/customer.js`).
+- Authentication → URL Configuration: **Site URL** `http://localhost:5173` finché
+  si prova in locale; in **Redirect URLs** va aggiunto ogni indirizzo dove gira il
+  sito (in locale `http://localhost:5173`, poi quello di Cloudflare Pages). È
+  dove i link delle email riportano il cliente.
+- Le email di Supabase incluse nel piano Free partono solo verso gli indirizzi del
+  team del progetto e poche all'ora: bastano per le prove. Per i clienti veri
+  serve Resend (passo 6).
+
 ## Collegamento dal sito
 
 - `src/lib/supabase.js` crea il client con `VITE_SUPABASE_URL` e
   `VITE_SUPABASE_PUBLISHABLE_KEY`, presi da `.env.local` (vedi `.env.example`).
 - `src/lib/priceList.js` legge il listino.
+- `src/lib/auth.js` registrazione, accesso, uscita, password dimenticata e
+  lettura del profilo; `src/lib/useAuth.js` dice alla pagina chi ha fatto il login.
 - Online (Cloudflare Pages) le stesse due variabili andranno nelle impostazioni
   del progetto.
 
