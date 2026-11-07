@@ -93,6 +93,11 @@ RLS è attiva su entrambe le tabelle. Il sito usa la chiave **pubblica**
 - leggere tutte le categorie;
 - leggere i servizi con `is_active = true`.
 
+Chi ha fatto l'accesso usa il ruolo `authenticated`, che per il listino ha le
+stesse regole (migrazione 5). **Da ricordare:** ogni regola RLS pensata "per
+tutti" va scritta `to anon, authenticated`, altrimenti i clienti dentro il loro
+account non vedono nulla.
+
 Le tabelle `bookings`, `booking_services` e `blocked_periods` hanno RLS attiva e
 **nessun permesso** per `anon` e `authenticated`: dal sito si possono solo chiamare
 le due funzioni.
@@ -143,6 +148,8 @@ modifica "riesce" ma cambia zero righe; con la migrazione 2 viene rifiutato con
     `authenticated` i permessi di modifica che Supabase può dare in automatico.
   - `20261103140000_prenotazioni.sql` – prenotazioni, blocchi e le due funzioni.
   - `20261107120000_clienti.sql` – profili dei clienti e trigger di registrazione.
+  - `20261107130000_listino_per_clienti.sql` – le regole del listino valgono anche
+    per chi ha fatto l'accesso (prima vedeva un listino vuoto).
 - `supabase/seed.sql` – i dati iniziali del listino (2026-11-03). Serve solo per
   un database nuovo: i prezzi aggiornati stanno nel database, non qui.
 
