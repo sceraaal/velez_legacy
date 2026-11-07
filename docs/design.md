@@ -98,8 +98,9 @@ si legge male sul telefono.
 - **Conferma** (`BookingConfirmation.jsx`): titolo "Appuntamento confermato" in
   Cinzel Decorative, giorno e ora in oro chiaro, servizi, prezzo, nota sul
   pagamento in salone e bottone secondario (solo bordo) "Nuova prenotazione".
-- **Area clienti** (`src/components/account/`): sezione "Area clienti" con la
-  stessa cornice della prenotazione. Linguette Accedi / Registrati (attiva = fondo
+- **Area clienti** (`src/components/account/`): pagina a sé, `/area-clienti`, con
+  in alto "← Torna al sito" e il logo piccolo (56 px, rotondo) che riporta al
+  sito; sotto il titolo "Area clienti" e la stessa cornice della prenotazione. Linguette Accedi / Registrati (attiva = fondo
   oro, testo nero), stesse caselle ed errori del modulo dati cliente, link
   testuale in corsivo oro chiaro ("Ha dimenticato la password?"), messaggi di
   conferma su fondo `--color-surface` con filetto oro a sinistra, bottone "Esci"

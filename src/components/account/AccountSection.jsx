@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useState } from 'react'
 import BaroqueFrame from '../BaroqueFrame.jsx'
 import AccountPanel from './AccountPanel.jsx'
 import ForgotPasswordForm from './ForgotPasswordForm.jsx'
@@ -15,8 +15,8 @@ import './Account.css'
 // 3. non ha fatto il login                      → Accedi / Registrati
 //    (con "password dimenticata" dentro Accedi)
 //
-// "auth" arriva da App, che lo prende da useAuth: così anche il link in alto
-// alla pagina sa se il cliente è dentro.
+// Sta nella pagina /area-clienti (AccountPage). "auth" arriva da App, che lo
+// prende da useAuth: così anche il link "Accedi" del sito sa se il cliente è dentro.
 
 function AccountSection({ auth }) {
   const { session, loading, recovering, endRecovery } = auth
@@ -27,12 +27,6 @@ function AccountSection({ auth }) {
   // Messaggio per chi è già dentro (es. "password salvata"): separato da
   // notice, così il messaggio della registrazione non resta dopo l'accesso
   const [panelNotice, setPanelNotice] = useState(null)
-  const sectionRef = useRef(null)
-
-  // Chi arriva dal link dell'email per la nuova password viene portato qui
-  useEffect(() => {
-    if (recovering) sectionRef.current?.scrollIntoView()
-  }, [recovering])
 
   function switchTo(nextMode) {
     setMode(nextMode)
@@ -113,7 +107,7 @@ function AccountSection({ auth }) {
   }
 
   return (
-    <section id="account" className="booking" ref={sectionRef} aria-labelledby="account-titolo">
+    <section id="account" className="booking" aria-labelledby="account-titolo">
       <h2 id="account-titolo" className="booking__title">
         Area clienti
       </h2>

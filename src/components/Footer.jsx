@@ -2,7 +2,7 @@ import Ornament from './Ornament.jsx'
 import './Footer.css'
 
 // Il fondo pagina: nome, indirizzo del salone e orari.
-// Il link "Accedi o registrati" arriverà con la Fase 1.
+// Il link all'area clienti sta in alto (AccountLink).
 
 function Footer() {
   return (

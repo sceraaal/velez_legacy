@@ -15,13 +15,19 @@ Le voci più recenti stanno in alto.
   registrazione; l'email resta solo nell'account di Supabase Auth.
 - Per ora il cliente non può modificare i suoi dati dal sito: si aggiungerà con
   una migrazione nuova e gli stessi controlli della registrazione.
-- Nessuna libreria per le pagine: l'area clienti è una sezione della stessa pagina.
+- L'area clienti è una **pagina a sé** (`/area-clienti`), scelta da Simona dopo
+  aver provato la prima versione in fondo alla pagina principale (scomoda da
+  raggiungere). Il passaggio tra le pagine lo fa un piccolo router scritto da noi
+  (`src/lib/router.js` e `src/components/Link.jsx`), senza librerie; se le pagine
+  diventano tante si valuta React Router.
 
 **Perché:** email e password è il metodo che i clienti conoscono già. La
 conferma dell'email impedisce di registrarsi con l'indirizzo di un altro. Il
 trigger fa sì che non possa esistere un cliente senza i suoi dati.
 
-**Scartate:** codice di 6 cifre via email (consigliato da Claude perché senza
+**Scartate:** per l'area clienti, un pannello che si apre sopra la pagina
+(stretto per gli appuntamenti) e la sezione spostata sotto il logo (pagina
+lunga). Per il login, codice di 6 cifre via email (consigliato da Claude perché senza
 password) e link via email (su iPhone si apre fuori dall'icona salvata); login
 con Google o Apple (più configurazione; Apple richiede un account a pagamento).
 
