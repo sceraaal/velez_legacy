@@ -25,7 +25,7 @@ function MonthCalendar({ first, last, isAvailable, selectedDay, onSelect }) {
   const months = groupByMonth(first, last)
 
   return (
-    <fieldset className="booking-step">
+    <fieldset className="booking-step" id="prenota-giorno">
       <legend className="booking-step__title">Il giorno</legend>
 
       {[...months].map(([key, days]) => {

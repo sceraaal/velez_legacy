@@ -52,9 +52,12 @@ livello superiore e curato.
 
 ## Lato cliente
 
-- Registrazione con nome, cognome, telefono, email e accettazione dell'informativa
-  privacy. Nella prova (passo 4) non c'è ancora l'account: il cliente scrive
-  questi dati nel modulo di ogni prenotazione.
+- Registrazione con nome, cognome, telefono, email, password e accettazione
+  dell'informativa privacy. Si accede con **email e password** (almeno 8
+  caratteri). Prima del primo accesso il cliente conferma l'email con il link
+  ricevuto. Chi dimentica la password ne sceglie una nuova da un link via email.
+- Finché il passo 2 della Fase 1 non è fatto, la prenotazione chiede ancora i dati
+  nel modulo, come nella prova.
 - Telefono: da 9 a 15 cifre, con un "+" facoltativo all'inizio e spazi ammessi.
   Email: deve avere la forma nome@dominio.it.
 - Prenotazione al massimo 30 giorni prima e al minimo 1 ora prima, se ci sono slot

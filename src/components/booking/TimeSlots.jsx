@@ -4,7 +4,7 @@ import { formatTime } from '../../lib/availability.js'
 
 function TimeSlots({ slots, selectedSlot, onSelect }) {
   return (
-    <fieldset className="booking-step">
+    <fieldset className="booking-step" id="prenota-orario">
       <legend className="booking-step__title">L'orario</legend>
       {slots.length === 0 ? (
         <p className="booking__message">Nessun orario libero in questo giorno.</p>

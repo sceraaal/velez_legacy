@@ -89,7 +89,9 @@ si legge male sul telefono.
   il titolo tra due filetti. Servizi con casella oro (`accent-color`); calendario
   a 7 colonne, giorni senza orari liberi spenti; orari come bottoni con bordo oro
   scuro. Scelta attiva = fondo oro e testo nero. Riepilogo fisso in fondo allo
-  schermo con fondo `--color-surface`.
+  schermo con fondo `--color-surface`: è un bottone, con sotto il totale la
+  scritta oro del passo successivo ("Scelga il giorno ›", poi "Scelga l'orario ›",
+  poi "Inserisca i Suoi dati ›"); toccandolo la pagina scorre fin lì.
 - **Modulo dati cliente** (`CustomerForm.jsx`): passo "I Suoi dati". Etichette in
   Cinzel maiuscolo grigio caldo, caselle con fondo nero e bordo oro scuro, alte
   48 px, testo a 17 px (sotto i 16 px l'iPhone ingrandisce la pagina). Errori in
@@ -98,6 +100,14 @@ si legge male sul telefono.
 - **Conferma** (`BookingConfirmation.jsx`): titolo "Appuntamento confermato" in
   Cinzel Decorative, giorno e ora in oro chiaro, servizi, prezzo, nota sul
   pagamento in salone e bottone secondario (solo bordo) "Nuova prenotazione".
+- **Area clienti** (`src/components/account/`): pagina a sé, `/area-clienti`, con
+  in alto "← Torna al sito" e il logo piccolo (56 px, rotondo) che riporta al
+  sito; sotto il titolo "Area clienti" e la stessa cornice della prenotazione. Linguette Accedi / Registrati (attiva = fondo
+  oro, testo nero), stesse caselle ed errori del modulo dati cliente, link
+  testuale in corsivo oro chiaro ("Ha dimenticato la password?"), messaggi di
+  conferma su fondo `--color-surface` con filetto oro a sinistra, bottone "Esci"
+  secondario (solo bordo). In alto a destra della pagina il link "Accedi" / "Il
+  mio account" in Cinzel maiuscolo oro chiaro.
 - **Servizio tecnico**: prezzo "da €20" e la nota in corsivo "Prezzo finale dopo
   consulenza in salone".
 
