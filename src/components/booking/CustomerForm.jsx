@@ -43,7 +43,7 @@ function CustomerForm({ hidden, sending, onSubmit }) {
 
   // noValidate: usiamo i nostri controlli e messaggi in italiano, non quelli del browser
   return (
-    <form className="customer-form" hidden={hidden} onSubmit={handleSubmit} noValidate>
+    <form className="customer-form" id="prenota-dati" hidden={hidden} onSubmit={handleSubmit} noValidate>
       <fieldset className="booking-step" disabled={sending}>
         <legend className="booking-step__title">I Suoi dati</legend>
 

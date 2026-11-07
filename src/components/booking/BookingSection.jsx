@@ -99,6 +99,22 @@ function BookingSection() {
     setSubmitError(null)
   }
 
+  // La barra del riepilogo in fondo allo schermo è un bottone: porta al
+  // primo passo ancora da fare (giorno, poi orario, poi dati).
+  // Gli id stanno in MonthCalendar, TimeSlots e CustomerForm.
+  // scrollIntoView segue lo "scroll-behavior: smooth" di index.css, che è
+  // spento per chi ha chiesto meno animazioni nelle impostazioni del telefono.
+  const nextStep =
+    selectedDay === null
+      ? { id: 'prenota-giorno', label: 'Scelga il giorno' }
+      : selectedSlot === null
+        ? { id: 'prenota-orario', label: "Scelga l'orario" }
+        : { id: 'prenota-dati', label: 'Inserisca i Suoi dati' }
+
+  function goToNextStep() {
+    document.getElementById(nextStep.id)?.scrollIntoView({ block: 'start' })
+  }
+
   // Il cliente ha premuto "Conferma" e i suoi dati sono a posto.
   // async/await: aspettiamo la risposta del database prima di andare avanti.
   async function submitBooking(customer) {
@@ -201,16 +217,21 @@ function BookingSection() {
         )}
       </BaroqueFrame>
 
-      {/* Riepilogo fisso in fondo allo schermo, appena c'è almeno un servizio */}
+      {/* Riepilogo fisso in fondo allo schermo, appena c'è almeno un servizio.
+          Toccandolo si va al passo successivo. */}
       {chosen.length > 0 && !confirmed && (
-        <div className="booking-summary" aria-live="polite">
-          <p className="booking-summary__line">
-            {selectedDay && selectedSlot !== null
-              ? formatDateTime(fromRome(selectedDay, selectedSlot))
-              : `${chosen.length} ${chosen.length === 1 ? 'servizio' : 'servizi'} · ${formatDuration(totalMinutes)}`}
-          </p>
-          <p className="booking-summary__price">{formatPrice(totalPrice, hasFromPrice)}</p>
-        </div>
+        <button type="button" className="booking-summary" onClick={goToNextStep}>
+          {/* aria-live: il lettore di schermo legge il totale quando cambia */}
+          <span className="booking-summary__row" aria-live="polite">
+            <span className="booking-summary__line">
+              {selectedDay && selectedSlot !== null
+                ? formatDateTime(fromRome(selectedDay, selectedSlot))
+                : `${chosen.length} ${chosen.length === 1 ? 'servizio' : 'servizi'} · ${formatDuration(totalMinutes)}`}
+            </span>
+            <span className="booking-summary__price">{formatPrice(totalPrice, hasFromPrice)}</span>
+          </span>
+          <span className="booking-summary__action">{nextStep.label} ›</span>
+        </button>
       )}
     </section>
   )

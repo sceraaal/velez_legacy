@@ -89,7 +89,9 @@ si legge male sul telefono.
   il titolo tra due filetti. Servizi con casella oro (`accent-color`); calendario
   a 7 colonne, giorni senza orari liberi spenti; orari come bottoni con bordo oro
   scuro. Scelta attiva = fondo oro e testo nero. Riepilogo fisso in fondo allo
-  schermo con fondo `--color-surface`.
+  schermo con fondo `--color-surface`: è un bottone, con sotto il totale la
+  scritta oro del passo successivo ("Scelga il giorno ›", poi "Scelga l'orario ›",
+  poi "Inserisca i Suoi dati ›"); toccandolo la pagina scorre fin lì.
 - **Modulo dati cliente** (`CustomerForm.jsx`): passo "I Suoi dati". Etichette in
   Cinzel maiuscolo grigio caldo, caselle con fondo nero e bordo oro scuro, alte
   48 px, testo a 17 px (sotto i 16 px l'iPhone ingrandisce la pagina). Errori in
