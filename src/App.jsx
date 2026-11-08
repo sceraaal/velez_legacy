@@ -34,7 +34,7 @@ function App() {
           <main>
             <Hero />
             <PriceList />
-            <BookingSection />
+            <BookingSection auth={auth} />
           </main>
         </>
       )}

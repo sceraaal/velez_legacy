@@ -1,5 +1,8 @@
 import { useEffect, useState } from 'react'
 import { fetchMyProfile, signOut } from '../../lib/auth.js'
+import { loadPendingBooking } from '../../lib/pendingBooking.js'
+import { ROUTES } from '../../lib/router.js'
+import Link from '../Link.jsx'
 
 // "Il Suo account": i dati di chi ha fatto il login e il bottone Esci.
 // Nel passo 3 qui sotto arriveranno "I miei appuntamenti".
@@ -9,6 +12,8 @@ function AccountPanel({ user, notice }) {
   const [profile, setProfile] = useState(undefined)
   const [error, setError] = useState(null)
   const [leaving, setLeaving] = useState(false)
+  // C'è una prenotazione lasciata a metà? (letta una volta, all'apertura)
+  const [hasPending] = useState(() => loadPendingBooking() !== null)
 
   // Legge il profilo ogni volta che cambia l'utente. "ignore" evita di
   // mostrare la risposta di una richiesta vecchia se l'utente è cambiato.
@@ -44,6 +49,12 @@ function AccountPanel({ user, notice }) {
         <p className="account__notice" role="status">
           {notice}
         </p>
+      )}
+
+      {profile && hasPending && (
+        <Link className="customer-form__submit account__return" to={`${ROUTES.home}#prenota-conferma`}>
+          Torni alla Sua prenotazione
+        </Link>
       )}
 
       {profile === undefined && !error && <p className="booking__message">Caricamento…</p>}

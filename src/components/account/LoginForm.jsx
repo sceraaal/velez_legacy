@@ -3,10 +3,11 @@ import { signIn } from '../../lib/auth.js'
 import { validateEmail } from '../../lib/customer.js'
 import TextField from './TextField.jsx'
 
-// Accesso con email e password. Se va bene, non serve fare altro: useAuth
-// riceve la nuova sessione e AccountSection mostra "Il Suo account".
+// Accesso con email e password. Se va bene, useAuth riceve la nuova sessione
+// e AccountSection mostra "Il Suo account"; onSignedIn avvisa AccountSection,
+// che riporta alla prenotazione chi la stava facendo.
 
-function LoginForm({ onForgotPassword }) {
+function LoginForm({ onForgotPassword, onSignedIn }) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [errors, setErrors] = useState({})
@@ -24,6 +25,7 @@ function LoginForm({ onForgotPassword }) {
     setSending(true)
     try {
       await signIn({ email, password })
+      onSignedIn()
     } catch (error) {
       setErrors({ form: error.message })
       setSending(false)

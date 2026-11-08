@@ -56,16 +56,20 @@ livello superiore e curato.
   dell'informativa privacy. Si accede con **email e password** (almeno 8
   caratteri). Prima del primo accesso il cliente conferma l'email con il link
   ricevuto. Chi dimentica la password ne sceglie una nuova da un link via email.
-- Finché il passo 2 della Fase 1 non è fatto, la prenotazione chiede ancora i dati
-  nel modulo, come nella prova.
+- **Per prenotare serve l'account.** Il cliente sceglie servizi, giorno e orario
+  anche senza accesso; al momento di confermare vede "Per prenotare acceda al Suo
+  account o si registri". Le scelte restano salvate nel browser per un'ora: dopo
+  l'accesso (o dopo aver confermato l'email) torna alla prenotazione e deve solo
+  premere Conferma.
 - Telefono: da 9 a 15 cifre, con un "+" facoltativo all'inizio e spazi ammessi.
   Email: deve avere la forma nome@dominio.it.
 - Prenotazione al massimo 30 giorni prima e al minimo 1 ora prima, se ci sono slot
   liberi.
 - Conferma automatica, senza approvazione di Nicolas. Dopo l'invio il cliente vede
   la schermata "Appuntamento confermato" con giorno, ora, servizi e prezzo.
-- Se l'orario viene preso da un altro cliente mentre compila il modulo, vede un
-  messaggio, gli orari si aggiornano e ne sceglie un altro senza riscrivere i dati.
+- Se l'orario viene preso da un altro cliente prima della conferma (anche mentre
+  sta facendo l'accesso), vede un messaggio o l'orario non risulta più scelto,
+  gli orari si aggiornano e ne sceglie un altro.
 - Disdetta o spostamento possibili fino a 1 ora prima dell'appuntamento.
 - Promemoria SMS 1 giorno prima e 2 ore prima (Fase 2; solo promemoria, nessuna
   risposta richiesta).

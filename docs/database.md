@@ -26,20 +26,23 @@ Il database è un progetto **Supabase** (PostgreSQL) nella regione **Central EU
 | `position` | numero | ordine dentro la sezione |
 | `is_active` | sì/no | `false` = nascosto dal sito, ma non cancellato |
 
-### `bookings` – le prenotazioni (passo 4)
+### `bookings` – le prenotazioni (passo 4, cliente dalla Fase 1 passo 2)
 
 | Colonna | Tipo | Note |
 | --- | --- | --- |
 | `id` | codice unico (uuid) | generato dal database |
 | `starts_at` / `ends_at` | data e ora | fine arrotondata alla mezz'ora successiva |
-| `first_name`, `last_name` | testo | |
-| `phone`, `email` | testo | controllati da `create_booking` |
-| `privacy_accepted_at` | data e ora | prova del consenso all'informativa |
+| `customer_id` | uuid → `customers.id`, facoltativo | il cliente con l'account che ha prenotato |
+| `first_name`, `last_name` | testo, facoltativi | solo prenotazioni della prova e, dal passo 5, quelle inserite a mano |
+| `phone`, `email` | testo, facoltativi | come sopra |
+| `privacy_accepted_at` | data e ora, facoltativo | come sopra |
 | `status` | `confirmed` o `cancelled` | una disdetta libera l'orario |
 | `created_at` | data e ora | |
 
 Vincolo `bookings_no_overlap`: due prenotazioni confermate non possono
 sovrapporsi nel tempo, nemmeno se arrivano nello stesso istante.
+Vincolo `bookings_has_customer`: ogni prenotazione ha `customer_id` oppure nome
+e cognome. Per i clienti con l'account i dati si leggono da `customers`.
 
 ### `booking_services` – i servizi di ogni prenotazione
 
@@ -71,15 +74,18 @@ che il sito manda alla registrazione. Un account creato a mano dal pannello
 - `get_busy_periods(da, a)` – restituisce solo inizio e fine dei periodi occupati
   (prenotazioni confermate e blocchi), massimo 40 giorni per richiesta. Nessun dato
   personale.
-- `create_booking(servizi, inizio, nome, cognome, telefono, email, privacy)` –
-  controlla le regole di `docs/regole-progetto.md` (martedì–sabato, inizio ogni 30
-  minuti, 8:00–20:00 servizio compreso, almeno 1 ora e al massimo 30 giorni prima,
-  niente sovrapposizioni o blocchi, dati validi, informativa accettata), calcola
-  durata e prezzo dal database e salva. Gli errori sono messaggi in italiano con il
-  Lei, pronti da mostrare.
+- `create_booking(servizi, inizio)` (migrazione 6) – prende il cliente dal login
+  (`auth.uid()`): serve l'accesso e un profilo in `customers`. Controlla le regole
+  di `docs/regole-progetto.md` (martedì–sabato, inizio ogni 30 minuti, 8:00–20:00
+  servizio compreso, almeno 1 ora e al massimo 30 giorni prima, niente
+  sovrapposizioni o blocchi), calcola durata e prezzo dal database e salva.
+  Restituisce anche il nome del cliente per la schermata di conferma. Gli errori
+  sono messaggi in italiano con il Lei, pronti da mostrare. La può chiamare solo
+  il ruolo `authenticated`. (La versione della migrazione 3, con nome, telefono
+  ed email, è stata tolta.)
 
 Entrambe sono `security definer`: lavorano con i permessi di chi le ha create,
-così il visitatore può prenotare senza poter leggere la tabella `bookings`.
+così si può prenotare senza poter leggere la tabella `bookings`.
 
 ## Sicurezza (RLS)
 
@@ -150,6 +156,8 @@ modifica "riesce" ma cambia zero righe; con la migrazione 2 viene rifiutato con
   - `20261107120000_clienti.sql` – profili dei clienti e trigger di registrazione.
   - `20261107130000_listino_per_clienti.sql` – le regole del listino valgono anche
     per chi ha fatto l'accesso (prima vedeva un listino vuoto).
+  - `20261108120000_prenotazioni_clienti.sql` – si prenota solo con l'account:
+    `customer_id` e nuova `create_booking`.
 - `supabase/seed.sql` – i dati iniziali del listino (2026-11-03). Serve solo per
   un database nuovo: i prezzi aggiornati stanno nel database, non qui.
 

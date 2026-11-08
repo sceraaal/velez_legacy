@@ -1,4 +1,6 @@
 import { useState } from 'react'
+import { loadPendingBooking } from '../../lib/pendingBooking.js'
+import { navigate, ROUTES } from '../../lib/router.js'
 import BaroqueFrame from '../BaroqueFrame.jsx'
 import AccountPanel from './AccountPanel.jsx'
 import ForgotPasswordForm from './ForgotPasswordForm.jsx'
@@ -20,13 +22,21 @@ import './Account.css'
 
 function AccountSection({ auth }) {
   const { session, loading, recovering, endRecovery } = auth
-  // Quale modulo mostrare a chi non è dentro: 'login', 'register' o 'forgot'
-  const [mode, setMode] = useState('login')
+  // Quale modulo mostrare a chi non è dentro: 'login', 'register' o 'forgot'.
+  // Si parte da Registrati se l'indirizzo finisce con #registrati (bottone
+  // Registrati della prenotazione).
+  const [mode, setMode] = useState(() => (window.location.hash === '#registrati' ? 'register' : 'login'))
   // Messaggio di conferma da mostrare sopra il modulo (es. "controlli l'email")
   const [notice, setNotice] = useState(null)
   // Messaggio per chi è già dentro (es. "password salvata"): separato da
   // notice, così il messaggio della registrazione non resta dopo l'accesso
   const [panelNotice, setPanelNotice] = useState(null)
+
+  // Dopo l'accesso: se il cliente stava prenotando, lo riportiamo al passo
+  // Conferma della prenotazione, con le sue scelte (vedi pendingBooking.js)
+  function returnToBooking() {
+    if (loadPendingBooking()) navigate(`${ROUTES.home}#prenota-conferma`)
+  }
 
   function switchTo(nextMode) {
     setMode(nextMode)
@@ -78,14 +88,18 @@ function AccountSection({ auth }) {
           </p>
         )}
 
-        {mode === 'login' && <LoginForm onForgotPassword={() => switchTo('forgot')} />}
+        {mode === 'login' && (
+          <LoginForm onForgotPassword={() => switchTo('forgot')} onSignedIn={returnToBooking} />
+        )}
 
         {mode === 'register' && (
           <RegisterForm
             onDone={(email) => {
               setMode('login')
               setNotice(
-                `Le abbiamo inviato un'email a ${email}. Tocchi il link per confermare l'indirizzo: poi potrà accedere.`,
+                loadPendingBooking()
+                  ? `Le abbiamo inviato un'email a ${email}. Tocchi il link per confermare l'indirizzo: tornerà alla Sua prenotazione, con le scelte già fatte.`
+                  : `Le abbiamo inviato un'email a ${email}. Tocchi il link per confermare l'indirizzo: poi potrà accedere.`,
               )
             }}
           />

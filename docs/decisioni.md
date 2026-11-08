@@ -6,6 +6,28 @@ Le voci più recenti stanno in alto.
 
 ---
 
+## 2026-11-08 – Si prenota solo con l'account (Fase 1, passo 2)
+
+**Decisione**
+- Il modulo "I Suoi dati" è sparito: al suo posto il passo Conferma chiede di
+  accedere o registrarsi (proposta di Simona). Chi è dentro conferma con un tocco.
+- Le scelte (servizi, giorno, orario) si salvano nel browser (`localStorage`) per
+  un'ora quando il cliente preme Accedi o Registrati, e si ritrovano dopo
+  l'accesso. Solo codici e orari, nessun dato personale.
+- `create_booking` prende il cliente dal login; la prenotazione salva solo
+  `customer_id`. Le colonne con nome e telefono restano, facoltative, per le
+  prenotazioni inserite a mano da Nicolas (passo 5).
+
+**Perché:** un cliente non riscrive i dati a ogni prenotazione, e nessuno può
+prenotare a nome di un altro. I dati personali stanno in un posto solo.
+
+**Da sapere:** finché le email passano dal servizio gratuito di Supabase (solo
+agli indirizzi del team), chi prova il link online senza essere del team non può
+registrarsi da solo: il suo account si crea dal pannello (vedi
+`docs/database.md`, "Creare un cliente di prova senza email").
+
+---
+
 ## 2026-11-07 – Login dei clienti con email e password (Fase 1, passo 1)
 
 **Decisione**
