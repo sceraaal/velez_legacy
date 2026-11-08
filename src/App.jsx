@@ -4,6 +4,7 @@ import BookingSection from './components/booking/BookingSection.jsx'
 import AccountLink from './components/account/AccountLink.jsx'
 import AccountPage from './components/account/AccountPage.jsx'
 import Footer from './components/Footer.jsx'
+import TestBanner from './components/TestBanner.jsx'
 import { useAuth } from './lib/useAuth.js'
 import { ROUTES, usePath } from './lib/router.js'
 
@@ -23,6 +24,8 @@ function App() {
 
   return (
     <>
+      {/* Fascia "Versione di prova": compare su tutte e due le pagine */}
+      <TestBanner />
       {showAccount ? (
         <AccountPage auth={auth} />
       ) : (

@@ -163,7 +163,8 @@ un nuovo file in `supabase/migrations/`, non modifichiamo quelli già lanciati.
   `src/lib/customer.js`).
 - Authentication → URL Configuration: **Site URL** `http://localhost:5173` finché
   si prova in locale; in **Redirect URLs** va aggiunto ogni indirizzo dove gira il
-  sito (in locale `http://localhost:5173`, poi quello di Cloudflare Pages). È
+  sito (in locale `http://localhost:5173`, per il link di prova
+  `https://velez-legacy.pages.dev`). È
   dove i link delle email riportano il cliente.
 - Le email di Supabase incluse nel piano Free partono solo verso gli indirizzi del
   team del progetto e poche all'ora: bastano per le prove. Per i clienti veri

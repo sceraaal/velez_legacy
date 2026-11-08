@@ -36,6 +36,27 @@ aprono nel browser, non nell'icona salvata sulla schermata home.
 
 ---
 
+## 2026-11-03 – Bozza online per Nicolas, con prenotazioni vere
+
+**Decisione**
+- La bozza va online su Cloudflare Pages (gratuito) con un link `.pages.dev`,
+  così Nicolas la prova dal telefono.
+- Le prenotazioni si salvano davvero nel database. Una fascia in alto dice
+  "Versione di prova" e chiede di usare dati di fantasia (variabile
+  `VITE_TEST_VERSION`).
+- Il link non compare su Google (`public/_headers`).
+
+**Perché:** Simona ha preferito che Nicolas veda il percorso completo, compreso
+l'orario che diventa occupato. Cloudflare Pages era già lo strumento scelto.
+
+**Attenzione:** manca ancora l'informativa privacy. Il link va dato solo a
+Nicolas, e le prenotazioni di prova vanno cancellate prima del lancio.
+
+**Scartate:** modalità prova senza salvataggio (più sicura per i dati, ma meno
+realistica); prova solo in locale (Nicolas non potrebbe provarla da solo).
+
+---
+
 ## 2026-11-03 – Le prenotazioni della prova (passo 4)
 
 **Decisione**
