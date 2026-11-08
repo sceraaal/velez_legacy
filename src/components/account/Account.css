@@ -1,0 +1,164 @@
+/* --- Area clienti (Fase 1, passo 1) ---
+   Caselle, etichette, errori e bottone principale vengono da
+   ../booking/Booking.css (classi customer-form__*): qui solo le parti nuove. */
+
+/* Linguette Accedi / Registrati: due bottoni affiancati con bordo oro scuro.
+   Quella attiva (aria-pressed="true") ha il fondo oro, come gli orari scelti. */
+.account__tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin-bottom: var(--space-4);
+  border: 1px solid var(--color-gold-dark);
+  border-radius: var(--radius);
+}
+
+.account__tab {
+  min-height: 48px;
+  border: none;
+  background: none;
+  color: var(--color-ivory);
+  font-family: var(--font-display);
+  font-size: 0.875rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.account__tab[aria-pressed='true'] {
+  background-color: var(--color-gold);
+  color: var(--color-black);
+  font-weight: 600;
+}
+
+/* Messaggio di conferma (es. "Le abbiamo inviato un'email") */
+.account__notice {
+  margin: 0 0 var(--space-4);
+  padding: var(--space-3);
+  border-left: 2px solid var(--color-gold);
+  background-color: var(--color-surface);
+  font-style: italic;
+}
+
+.account__text {
+  margin: 0 0 var(--space-3);
+}
+
+/* Nota sotto una casella (es. "Almeno 8 caratteri") */
+.account__hint {
+  margin: var(--space-1) 0 0;
+  font-size: 0.9375rem;
+  font-style: italic;
+  color: var(--color-muted);
+}
+
+/* Link testuale ("Ha dimenticato la password?"): è un <button> perché non
+   porta a un'altra pagina, cambia solo il modulo mostrato */
+.account__link {
+  display: block;
+  min-height: 44px;
+  margin: var(--space-2) auto 0;
+  padding: 0 var(--space-2);
+  border: none;
+  background: none;
+  color: var(--color-gold-light);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-style: italic;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+/* I dati del cliente: etichetta piccola sopra, valore sotto */
+.account__details {
+  margin: 0 0 var(--space-4);
+}
+
+.account__details dt {
+  margin-top: var(--space-3);
+  font-family: var(--font-display);
+  font-size: 0.8125rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+.account__details dt:first-child {
+  margin-top: 0;
+}
+
+.account__details dd {
+  margin: 0;
+  font-size: 1.125rem;
+  /* Le email lunghe vanno a capo invece di uscire dalla cornice */
+  overflow-wrap: anywhere;
+}
+
+/* Bottone secondario (solo bordo), come "Nuova prenotazione" */
+.account__secondary {
+  display: block;
+  min-height: 44px;
+  margin: 0 auto;
+  padding: 0 var(--space-5);
+  border: 1px solid var(--color-gold-dark);
+  border-radius: var(--radius);
+  background: none;
+  color: var(--color-ivory);
+  font-family: var(--font-display);
+  font-size: 0.875rem;
+  letter-spacing: 0.15em;
+  cursor: pointer;
+}
+
+.account__secondary:hover:not(:disabled) {
+  border-color: var(--color-gold);
+}
+
+/* --- Link in alto alla pagina --- */
+
+.account-link {
+  display: flex;
+  justify-content: flex-end;
+  max-width: 34rem;
+  margin: 0 auto;
+  padding: var(--space-2) var(--space-4) 0;
+}
+
+.account-link__anchor {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-family: var(--font-display);
+  font-size: 0.8125rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--color-gold-light);
+  text-shadow: var(--shadow-text);
+  text-decoration: none;
+}
+
+.account-link__anchor:hover {
+  text-decoration: underline;
+}
+
+/* --- Pagina /area-clienti: barra in alto --- */
+
+.account-page__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 34rem;
+  margin: 0 auto;
+  padding: var(--space-2) var(--space-4) 0;
+}
+
+.account-page__logo-link {
+  line-height: 0;
+}
+
+/* Il logo piccolo, rotondo come in testata */
+.account-page__logo {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+}
