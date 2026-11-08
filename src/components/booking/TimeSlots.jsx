@@ -2,9 +2,9 @@ import { formatTime } from '../../lib/availability.js'
 
 // Passo 3: gli orari liberi del giorno scelto, come bottoni.
 
-function TimeSlots({ slots, selectedSlot, onSelect }) {
+function TimeSlots({ slots, selectedSlot, onSelect, id = 'prenota-orario' }) {
   return (
-    <fieldset className="booking-step" id="prenota-orario">
+    <fieldset className="booking-step" id={id}>
       <legend className="booking-step__title">L'orario</legend>
       {slots.length === 0 ? (
         <p className="booking__message">Nessun orario libero in questo giorno.</p>

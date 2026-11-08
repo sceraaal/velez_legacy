@@ -1,5 +1,7 @@
 import { formatDateTime } from '../../lib/availability.js'
 import { formatPrice } from '../../utils/format.js'
+import { ROUTES } from '../../lib/router.js'
+import Link from '../Link.jsx'
 
 // La schermata finale: la prenotazione è salvata.
 // Mostra solo quello che il database ha restituito più i nomi dei servizi
@@ -27,6 +29,12 @@ function BookingConfirmation({ booking, services, firstName, onNewBooking }) {
         Il pagamento si effettua in salone.
         <br />
         Via Mario Alfani 84, Pontecagnano Faiano (SA)
+      </p>
+
+      <p className="booking-confirmation__note">
+        <Link className="booking-confirmation__link" to={ROUTES.account}>
+          Vedi i Suoi appuntamenti
+        </Link>
       </p>
 
       <button type="button" className="booking-confirmation__again" onClick={onNewBooking}>

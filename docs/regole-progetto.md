@@ -70,7 +70,12 @@ livello superiore e curato.
 - Se l'orario viene preso da un altro cliente prima della conferma (anche mentre
   sta facendo l'accesso), vede un messaggio o l'orario non risulta più scelto,
   gli orari si aggiornano e ne sceglie un altro.
-- Disdetta o spostamento possibili fino a 1 ora prima dell'appuntamento.
+- Disdetta o spostamento possibili fino a 1 ora prima dell'appuntamento, dalla
+  pagina Area clienti ("I miei appuntamenti"). Lo spostamento tiene gli stessi
+  servizi; il vecchio orario si libera solo se il nuovo è preso. Dopo il limite
+  di un'ora il cliente legge "per modifiche contatti il salone".
+- In "I miei appuntamenti" il cliente vede i prossimi appuntamenti e gli ultimi
+  5 passati (quelli disdetti non compaiono).
 - Promemoria SMS 1 giorno prima e 2 ore prima (Fase 2; solo promemoria, nessuna
   risposta richiesta).
 - Pagamento solo in salone.

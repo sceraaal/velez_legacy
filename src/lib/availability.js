@@ -1,5 +1,6 @@
 // Calcolo degli orari liberi. Le regole sono quelle di docs/regole-progetto.md
-// e sono le STESSE che controlla la funzione create_booking nel database:
+// e sono le STESSE che controlla la funzione check_booking_slot nel database
+// (migrazione 7):
 // se ne cambia una, va cambiata in tutti e due i posti.
 //
 // Qui non c'è nulla di React: solo funzioni che ricevono dati e restituiscono
