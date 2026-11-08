@@ -67,7 +67,9 @@ della prenotazione** (se un prezzo cambia, le prenotazioni vecchie restano giust
 Email e password stanno solo negli account di Supabase Auth (`auth.users`, la
 password cifrata). Il profilo lo crea il trigger `on_auth_user_created` con la
 funzione `create_customer_profile`, leggendo nome, cognome, telefono e consenso
-che il sito manda alla registrazione. Un account creato a mano dal pannello
+che il sito manda alla registrazione. Il trigger `customers_capitalize_name`
+(migrazione 8) mette la maiuscola all'iniziale di ogni parola di nome e cognome
+se manca ("simona d'angelo" → "Simona D'Angelo"), senza toccare il resto. Un account creato a mano dal pannello
 (senza questi dati) non ha profilo: servirà per l'account di Nicolas.
 
 ## Funzioni
@@ -176,6 +178,8 @@ modifica "riesce" ma cambia zero righe; con la migrazione 2 viene rifiutato con
     `customer_id` e nuova `create_booking`.
   - `20261108130000_miei_appuntamenti.sql` – regole sugli orari in comune,
     `get_my_bookings`, `cancel_booking`, `reschedule_booking`, `cancelled_at`.
+  - `20261108140000_nomi_maiuscola.sql` – iniziale maiuscola automatica per nome
+    e cognome dei clienti, anche quelli già salvati.
 - `supabase/seed.sql` – i dati iniziali del listino (2026-11-03). Serve solo per
   un database nuovo: i prezzi aggiornati stanno nel database, non qui.
 
