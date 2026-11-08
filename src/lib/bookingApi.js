@@ -64,3 +64,46 @@ export async function createBooking({ serviceIds, startsAt }) {
     firstName: data.first_name,
   }
 }
+
+// --- I miei appuntamenti (migrazione 7) ---------------------------------------
+
+// Trasforma un errore del database in un BookingError con un messaggio adatto
+// al cliente (vedi createBooking qui sopra per la spiegazione di P0001).
+function toBookingError(error, fallback) {
+  if (error.code === 'P0001') {
+    return new BookingError(error.message, { slotTaken: error.message.includes('orario non è') })
+  }
+  console.error(fallback, error)
+  return new BookingError(fallback)
+}
+
+// Le prenotazioni confermate del cliente che ha fatto l'accesso, dalla più
+// vecchia alla più nuova. Il database restituisce solo le sue.
+export async function fetchMyBookings() {
+  const { data, error } = await supabase.rpc('get_my_bookings')
+  if (error) throw toBookingError(error, 'Non siamo riusciti a caricare i Suoi appuntamenti.')
+  return data.map((row) => ({
+    id: row.id,
+    startsAt: new Date(row.starts_at),
+    endsAt: new Date(row.ends_at),
+    serviceNames: row.service_names,
+    totalPrice: Number(row.total_price),
+    fromPrice: row.from_price,
+    totalMinutes: row.total_minutes,
+  }))
+}
+
+// Disdice un appuntamento (fino a 1 ora prima: lo controlla il database)
+export async function cancelBooking(bookingId) {
+  const { error } = await supabase.rpc('cancel_booking', { p_booking_id: bookingId })
+  if (error) throw toBookingError(error, 'Non siamo riusciti a disdire. La preghiamo di riprovare.')
+}
+
+// Sposta un appuntamento a un nuovo orario, con gli stessi servizi
+export async function rescheduleBooking(bookingId, startsAt) {
+  const { error } = await supabase.rpc('reschedule_booking', {
+    p_booking_id: bookingId,
+    p_starts_at: startsAt.toISOString(),
+  })
+  if (error) throw toBookingError(error, 'Non siamo riusciti a spostare. La preghiamo di riprovare.')
+}

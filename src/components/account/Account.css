@@ -171,3 +171,115 @@
   margin: 0 0 var(--space-4);
   text-decoration: none;
 }
+
+/* --- I miei appuntamenti (passo 3) --- */
+
+.my-bookings {
+  margin: var(--space-5) 0 var(--space-5);
+}
+
+.my-bookings__past-title {
+  margin: var(--space-5) 0 var(--space-2);
+  font-family: var(--font-display);
+  font-size: 0.8125rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+/* Ogni appuntamento: un riquadro con filetto oro a sinistra */
+.booking-card {
+  margin-top: var(--space-3);
+  padding: var(--space-3);
+  border-left: 2px solid var(--color-gold);
+  background-color: var(--color-surface);
+}
+
+/* I passati: più spenti */
+.booking-card--past {
+  border-left-color: var(--color-line);
+  color: var(--color-muted);
+}
+
+.booking-card__when {
+  margin: 0;
+  font-size: 1.125rem;
+  color: var(--color-gold-light);
+}
+
+/* "Giovedì 12 novembre": la prima lettera maiuscola */
+.booking-card__when::first-letter {
+  text-transform: uppercase;
+}
+
+.booking-card--past .booking-card__when {
+  color: var(--color-muted);
+}
+
+.booking-card__services,
+.booking-card__price {
+  margin: var(--space-1) 0 0;
+}
+
+.booking-card__price {
+  font-family: var(--font-display);
+  color: var(--color-gold);
+}
+
+.booking-card--past .booking-card__price {
+  color: var(--color-muted);
+}
+
+.booking-card__question {
+  margin: var(--space-3) 0 0;
+  font-style: italic;
+}
+
+/* Bottoni affiancati, larghi metà ciascuno */
+.booking-card__actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+}
+
+.booking-card__actions .account__secondary {
+  width: 100%;
+  padding: 0 var(--space-2);
+}
+
+/* "Conferma" dello spostamento: pieno d'oro */
+.booking-card__primary,
+.booking-card__danger {
+  min-height: 44px;
+  padding: 0 var(--space-2);
+  border-radius: var(--radius);
+  font-family: var(--font-display);
+  font-size: 0.875rem;
+  letter-spacing: 0.15em;
+  cursor: pointer;
+}
+
+.booking-card__primary {
+  border: none;
+  background-color: var(--color-gold);
+  color: var(--color-black);
+  font-weight: 600;
+}
+
+.booking-card__primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* "Sì, disdici": bordo e testo oro chiaro, per distinguerlo dal "No" */
+.booking-card__danger {
+  border: 1px solid var(--color-gold-light);
+  background: none;
+  color: var(--color-gold-light);
+  font-weight: 600;
+}
+
+.reschedule {
+  margin-top: var(--space-4);
+}

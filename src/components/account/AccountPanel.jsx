@@ -3,9 +3,10 @@ import { fetchMyProfile, signOut } from '../../lib/auth.js'
 import { loadPendingBooking } from '../../lib/pendingBooking.js'
 import { ROUTES } from '../../lib/router.js'
 import Link from '../Link.jsx'
+import MyBookings from './MyBookings.jsx'
 
 // "Il Suo account": i dati di chi ha fatto il login e il bottone Esci.
-// Nel passo 3 qui sotto arriveranno "I miei appuntamenti".
+// Sotto i dati, per i clienti, "I miei appuntamenti" (MyBookings).
 
 function AccountPanel({ user, notice }) {
   // undefined = sto ancora leggendo, null = profilo assente, oggetto = profilo
@@ -84,6 +85,8 @@ function AccountPanel({ user, notice }) {
           {error}
         </p>
       )}
+
+      {profile && <MyBookings />}
 
       <button type="button" className="account__secondary" onClick={handleSignOut} disabled={leaving}>
         {leaving ? 'Uscita…' : 'Esci'}

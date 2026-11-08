@@ -37,6 +37,7 @@ Il database è un progetto **Supabase** (PostgreSQL) nella regione **Central EU
 | `phone`, `email` | testo, facoltativi | come sopra |
 | `privacy_accepted_at` | data e ora, facoltativo | come sopra |
 | `status` | `confirmed` o `cancelled` | una disdetta libera l'orario |
+| `cancelled_at` | data e ora, facoltativo | quando è stata disdetta (migrazione 7) |
 | `created_at` | data e ora | |
 
 Vincolo `bookings_no_overlap`: due prenotazioni confermate non possono
@@ -66,7 +67,9 @@ della prenotazione** (se un prezzo cambia, le prenotazioni vecchie restano giust
 Email e password stanno solo negli account di Supabase Auth (`auth.users`, la
 password cifrata). Il profilo lo crea il trigger `on_auth_user_created` con la
 funzione `create_customer_profile`, leggendo nome, cognome, telefono e consenso
-che il sito manda alla registrazione. Un account creato a mano dal pannello
+che il sito manda alla registrazione. Il trigger `customers_capitalize_name`
+(migrazione 8) mette la maiuscola all'iniziale di ogni parola di nome e cognome
+se manca ("simona d'angelo" → "Simona D'Angelo"), senza toccare il resto. Un account creato a mano dal pannello
 (senza questi dati) non ha profilo: servirà per l'account di Nicolas.
 
 ## Funzioni
@@ -84,8 +87,23 @@ che il sito manda alla registrazione. Un account creato a mano dal pannello
   il ruolo `authenticated`. (La versione della migrazione 3, con nome, telefono
   ed email, è stata tolta.)
 
-Entrambe sono `security definer`: lavorano con i permessi di chi le ha create,
-così si può prenotare senza poter leggere la tabella `bookings`.
+- `check_booking_slot(inizio, minuti)` (migrazione 7) – **le regole sugli orari in
+  un posto solo**: giorni, mezz'ore, 8:00–20:00, preavviso di 1 ora, 30 giorni,
+  ferie. La usano `create_booking` e `reschedule_booking`; dal sito non si può
+  chiamare. Se Nicolas cambia gli orari, si cambia qui (con una nuova migrazione)
+  e in `src/lib/availability.js`.
+- `get_my_bookings()` – le prenotazioni confermate di chi ha fatto l'accesso, con
+  nomi dei servizi, prezzo e durata. Solo le sue.
+- `cancel_booking(id)` – disdice una sua prenotazione confermata, se manca più di
+  un'ora; segna `cancelled_at`.
+- `reschedule_booking(id, nuovo inizio)` – sposta una sua prenotazione (stessi
+  servizi), se manca più di un'ora. Aggiorna la stessa riga: se il nuovo orario
+  non va bene, il vecchio resta.
+
+Sono tutte `security definer`: lavorano con i permessi di chi le ha create, così
+il cliente prenota, legge, disdice e sposta solo le sue prenotazioni senza poter
+leggere la tabella `bookings`. Le ultime tre e `create_booking` le può chiamare
+solo il ruolo `authenticated`.
 
 ## Sicurezza (RLS)
 
@@ -158,6 +176,10 @@ modifica "riesce" ma cambia zero righe; con la migrazione 2 viene rifiutato con
     per chi ha fatto l'accesso (prima vedeva un listino vuoto).
   - `20261108120000_prenotazioni_clienti.sql` – si prenota solo con l'account:
     `customer_id` e nuova `create_booking`.
+  - `20261108130000_miei_appuntamenti.sql` – regole sugli orari in comune,
+    `get_my_bookings`, `cancel_booking`, `reschedule_booking`, `cancelled_at`.
+  - `20261108140000_nomi_maiuscola.sql` – iniziale maiuscola automatica per nome
+    e cognome dei clienti, anche quelli già salvati.
 - `supabase/seed.sql` – i dati iniziali del listino (2026-11-03). Serve solo per
   un database nuovo: i prezzi aggiornati stanno nel database, non qui.
 

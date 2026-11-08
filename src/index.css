@@ -85,6 +85,12 @@ body::before {
   position: fixed;
   inset: 0;
   z-index: -1;
+  /* Su iPhone (Safari) l'immagine fissa a volte sparisce per un attimo quando la
+     pagina cambia molto di altezza e scorre da sola (es. dopo la conferma della
+     prenotazione). Queste due righe la mettono su un "livello" suo, che Safari
+     ridisegna sempre: è il rimedio più usato per questo difetto di Safari. */
+  transform: translateZ(0);
+  will-change: transform;
   background:
     linear-gradient(var(--veil-light), var(--veil-dark)),
     url('./assets/sfondo-barocco-800.webp') center / cover no-repeat;

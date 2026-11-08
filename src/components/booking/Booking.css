@@ -495,3 +495,12 @@
 .booking-confirmation__again:hover {
   border-color: var(--color-gold);
 }
+
+/* Link "Vedi i Suoi appuntamenti" nella conferma */
+.booking-confirmation__link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: var(--color-gold-light);
+  text-underline-offset: 3px;
+}

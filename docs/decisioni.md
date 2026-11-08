@@ -6,6 +6,28 @@ Le voci più recenti stanno in alto.
 
 ---
 
+## 2026-11-08 – I miei appuntamenti: disdire e spostare (Fase 1, passo 3)
+
+**Decisione**
+- "I miei appuntamenti" sta nella pagina Area clienti, sotto i dati del cliente.
+- Il cliente legge, disdice e sposta solo con tre funzioni del database
+  (`get_my_bookings`, `cancel_booking`, `reschedule_booking`); la tabella
+  `bookings` resta chiusa.
+- Le regole sugli orari sono state spostate in una funzione sola,
+  `check_booking_slot`, usata per prenotare e per spostare.
+- Lo spostamento aggiorna la stessa prenotazione invece di disdirla e crearne
+  un'altra.
+
+**Perché:** una regola scritta in un posto solo non può andare fuori sincrono.
+Aggiornare la stessa riga fa sì che il cliente non perda mai il vecchio orario
+se il nuovo non va bene.
+
+**Scartate:** leggere `bookings` con regole RLS (servirebbero regole anche su
+`booking_services` e sui servizi non più attivi); una pagina separata per gli
+appuntamenti (per ora sono pochi).
+
+---
+
 ## 2026-11-08 – Si prenota solo con l'account (Fase 1, passo 2)
 
 **Decisione**

@@ -112,6 +112,12 @@ si legge male sul telefono.
   conferma su fondo `--color-surface` con filetto oro a sinistra, bottone "Esci"
   secondario (solo bordo). In alto a destra della pagina il link "Accedi" / "Il
   mio account" in Cinzel maiuscolo oro chiaro.
+- **I miei appuntamenti** (`MyBookings.jsx`, `BookingCard.jsx`): ogni appuntamento
+  in un riquadro su fondo `--color-surface` con filetto oro a sinistra; giorno e
+  ora in oro chiaro, servizi, prezzo in oro. Bottoni secondari affiancati "Sposta"
+  e "Disdici"; la domanda di conferma della disdetta ha "No" e "Sì, disdici"
+  (bordo oro chiaro). I passati sono spenti (grigio caldo, filetto scuro).
+  "Sposta" apre lo stesso calendario e gli stessi orari della prenotazione.
 - **Servizio tecnico**: prezzo "da €20" e la nota in corsivo "Prezzo finale dopo
   consulenza in salone".
 

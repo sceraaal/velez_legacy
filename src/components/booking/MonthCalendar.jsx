@@ -21,11 +21,13 @@ function groupByMonth(first, last) {
   return months
 }
 
-function MonthCalendar({ first, last, isAvailable, selectedDay, onSelect }) {
+// id: per la prenotazione 'prenota-giorno' (la barra del riepilogo scorre fin
+// qui); per lo spostamento nessuno, così non ci sono due id uguali nella pagina.
+function MonthCalendar({ first, last, isAvailable, selectedDay, onSelect, id = 'prenota-giorno' }) {
   const months = groupByMonth(first, last)
 
   return (
-    <fieldset className="booking-step" id="prenota-giorno">
+    <fieldset className="booking-step" id={id}>
       <legend className="booking-step__title">Il giorno</legend>
 
       {[...months].map(([key, days]) => {
