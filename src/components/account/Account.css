@@ -162,3 +162,12 @@
   height: 56px;
   border-radius: 50%;
 }
+
+/* "Torni alla Sua prenotazione": un link con l'aspetto del bottone principale */
+.account__return {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 0 var(--space-4);
+  text-decoration: none;
+}

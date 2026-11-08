@@ -29,10 +29,12 @@ export class BookingError extends Error {
   }
 }
 
-// Salva la prenotazione chiamando la funzione create_booking del database.
+// Salva la prenotazione chiamando la funzione create_booking del database
+// (migrazione 6). Il cliente non lo mandiamo noi: il database lo prende dal
+// login, così nessuno può prenotare a nome di un altro.
 // Tutte le regole (orari, giorni, sovrapposizioni) le controlla il database:
 // il sito non può aggirarle. Restituisce il riepilogo per la conferma.
-export async function createBooking({ serviceIds, startsAt, customer }) {
+export async function createBooking({ serviceIds, startsAt }) {
   if (!supabase) {
     throw new BookingError('La prenotazione non è disponibile al momento. La preghiamo di riprovare più tardi.')
   }
@@ -40,11 +42,6 @@ export async function createBooking({ serviceIds, startsAt, customer }) {
   const { data, error } = await supabase.rpc('create_booking', {
     p_service_ids: serviceIds,
     p_starts_at: startsAt.toISOString(),
-    p_first_name: customer.firstName,
-    p_last_name: customer.lastName,
-    p_phone: customer.phone,
-    p_email: customer.email,
-    p_privacy_accepted: customer.privacyAccepted,
   })
 
   if (error) {
@@ -64,5 +61,6 @@ export async function createBooking({ serviceIds, startsAt, customer }) {
     endsAt: new Date(data.ends_at),
     totalPrice: Number(data.total_price),
     fromPrice: data.from_price,
+    firstName: data.first_name,
   }
 }

@@ -91,12 +91,16 @@ si legge male sul telefono.
   scuro. Scelta attiva = fondo oro e testo nero. Riepilogo fisso in fondo allo
   schermo con fondo `--color-surface`: è un bottone, con sotto il totale la
   scritta oro del passo successivo ("Scelga il giorno ›", poi "Scelga l'orario ›",
-  poi "Inserisca i Suoi dati ›"); toccandolo la pagina scorre fin lì.
-- **Modulo dati cliente** (`CustomerForm.jsx`): passo "I Suoi dati". Etichette in
-  Cinzel maiuscolo grigio caldo, caselle con fondo nero e bordo oro scuro, alte
-  48 px, testo a 17 px (sotto i 16 px l'iPhone ingrandisce la pagina). Errori in
-  corsivo oro chiaro sotto il campo. Bottone "Conferma la prenotazione" pieno
-  d'oro, come il bottone "Prenota" in alto.
+  poi "Confermi la prenotazione ›"); toccandolo la pagina scorre fin lì.
+- **Passo Conferma** (`ConfirmStep.jsx`): chi non è dentro legge "Per prenotare
+  acceda al Suo account o si registri" con i bottoni ACCEDI (pieno d'oro) e
+  REGISTRATI (solo bordo), uno sotto l'altro; chi è dentro legge "Prenota come
+  **Nome Cognome**" (nome in oro chiaro) e il bottone "Conferma la prenotazione"
+  pieno d'oro, come il bottone "Prenota" in alto.
+- **Caselle dei moduli** (area clienti): etichette in Cinzel maiuscolo grigio
+  caldo, caselle con fondo nero e bordo oro scuro, alte 48 px, testo a 17 px
+  (sotto i 16 px l'iPhone ingrandisce la pagina). Errori in corsivo oro chiaro
+  sotto il campo.
 - **Conferma** (`BookingConfirmation.jsx`): titolo "Appuntamento confermato" in
   Cinzel Decorative, giorno e ora in oro chiaro, servizi, prezzo, nota sul
   pagamento in salone e bottone secondario (solo bordo) "Nuova prenotazione".
