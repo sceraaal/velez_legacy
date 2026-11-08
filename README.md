@@ -34,6 +34,20 @@ Per fermarla: `Ctrl+C` nel terminale.
 | `npm run preview` | Mostra in locale la versione finale |
 | `npm run lint` | Controlla il codice con ESLint |
 
+## Link di prova online (Cloudflare Pages)
+
+Il sito è collegato a Cloudflare Pages: ogni volta che si unisce una PR in `main`,
+Cloudflare ricostruisce il sito e aggiorna il link `….pages.dev` da solo.
+
+Impostazioni del progetto su Cloudflare:
+
+- Comando di build: `npm run build` · cartella di uscita: `dist`
+- Variabili: `VITE_SUPABASE_URL` e `VITE_SUPABASE_PUBLISHABLE_KEY` (le stesse di
+  `.env.local`, solo chiavi pubbliche) e `VITE_TEST_VERSION=true`, che mostra la
+  fascia "Versione di prova".
+- `public/_headers` chiede ai motori di ricerca di non mostrare il link
+  `.pages.dev` nei risultati.
+
 ## Documentazione
 
 - [Regole del progetto](docs/regole-progetto.md): orari, servizi, regole di prenotazione
