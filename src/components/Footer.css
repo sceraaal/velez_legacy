@@ -32,3 +32,87 @@
   font-style: normal;
   color: var(--color-ivory);
 }
+
+/* --- Contatti: telefono (ed email quando arriva) --- */
+.footer__contacts {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.footer__contact {
+  /* alto almeno 44 px, così si tocca bene col dito */
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-display);
+  font-size: 0.875rem;
+  letter-spacing: 0.08em;
+  color: var(--color-gold-light);
+  text-decoration: none;
+}
+
+.footer__contact:hover {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+/* --- Pulsanti social: tre cerchi con bordo oro, nome sotto --- */
+.footer__social {
+  margin: var(--space-2) 0 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  gap: var(--space-4);
+}
+
+.footer__social-link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--color-gold);
+  text-decoration: none;
+}
+
+/* Il cerchio: doppio filetto come le cornici (oro scuro dentro, linea fuori) */
+.footer__social-circle {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--color-gold-dark);
+  border-radius: 50%;
+  outline: 1px solid var(--color-line);
+  outline-offset: 3px;
+  background-color: var(--color-black);
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+}
+
+.social-icon {
+  width: 22px;
+  height: 22px;
+}
+
+.footer__social-label {
+  font-family: var(--font-display);
+  font-size: 0.6875rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+/* Al passaggio del mouse (o col tasto Tab) il cerchio si riempie d'oro,
+   come la scelta attiva nella prenotazione */
+.footer__social-link:hover .footer__social-circle,
+.footer__social-link:focus-visible .footer__social-circle {
+  background-color: var(--color-gold);
+  border-color: var(--color-gold);
+  color: var(--color-black);
+}
+
+.footer__social-link:hover .footer__social-label {
+  color: var(--color-gold-light);
+}
