@@ -27,7 +27,8 @@ livello superiore e curato.
 
 ## Servizi
 
-Listino aggiornato da Nicolas il 2026-11-09, in ordine di sezione.
+Listino aggiornato da Nicolas il 2026-11-09, in ordine di sezione. Quando la
+durata indicata è un intervallo, si usa il valore più lungo.
 
 | Sezione | Servizio | Prezzo | Durata | Note |
 | --- | --- | --- | --- | --- |
@@ -48,12 +49,14 @@ Listino aggiornato da Nicolas il 2026-11-09, in ordine di sezione.
 | Skincare & trattamenti viso | Royal Anti-Fatigue Treatment | €35 | 40 min | con descrizione |
 | Servizi tecnici | Colorazione Uomo | da €20 | 30 min | servizio tecnico |
 | Servizi tecnici | Tonalizzante | da €30 | 30 min | servizio tecnico |
+| Servizi tecnici | Colpi di sole | da €40 | 90 min | servizio tecnico; Nicolas dice 60-90 min (2026-11-09) |
+| Servizi tecnici | Decolorazione totale | da €60 | 150 min | servizio tecnico; Nicolas dice "più di 2 ore" (2026-11-09) |
 | Extra | Patch Occhi | €3 | 10 min | |
 | Extra | Maschera Viso Detox (Carbone/Argilla) | €10 | 10 min | |
 | Extra | Trattamento Vapore & Panni Caldi Extra | €7 | 10 min | |
 
 - I prezzi sono visibili nell'app.
-- **Servizi tecnici** (colorazione, tonalizzante): si prenotano normalmente; il prezzo
+- **Servizi tecnici** (colorazione, tonalizzante, colpi di sole, decolorazione): si prenotano normalmente; il prezzo
   è mostrato come "a partire da", con una nota che il prezzo finale si decide in
   salone dopo una consulenza.
 - Il cliente può prenotare più servizi insieme: la durata totale è la somma.

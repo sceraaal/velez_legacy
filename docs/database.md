@@ -185,10 +185,12 @@ modifica "riesce" ma cambia zero righe; con la migrazione 2 viene rifiutato con
     e cognome dei clienti, anche quelli già salvati.
   - `20261109120000_listino_nuovo.sql` – colonna `description`, sezione
     Skincare e i 6 servizi nuovi del listino del 2026-11-09.
+  - `20261109130000_servizi_tecnici_nuovi.sql` – Colpi di sole e Decolorazione
+    totale nei servizi tecnici.
 - `supabase/seed.sql` – i dati iniziali del listino (2026-11-03). Serve solo per
   un database nuovo: i prezzi aggiornati stanno nel database, non qui.
-  Su un database nuovo l'ordine è: migrazioni 1-8, poi `seed.sql`, poi la
-  migrazione 9 (che aggiunge i servizi nuovi ai 14 del seed).
+  Su un database nuovo l'ordine è: migrazioni 1-8, poi `seed.sql`, poi le
+  migrazioni 9 e 10 (che aggiungono i servizi nuovi ai 14 del seed).
 
 Quando cambiamo la struttura (per esempio le prenotazioni al passo 4) aggiungiamo
 un nuovo file in `supabase/migrations/`, non modifichiamo quelli già lanciati.
