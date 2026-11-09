@@ -71,7 +71,19 @@ funzione `create_customer_profile`, leggendo nome, cognome, telefono e consenso
 che il sito manda alla registrazione. Il trigger `customers_capitalize_name`
 (migrazione 8) mette la maiuscola all'iniziale di ogni parola di nome e cognome
 se manca ("simona d'angelo" → "Simona D'Angelo"), senza toccare il resto. Un account creato a mano dal pannello
-(senza questi dati) non ha profilo: servirà per l'account di Nicolas.
+(senza questi dati) non ha profilo: è il caso dell'account di Nicolas.
+
+### `staff` – gli account del barbiere (Fase 1, passo 4)
+
+| Colonna | Tipo | Note |
+| --- | --- | --- |
+| `user_id` | uuid, chiave primaria → `auth.users.id` | l'account di Nicolas |
+| `created_at` | data e ora | |
+
+Chi è in questa tabella vede l'agenda (`/agenda`). Si riempie **solo** dall'SQL
+Editor (vedi "Come si fa a… dare l'agenda a Nicolas"): RLS attiva e nessun
+permesso per `anon` e `authenticated`, quindi dal sito nessuno la legge o ci si
+aggiunge.
 
 ## Funzioni
 
@@ -100,6 +112,17 @@ se manca ("simona d'angelo" → "Simona D'Angelo"), senza toccare il resto. Un a
 - `reschedule_booking(id, nuovo inizio)` – sposta una sua prenotazione (stessi
   servizi), se manca più di un'ora. Aggiorna la stessa riga: se il nuovo orario
   non va bene, il vecchio resta.
+
+- `is_staff()` (migrazione 11) – "chi ha fatto l'accesso è nella tabella
+  `staff`?". La usano le altre funzioni; dal sito non si può chiamare.
+- `am_i_staff()` – la stessa domanda per il sito: risponde solo true o false.
+  Dopo l'accesso, se l'account non ha profilo cliente ed è staff, il sito porta
+  Nicolas all'agenda.
+- `get_agenda(da, a)` – gli appuntamenti confermati che iniziano nel periodo
+  (massimo 40 giorni), con nome, cognome, telefono, email, servizi, prezzo e
+  durata. Solo per lo staff: a tutti gli altri risponde "Pagina riservata.".
+  Per le prenotazioni vecchie della prova (senza cliente collegato) prende i
+  dati scritti nella prenotazione.
 
 Sono tutte `security definer`: lavorano con i permessi di chi le ha create, così
 il cliente prenota, legge, disdice e sposta solo le sue prenotazioni senza poter
@@ -160,6 +183,17 @@ modifica "riesce" ma cambia zero righe; con la migrazione 2 viene rifiutato con
   select id, 'Prova', 'Due', '3330000000', now() from auth.users
   where email = 'email-del-cliente-di-prova@esempio.it';
   ```
+- **Dare l'agenda a Nicolas** (una volta sola): crea il suo account da
+  Authentication → Users → Add user → Create new user, con "Auto Confirm User"
+  acceso e una password di almeno 8 caratteri. **Non** inserirlo in
+  `customers`. Poi, nell'SQL Editor:
+  ```sql
+  insert into public.staff (user_id)
+  select id from auth.users where email = 'email-di-nicolas@esempio.it';
+  ```
+  Deve rispondere `INSERT 0 1` (se dice `INSERT 0 0` l'email è scritta
+  diversamente). Nicolas accede da "Accedi" e il sito lo porta su `/agenda`.
+  Per togliere l'accesso: Table Editor → `staff` → cancella la riga.
 - **Aggiungere un servizio**: Table Editor → `services` → Insert row. Servono
   `id` (nuovo, in minuscolo con i trattini), `category_id`, `name`, `price`,
   `duration_minutes`, `position` e, se serve, `description`.
@@ -187,10 +221,12 @@ modifica "riesce" ma cambia zero righe; con la migrazione 2 viene rifiutato con
     Skincare e i 6 servizi nuovi del listino del 2026-11-09.
   - `20261109130000_servizi_tecnici_nuovi.sql` – Colpi di sole e Decolorazione
     totale nei servizi tecnici.
+  - `20261109140000_area_nicolas.sql` – tabella `staff`, `is_staff`,
+    `am_i_staff` e `get_agenda` per l'agenda di Nicolas.
 - `supabase/seed.sql` – i dati iniziali del listino (2026-11-03). Serve solo per
   un database nuovo: i prezzi aggiornati stanno nel database, non qui.
   Su un database nuovo l'ordine è: migrazioni 1-8, poi `seed.sql`, poi le
-  migrazioni 9 e 10 (che aggiungono i servizi nuovi ai 14 del seed).
+  migrazioni dalla 9 in poi (la 9 e la 10 aggiungono i servizi nuovi ai 14 del seed).
 
 Quando cambiamo la struttura (per esempio le prenotazioni al passo 4) aggiungiamo
 un nuovo file in `supabase/migrations/`, non modifichiamo quelli già lanciati.

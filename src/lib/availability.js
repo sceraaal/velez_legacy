@@ -93,6 +93,17 @@ export function formatDateTime(date) {
   return `${dayFormatter.format(date)}, ore ${formatTime(toRome(date).minutes)}`
 }
 
+// Solo l'ora di un istante, in ora italiana: "9:30" (usata nell'agenda)
+export function formatClock(date) {
+  return formatTime(toRome(date).minutes)
+}
+
+// Un giorno 'AAAA-MM-GG' scritto per esteso: "martedì 17 novembre"
+// (mezzogiorno serve solo a stare lontani dal cambio dell'ora legale)
+export function formatDay(day) {
+  return dayFormatter.format(fromRome(day, 12 * 60))
+}
+
 // --- Orari liberi -------------------------------------------------------------
 
 // Gli orari di inizio possibili per un giorno, per un appuntamento che occupa

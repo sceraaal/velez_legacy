@@ -17,6 +17,7 @@ import { useEffect, useState } from 'react'
 export const ROUTES = {
   home: '/',
   account: '/area-clienti',
+  agenda: '/agenda', // area riservata di Nicolas (passo 4)
 }
 
 // Avvisa tutti i componenti che usano usePath che l'indirizzo è cambiato
