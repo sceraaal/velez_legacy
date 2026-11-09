@@ -6,6 +6,24 @@ Le voci più recenti stanno in alto.
 
 ---
 
+## 2026-11-09 – Nuovo listino di Nicolas
+
+**Decisione**
+- 6 servizi nuovi e la sezione "Skincare & trattamenti viso" (migrazione 9); i 14
+  servizi di prima restano uguali.
+- Colonna `description` facoltativa: la descrizione si vede solo nel listino, non
+  nella scelta dei servizi della prenotazione, per tenerla compatta.
+- Presidential Luxury Experience: durata 80 minuti (sul listino "75-80").
+- Niente emoji nei titoli delle sezioni.
+
+**Perché**
+- Il calendario ha bisogno di una durata sola; con gli inizi ogni mezz'ora 75 e
+  80 minuti occupano comunque 1 ora e mezza.
+- Le emoji cambiano aspetto su ogni telefono e stonano con lo stile barocco nero
+  e oro.
+
+---
+
 ## 2026-11-08 – I miei appuntamenti: disdire e spostare (Fase 1, passo 3)
 
 **Decisione**

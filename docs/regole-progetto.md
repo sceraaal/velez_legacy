@@ -27,28 +27,40 @@ livello superiore e curato.
 
 ## Servizi
 
-| Servizio | Prezzo | Durata | Note |
-| --- | --- | --- | --- |
-| Luxury Cut Experience | €25 | 50 min | |
-| Luxury Total Experience | €40 | 80 min | |
-| Colorazione Uomo | da €20 | 30 min | servizio tecnico |
-| Tonalizzante | da €30 | 30 min | servizio tecnico |
-| Taglio + Ritual | €20 | 40 min | |
-| Taglio Barber | €18 | 30 min | |
-| Taglio Barber Under 14 | €15 | 30 min | |
-| Rasatura Uniformata | €15 | 30 min | |
-| Rasatura Tradizionale completa | €20 | 30 min | |
-| Taglio Barber + Barba | €23 | 45 min | |
-| Taglio Barber + Rituals + Barba | €25 | 45 min | |
-| Patch Occhi | €3 | 10 min | |
-| Barba City Man | €10 | 15 min | |
-| Luxury Beard Experience | €18 | 30 min | |
+Listino aggiornato da Nicolas il 2026-11-09, in ordine di sezione.
+
+| Sezione | Servizio | Prezzo | Durata | Note |
+| --- | --- | --- | --- | --- |
+| Esperienze Luxury | Presidential Luxury Experience | €55 | 80 min | sul listino "75-80 min"; con descrizione |
+| Esperienze Luxury | Luxury Cut Experience | €25 | 50 min | |
+| Esperienze Luxury | Luxury Total Experience | €40 | 80 min | |
+| Esperienze Luxury | Luxury Beard Experience | €18 | 30 min | |
+| Taglio | Taglio Barber | €18 | 30 min | |
+| Taglio | Taglio Barber Under 14 | €15 | 30 min | |
+| Taglio | Taglio + Ritual | €20 | 40 min | |
+| Taglio | Taglio Barber + Barba | €23 | 45 min | |
+| Taglio | Taglio Barber + Rituals + Barba | €25 | 45 min | |
+| Barba e rasatura | Barba City Man | €10 | 15 min | |
+| Barba e rasatura | Rasatura Uniformata | €15 | 30 min | |
+| Barba e rasatura | Rasatura Tradizionale completa | €20 | 30 min | |
+| Barba e rasatura | Rasatura Presidential | €30 | 45 min | con descrizione |
+| Skincare & trattamenti viso | Deep Tech Facial | €25 | 30 min | con descrizione |
+| Skincare & trattamenti viso | Royal Anti-Fatigue Treatment | €35 | 40 min | con descrizione |
+| Servizi tecnici | Colorazione Uomo | da €20 | 30 min | servizio tecnico |
+| Servizi tecnici | Tonalizzante | da €30 | 30 min | servizio tecnico |
+| Extra | Patch Occhi | €3 | 10 min | |
+| Extra | Maschera Viso Detox (Carbone/Argilla) | €10 | 10 min | |
+| Extra | Trattamento Vapore & Panni Caldi Extra | €7 | 10 min | |
 
 - I prezzi sono visibili nell'app.
 - **Servizi tecnici** (colorazione, tonalizzante): si prenotano normalmente; il prezzo
   è mostrato come "a partire da", con una nota che il prezzo finale si decide in
   salone dopo una consulenza.
 - Il cliente può prenotare più servizi insieme: la durata totale è la somma.
+- Gli **Extra** si possono prenotare anche da soli, come gli altri servizi (da
+  confermare con Nicolas).
+- Le **descrizioni** (cosa comprende il trattamento) si vedono solo nel listino,
+  non nella scelta dei servizi della prenotazione.
 
 ## Lato cliente
 

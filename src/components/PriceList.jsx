@@ -71,6 +71,8 @@ function PriceList() {
                     <span className="service__dots" aria-hidden="true" />
                     <span className="service__price">{formatPrice(service.price, service.fromPrice)}</span>
                   </div>
+                  {/* La descrizione c'è solo per alcuni servizi: se manca non mostriamo nulla */}
+                  {service.description && <p className="service__description">{service.description}</p>}
                   <span className="service__detail">{formatDuration(service.duration)}</span>
                   {service.fromPrice && (
                     <span className="service__detail service__detail--note">
