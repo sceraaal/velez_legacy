@@ -57,8 +57,8 @@ Listino aggiornato da Nicolas il 2026-11-09, in ordine di sezione.
   è mostrato come "a partire da", con una nota che il prezzo finale si decide in
   salone dopo una consulenza.
 - Il cliente può prenotare più servizi insieme: la durata totale è la somma.
-- Gli **Extra** si possono prenotare anche da soli, come gli altri servizi (da
-  confermare con Nicolas).
+- Gli **Extra** si possono prenotare anche da soli, come gli altri servizi
+  (confermato da Nicolas il 2026-11-09).
 - Le **descrizioni** (cosa comprende il trattamento) si vedono solo nel listino,
   non nella scelta dei servizi della prenotazione.
 
