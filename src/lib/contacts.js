@@ -8,10 +8,9 @@ export const contacts = {
   // ...e come lo vuole il telefono per chiamare (senza spazi)
   phoneLink: '+393520985635',
 
-  // EMAIL: per ora vuota, Nicolas la manderà più avanti.
-  // Quando arriva, scriverla tra gli apici, es. 'nicolas@esempio.it':
-  // nel fondo pagina comparirà da sola. Finché è vuota non si vede nulla.
-  email: '',
+  // Se un giorno si vuole togliere l'email dal fondo pagina, basta lasciare
+  // gli apici vuoti (email: ''): Footer.jsx la mostra solo se c'è.
+  email: 'nicovelez97@gmail.com',
 
   instagram: 'https://www.instagram.com/nicovxlz/',
   facebook: 'https://www.facebook.com/profile.php?id=61560938648048',
