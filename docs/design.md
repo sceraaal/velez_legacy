@@ -119,9 +119,8 @@ si legge male sul telefono.
   (bordo oro chiaro). I passati sono spenti (grigio caldo, filetto scuro).
   "Sposta" apre lo stesso calendario e gli stessi orari della prenotazione.
 - **Fondo pagina** (`Footer.jsx`): fregio, nome, indirizzo, orari; sotto il
-  telefono in Cinzel oro chiaro (link `tel:`, l'email comparirà sotto quando
-  Nicolas la manda) e tre pulsanti social rotondi (Instagram, Facebook,
-  WhatsApp): cerchio di 48 px con bordo oro scuro e filetto esterno come le
+  telefono e l'email in Cinzel oro chiaro (link `tel:` e `mailto:`) e tre
+  pulsanti social rotondi (Instagram, Facebook, WhatsApp): cerchio di 48 px con bordo oro scuro e filetto esterno come le
   cornici, icona a linee oro (`SocialIcon.jsx`, non i loghi colorati), nome sotto
   in Cinzel grigio caldo. Al passaggio del mouse il cerchio si riempie d'oro.
   Numeri e link stanno in `src/lib/contacts.js`.
@@ -135,8 +134,8 @@ si legge male sul telefono.
 - **Indirizzo**: Via Mario Alfani 84, 84098 Pontecagnano Faiano (SA), mostrato in
   fondo alla pagina.
 - **Contatti**: telefono +39 352 098 5635 (anche WhatsApp), Instagram
-  `nicovxlz`, Facebook. Tutti in `src/lib/contacts.js`. Email: in attesa da
-  Nicolas.
+  `nicovxlz`, Facebook. email nicovelez97@gmail.com. Tutti in
+  `src/lib/contacts.js`.
 
 ## Da decidere con Nicolas
 
