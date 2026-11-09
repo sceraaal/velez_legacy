@@ -12,7 +12,8 @@ export const contacts = {
   // gli apici vuoti (email: ''): Footer.jsx la mostra solo se c'è.
   email: 'nicovelez97@gmail.com',
 
-  instagram: 'https://www.instagram.com/nicovxlz/',
+  // Il profilo del salone (aggiornato il 2026-11-09; prima era il profilo personale nicovxlz)
+  instagram: 'https://www.instagram.com/velez_legacy/',
   facebook: 'https://www.facebook.com/profile.php?id=61560938648048',
   // wa.me apre una chat WhatsApp con questo numero (prefisso 39, senza + né spazi)
   whatsapp: 'https://wa.me/393520985635',

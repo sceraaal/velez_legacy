@@ -134,7 +134,7 @@ si legge male sul telefono.
 - **Indirizzo**: Via Mario Alfani 84, 84098 Pontecagnano Faiano (SA), mostrato in
   fondo alla pagina.
 - **Contatti**: telefono +39 352 098 5635 (anche WhatsApp), Instagram
-  `nicovxlz`, Facebook. email nicovelez97@gmail.com. Tutti in
+  `velez_legacy`, Facebook. email nicovelez97@gmail.com. Tutti in
   `src/lib/contacts.js`.
 
 ## Da decidere con Nicolas
