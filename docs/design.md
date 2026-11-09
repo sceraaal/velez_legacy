@@ -118,6 +118,13 @@ si legge male sul telefono.
   e "Disdici"; la domanda di conferma della disdetta ha "No" e "Sì, disdici"
   (bordo oro chiaro). I passati sono spenti (grigio caldo, filetto scuro).
   "Sposta" apre lo stesso calendario e gli stessi orari della prenotazione.
+- **Fondo pagina** (`Footer.jsx`): fregio, nome, indirizzo, orari; sotto il
+  telefono in Cinzel oro chiaro (link `tel:`, l'email comparirà sotto quando
+  Nicolas la manda) e tre pulsanti social rotondi (Instagram, Facebook,
+  WhatsApp): cerchio di 48 px con bordo oro scuro e filetto esterno come le
+  cornici, icona a linee oro (`SocialIcon.jsx`, non i loghi colorati), nome sotto
+  in Cinzel grigio caldo. Al passaggio del mouse il cerchio si riempie d'oro.
+  Numeri e link stanno in `src/lib/contacts.js`.
 - **Servizio tecnico**: prezzo "da €20" e la nota in corsivo "Prezzo finale dopo
   consulenza in salone".
 
@@ -127,6 +134,9 @@ si legge male sul telefono.
   esempio "Scelga il servizio", "La aspettiamo", "Il Suo appuntamento".
 - **Indirizzo**: Via Mario Alfani 84, 84098 Pontecagnano Faiano (SA), mostrato in
   fondo alla pagina.
+- **Contatti**: telefono +39 352 098 5635 (anche WhatsApp), Instagram
+  `nicovxlz`, Facebook. Tutti in `src/lib/contacts.js`. Email: in attesa da
+  Nicolas.
 
 ## Da decidere con Nicolas
 
