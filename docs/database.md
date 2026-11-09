@@ -20,6 +20,7 @@ Il database è un progetto **Supabase** (PostgreSQL) nella regione **Central EU
 | `id` | testo, chiave primaria | es. `taglio-barber` |
 | `category_id` | testo, chiave esterna → `service_categories.id` | la sezione |
 | `name` | testo | nome mostrato |
+| `description` | testo, facoltativo | cosa comprende il trattamento, mostrata nel listino (migrazione 9) |
 | `price` | numero con 2 decimali, mai negativo | prezzo in euro |
 | `from_price` | sì/no | `true` = mostra "da €X" (servizi tecnici) |
 | `duration_minutes` | numero intero, maggiore di zero | durata, servirà al calendario |
@@ -161,7 +162,9 @@ modifica "riesce" ma cambia zero righe; con la migrazione 2 viene rifiutato con
   ```
 - **Aggiungere un servizio**: Table Editor → `services` → Insert row. Servono
   `id` (nuovo, in minuscolo con i trattini), `category_id`, `name`, `price`,
-  `duration_minutes`, `position`.
+  `duration_minutes`, `position` e, se serve, `description`.
+- **Cambiare una descrizione**: Table Editor → `services` → cella `description`.
+  Per toglierla, svuota la cella (diventa NULL).
 
 ## File SQL nel repository
 
@@ -180,8 +183,12 @@ modifica "riesce" ma cambia zero righe; con la migrazione 2 viene rifiutato con
     `get_my_bookings`, `cancel_booking`, `reschedule_booking`, `cancelled_at`.
   - `20261108140000_nomi_maiuscola.sql` – iniziale maiuscola automatica per nome
     e cognome dei clienti, anche quelli già salvati.
+  - `20261109120000_listino_nuovo.sql` – colonna `description`, sezione
+    Skincare e i 6 servizi nuovi del listino del 2026-11-09.
 - `supabase/seed.sql` – i dati iniziali del listino (2026-11-03). Serve solo per
   un database nuovo: i prezzi aggiornati stanno nel database, non qui.
+  Su un database nuovo l'ordine è: migrazioni 1-8, poi `seed.sql`, poi la
+  migrazione 9 (che aggiunge i servizi nuovi ai 14 del seed).
 
 Quando cambiamo la struttura (per esempio le prenotazioni al passo 4) aggiungiamo
 un nuovo file in `supabase/migrations/`, non modifichiamo quelli già lanciati.

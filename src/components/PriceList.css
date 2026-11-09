@@ -43,6 +43,9 @@
   font-size: 0.875rem;
   letter-spacing: 0.2em;
   text-transform: uppercase;
+  /* Un titolo lungo (es. "Skincare & trattamenti viso") sul telefono va su due
+     righe: lo teniamo centrato */
+  text-align: center;
   color: var(--color-gold-light);
 }
 
@@ -50,6 +53,8 @@
 .price-list__group-title::after {
   content: '';
   flex-grow: 1;
+  /* Larghezza minima: anche col titolo su due righe i filetti restano visibili */
+  min-width: var(--space-4);
   height: 1px;
   background-color: var(--color-gold-dark);
 }
@@ -104,6 +109,16 @@
 
 .service__detail--note {
   font-style: italic;
+}
+
+/* Cosa comprende il trattamento: corsivo, più piccolo del nome e nel colore
+   attenuato della durata, così resta in secondo piano rispetto a nome e prezzo */
+.service__description {
+  margin: var(--space-1) 0;
+  font-size: 1rem;
+  font-style: italic;
+  line-height: 1.4;
+  color: var(--color-muted);
 }
 
 /* Messaggi di caricamento e di errore, al posto del listino */
