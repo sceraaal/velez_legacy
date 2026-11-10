@@ -269,7 +269,10 @@
 /* Arrivando con la barra, il titolo del passo non finisce attaccato al bordo */
 #prenota-giorno,
 #prenota-orario,
-#prenota-conferma {
+#prenota-conferma,
+#nuovo-giorno,
+#nuovo-orario,
+#nuovo-salva {
   scroll-margin-top: var(--space-4);
 }
 

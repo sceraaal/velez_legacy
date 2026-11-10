@@ -3,6 +3,7 @@ import { addDays, formatDay, OPENING, todayInRome, weekday } from '../../lib/ava
 import { fetchAgenda } from '../../lib/staffApi.js'
 import { formatPrice } from '../../utils/format.js'
 import AppointmentCard from './AppointmentCard.jsx'
+import ManualBookingForm from './ManualBookingForm.jsx'
 
 // Un giorno dell'agenda: in alto il giorno con ← → e "Oggi", sotto gli
 // appuntamenti in ordine di ora. Si apre sempre su oggi.
@@ -16,8 +17,10 @@ function AgendaDay() {
   const [result, setResult] = useState(null)
   // Cambiando questo numero si ricarica lo stesso giorno (tasto Aggiorna)
   const [version, setVersion] = useState(0)
-  // Messaggio dopo una disdetta; sparisce cambiando giorno
+  // Messaggio dopo una disdetta o un inserimento; sparisce cambiando giorno
   const [notice, setNotice] = useState(null)
+  // true = al posto della lista c'è il modulo "Nuovo appuntamento" (passo 5b)
+  const [adding, setAdding] = useState(false)
 
   function changeDay(next) {
     setNotice(null)
@@ -44,6 +47,21 @@ function AgendaDay() {
   const total = list.reduce((sum, item) => sum + item.totalPrice, 0)
   const anyFromPrice = list.some((item) => item.fromPrice)
 
+  if (adding) {
+    return (
+      <ManualBookingForm
+        initialDay={day}
+        onCancel={() => setAdding(false)}
+        onDone={(savedDay) => {
+          setAdding(false)
+          setDay(savedDay)
+          setNotice("L'appuntamento è stato salvato.")
+          setVersion((v) => v + 1)
+        }}
+      />
+    )
+  }
+
   return (
     <div className="agenda">
       <div className="agenda__nav">
@@ -66,6 +84,10 @@ function AgendaDay() {
           Aggiorna
         </button>
       </div>
+
+      <button type="button" className="customer-form__submit agenda__add" onClick={() => setAdding(true)}>
+        + Nuovo appuntamento
+      </button>
 
       {notice && (
         <p className="account__notice" role="status">

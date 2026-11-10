@@ -4,11 +4,12 @@ import { formatDuration, formatPrice } from '../../utils/format.js'
 // Riceve le categorie del listino e la lista degli id scelti; quando il
 // cliente spunta o toglie un servizio chiama onToggle, e la decisione su cosa
 // fare la prende il componente "genitore" (BookingSection).
+// title: il titolo sopra la lista; l'agenda di Nicolas usa "Servizi".
 
-function ServicePicker({ categories, selectedIds, onToggle }) {
+function ServicePicker({ categories, selectedIds, onToggle, title = 'I Suoi servizi' }) {
   return (
     <fieldset className="booking-step">
-      <legend className="booking-step__title">I Suoi servizi</legend>
+      <legend className="booking-step__title">{title}</legend>
 
       {categories.map((category) => (
         <div key={category.id} className="service-picker__group">

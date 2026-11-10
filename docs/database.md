@@ -73,6 +73,21 @@ che il sito manda alla registrazione. Il trigger `customers_capitalize_name`
 se manca ("simona d'angelo" → "Simona D'Angelo"), senza toccare il resto. Un account creato a mano dal pannello
 (senza questi dati) non ha profilo: è il caso dell'account di Nicolas.
 
+### `walk_in_customers` – i clienti senza account (Fase 1, passo 5b)
+
+| Colonna | Tipo | Note |
+| --- | --- | --- |
+| `id` | uuid, chiave primaria | |
+| `first_name`, `last_name` | testo | iniziale maiuscola automatica (trigger) |
+| `phone` | testo, facoltativo | |
+| `created_at` | data e ora | |
+
+Li inserisce Nicolas dall'agenda ("+ Nuovo appuntamento" → Nuovo). RLS attiva
+e nessun permesso per il sito: si passa solo da `staff_create_booking`.
+In `bookings` le colonne `walk_in_customer_id` (il cliente senza account) e
+`source` (`online` = dal sito, `manual` = inserita da Nicolas). Ogni
+prenotazione ha al massimo un cliente (`bookings_one_customer`).
+
 ### `staff` – gli account del barbiere (Fase 1, passo 4)
 
 | Colonna | Tipo | Note |
@@ -132,7 +147,20 @@ aggiunge.
 - `staff_cancel_booking(id)` – Nicolas disdice un appuntamento confermato,
   senza il limite di un'ora; segna `cancelled_at`.
 
-Le funzioni dell'agenda (migrazioni 11 e 12) controllano per prima cosa
+- `get_customers(ricerca)` (migrazione 13) – i clienti con e senza account, in
+  ordine di cognome, con visite passate, ultima visita e prossimo appuntamento.
+  La ricerca guarda nome, cognome e telefono.
+- `get_customer_history(tipo, id)` – gli appuntamenti confermati di un cliente,
+  dal più recente, con `source`.
+- `staff_create_booking(tipo, id, nome, cognome, telefono, servizi, inizio)` –
+  inserimento a mano, per un cliente dell'elenco o per uno nuovo senza account.
+  Valgono martedì–sabato, mezz'ore, 8:00–20:00 e niente sovrapposizioni; NON
+  valgono preavviso di un'ora, limite di 30 giorni e blocchi (decide Nicolas).
+  Data entro un anno, avanti o indietro.
+- La migrazione 13 aggiorna anche `get_agenda` e `add_blocked_period` perché
+  mostrino il nome dei clienti senza account.
+
+Le funzioni dell'agenda (migrazioni 11, 12 e 13) controllano per prima cosa
 `is_staff()`: a chi non è staff rispondono "Pagina riservata.".
 
 Sono tutte `security definer`: lavorano con i permessi di chi le ha create, così
@@ -237,6 +265,8 @@ modifica "riesce" ma cambia zero righe; con la migrazione 2 viene rifiutato con
     `am_i_staff` e `get_agenda` per l'agenda di Nicolas.
   - `20261110120000_blocchi_e_disdetta_nicolas.sql` – blocchi e disdetta
     dall'agenda di Nicolas.
+  - `20261110130000_clienti_e_inserimento_a_mano.sql` – clienti senza account,
+    elenco clienti, storico e inserimento a mano.
 - `supabase/seed.sql` – i dati iniziali del listino (2026-11-03). Serve solo per
   un database nuovo: i prezzi aggiornati stanno nel database, non qui.
   Su un database nuovo l'ordine è: migrazioni 1-8, poi `seed.sql`, poi le

@@ -110,9 +110,16 @@ durata indicata è un intervallo, si usa il valore più lungo.
   di un'ora. Il cliente per ora va avvisato a voce (email dal passo 6).
 - Notifica quando un cliente prenota o disdice: push dalla web app + email di
   riserva (niente SMS a Nicolas, per contenere i costi).
-- Inserimento manuale di clienti senza prenotazione, dopo il servizio (nome e
-  servizio svolto).
-- Lista clienti con storico degli appuntamenti.
+- Inserimento a mano ("+ Nuovo appuntamento" nell'agenda): per un cliente
+  dell'elenco o per uno nuovo senza account (nome, cognome, telefono
+  facoltativo). Va bene sia dopo il servizio (storico) sia per chi prenota al
+  telefono (occupa l'orario). Il calendario va da 2 settimane fa a 45 giorni
+  avanti e mostra solo giorni e orari liberi (appuntamenti e blocchi esclusi),
+  in base alla durata dei servizi scelti. Non valgono il preavviso di un'ora e
+  i 30 giorni. Il database accetterebbe anche un orario dentro un blocco, ma
+  il modulo non lo propone.
+- Lista clienti (linguetta Clienti) con ricerca e storico degli appuntamenti,
+  per i clienti con e senza account.
 - Può segnare un cliente come "non presentato". **Dal secondo appuntamento saltato il
   cliente viene bloccato** e non può più prenotare. Nicolas può sbloccarlo.
 

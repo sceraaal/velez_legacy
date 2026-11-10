@@ -201,3 +201,103 @@
 .block-card__remove {
   margin-top: var(--space-3);
 }
+
+/* --- Passo 5b: clienti e inserimento a mano --- */
+
+/* Tre linguette invece di due */
+.agenda__tabs {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.agenda__add {
+  margin-bottom: var(--space-4);
+}
+
+.customers__list {
+  margin: var(--space-3) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Un cliente nell'elenco: tutta la riga è un bottone */
+.customer-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: var(--space-1) var(--space-2);
+  width: 100%;
+  margin-top: var(--space-2);
+  padding: var(--space-3);
+  border: none;
+  border-left: 2px solid var(--color-gold-dark);
+  background-color: var(--color-surface);
+  color: var(--color-ivory);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  text-align: left;
+  cursor: pointer;
+}
+
+.customer-row__name {
+  font-size: 1.0625rem;
+}
+
+.customer-row__kind {
+  font-size: 0.875rem;
+  font-style: italic;
+  color: var(--color-muted);
+}
+
+.customer-row__meta {
+  grid-column: 1 / -1;
+  font-size: 0.9375rem;
+  color: var(--color-muted);
+}
+
+.customer-row__meta::first-letter {
+  text-transform: uppercase;
+}
+
+.customer-history__back {
+  margin: 0 0 var(--space-3);
+}
+
+.customer-history__name {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  color: var(--color-gold-light);
+}
+
+.customer-history .customer-row__kind {
+  margin: var(--space-1) 0 0;
+}
+
+.customer-history__contacts {
+  padding: 0;
+  margin-bottom: var(--space-4);
+}
+
+.customer-history__manual {
+  font-family: var(--font-body);
+  font-style: italic;
+  color: var(--color-muted);
+}
+
+/* Cliente scelto: nome e "Cambia" sulla stessa riga */
+.manual-booking__chosen {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  border-left: 2px solid var(--color-gold);
+  background-color: var(--color-surface);
+}
+
+.manual-booking__chosen .account__link {
+  margin: 0;
+}
+
+.manual-booking .booking-card__actions {
+  margin-top: var(--space-4);
+}

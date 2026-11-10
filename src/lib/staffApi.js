@@ -90,3 +90,57 @@ export async function staffCancelBooking(bookingId) {
   const { error } = await supabase.rpc('staff_cancel_booking', { p_booking_id: bookingId })
   if (error) throw toStaffError(error, 'Non siamo riusciti a disdire. Riprova.')
 }
+
+// --- Passo 5b: clienti, storico e inserimento a mano (migrazione 13) ---------
+
+// I clienti con e senza account. search (facoltativo) cerca in nome,
+// cognome e telefono. kind = 'account' oppure 'walk_in' (senza account).
+export async function fetchCustomers(search = '') {
+  const { data, error } = await supabase.rpc('get_customers', { p_search: search })
+  if (error) throw toStaffError(error, 'Non siamo riusciti a caricare i clienti.')
+  return data.map((row) => ({
+    kind: row.kind,
+    id: row.id,
+    firstName: row.first_name,
+    lastName: row.last_name,
+    phone: row.phone,
+    email: row.email,
+    visits: row.visits,
+    lastVisit: row.last_visit ? new Date(row.last_visit) : null,
+    nextVisit: row.next_visit ? new Date(row.next_visit) : null,
+  }))
+}
+
+// Gli appuntamenti confermati di un cliente, dal più recente
+export async function fetchCustomerHistory(customer) {
+  const { data, error } = await supabase.rpc('get_customer_history', {
+    p_kind: customer.kind,
+    p_customer_id: customer.id,
+  })
+  if (error) throw toStaffError(error, 'Non siamo riusciti a caricare lo storico.')
+  return data.map((row) => ({
+    id: row.id,
+    startsAt: new Date(row.starts_at),
+    endsAt: new Date(row.ends_at),
+    serviceNames: row.service_names,
+    totalPrice: Number(row.total_price),
+    fromPrice: row.from_price,
+    manual: row.source === 'manual',
+  }))
+}
+
+// Inserimento a mano. customer è un cliente dell'elenco ({ kind, id })
+// oppure null: in quel caso si crea un cliente nuovo senza account con
+// newCustomer ({ firstName, lastName, phone }).
+export async function staffCreateBooking({ customer, newCustomer, serviceIds, startsAt }) {
+  const { error } = await supabase.rpc('staff_create_booking', {
+    p_kind: customer?.kind ?? null,
+    p_customer_id: customer?.id ?? null,
+    p_first_name: newCustomer?.firstName ?? null,
+    p_last_name: newCustomer?.lastName ?? null,
+    p_phone: newCustomer?.phone ?? null,
+    p_service_ids: serviceIds,
+    p_starts_at: startsAt.toISOString(),
+  })
+  if (error) throw toStaffError(error, "Non siamo riusciti a salvare l'appuntamento. Riprova.")
+}

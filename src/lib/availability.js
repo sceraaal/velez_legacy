@@ -110,11 +110,13 @@ export function formatDay(day) {
 // slotMinutes (già arrotondati). busy = periodi occupati, come li restituisce
 // get_busy_periods: [{ from: Date, to: Date }].
 // Restituisce i minuti dalla mezzanotte: [480, 510, ...] = 8:00, 8:30...
-export function getFreeSlots(day, slotMinutes, busy, now = new Date()) {
+// withLimits = false (agenda di Nicolas): niente preavviso di un'ora e niente
+// limite dei 30 giorni, come in staff_create_booking (migrazione 13).
+export function getFreeSlots(day, slotMinutes, busy, now = new Date(), { withLimits = true } = {}) {
   if (!OPENING.days.includes(weekday(day))) return []
 
-  const earliest = now.getTime() + OPENING.minNoticeMinutes * 60_000
-  const latest = now.getTime() + OPENING.maxDaysAhead * 24 * 60 * 60_000
+  const earliest = withLimits ? now.getTime() + OPENING.minNoticeMinutes * 60_000 : -Infinity
+  const latest = withLimits ? now.getTime() + OPENING.maxDaysAhead * 24 * 60 * 60_000 : Infinity
   const slots = []
 
   for (
