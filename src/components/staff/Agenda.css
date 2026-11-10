@@ -150,3 +150,8 @@
   line-height: 44px;
   color: var(--color-gold-light);
 }
+
+/* Esci in fondo all'agenda */
+.agenda__signout-bottom {
+  margin-top: var(--space-5);
+}

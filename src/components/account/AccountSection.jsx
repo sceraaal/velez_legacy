@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { loadPendingBooking } from '../../lib/pendingBooking.js'
 import { navigate, ROUTES } from '../../lib/router.js'
+import { amIStaff } from '../../lib/staffApi.js'
 import BaroqueFrame from '../BaroqueFrame.jsx'
 import AccountPanel from './AccountPanel.jsx'
 import ForgotPasswordForm from './ForgotPasswordForm.jsx'
@@ -32,9 +33,15 @@ function AccountSection({ auth }) {
   // notice, così il messaggio della registrazione non resta dopo l'accesso
   const [panelNotice, setPanelNotice] = useState(null)
 
-  // Dopo l'accesso: se il cliente stava prenotando, lo riportiamo al passo
-  // Conferma della prenotazione, con le sue scelte (vedi pendingBooking.js)
-  function returnToBooking() {
+  // Subito dopo l'accesso:
+  // - se è Nicolas (tabella staff), lo portiamo alla sua agenda;
+  // - se il cliente stava prenotando, lo riportiamo al passo Conferma della
+  //   prenotazione, con le sue scelte (vedi pendingBooking.js).
+  async function afterSignIn() {
+    if (await amIStaff()) {
+      navigate(ROUTES.agenda)
+      return
+    }
     if (loadPendingBooking()) navigate(`${ROUTES.home}#prenota-conferma`)
   }
 
@@ -89,7 +96,7 @@ function AccountSection({ auth }) {
         )}
 
         {mode === 'login' && (
-          <LoginForm onForgotPassword={() => switchTo('forgot')} onSignedIn={returnToBooking} />
+          <LoginForm onForgotPassword={() => switchTo('forgot')} onSignedIn={afterSignIn} />
         )}
 
         {mode === 'register' && (
