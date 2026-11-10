@@ -6,6 +6,27 @@ Le voci più recenti stanno in alto.
 
 ---
 
+## 2026-11-10 – Clienti senza account e inserimento a mano (Fase 1, passo 5b)
+
+**Decisione**
+- I clienti senza account stanno in una tabella a parte, `walk_in_customers`
+  (nome, cognome, telefono facoltativo), non dentro la prenotazione.
+- L'inserimento a mano vale anche nel futuro (prenotazioni al telefono) e non
+  rispetta i blocchi né il preavviso: decide Nicolas.
+- Elenco clienti con ricerca; la scheda mostra contatti e appuntamenti.
+
+**Perché**
+- Con una tabella a parte la volta dopo Nicolas ritrova il cliente nell'elenco
+  e lo storico resta unito.
+- Nicolas conosce la sua agenda: le regole pensate per i clienti online
+  (preavviso, 30 giorni) lo bloccherebbero senza motivo.
+
+**Da ricordare**
+- Chi viene registrato a mano lascia i suoi dati in salone: l'informativa
+  privacy (passo 7) deve valere anche per lui.
+
+---
+
 ## 2026-11-10 – Blocchi e disdetta dall'agenda (Fase 1, passo 5a)
 
 **Decisione**

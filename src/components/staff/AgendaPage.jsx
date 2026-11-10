@@ -7,6 +7,7 @@ import BaroqueFrame from '../BaroqueFrame.jsx'
 import Link from '../Link.jsx'
 import AgendaDay from './AgendaDay.jsx'
 import BlockedPeriods from './BlockedPeriods.jsx'
+import CustomerList from './CustomerList.jsx'
 import '../booking/Booking.css'
 import '../account/Account.css'
 import './Agenda.css'
@@ -23,7 +24,7 @@ function AgendaPage({ auth }) {
   // non vale più.
   const [check, setCheck] = useState(null)
   const [leaving, setLeaving] = useState(false)
-  // Quale linguetta è aperta: 'agenda' o 'blocks'
+  // Quale linguetta è aperta: 'agenda', 'blocks' o 'customers'
   const [tab, setTab] = useState('agenda')
 
   const userId = session?.user.id
@@ -76,15 +77,25 @@ function AgendaPage({ auth }) {
     content = (
       <>
         {/* Le linguette, con lo stesso stile di Accedi / Registrati */}
-        <div className="account__tabs">
+        <div className="account__tabs agenda__tabs">
           <button type="button" className="account__tab" aria-pressed={tab === 'agenda'} onClick={() => setTab('agenda')}>
             Agenda
           </button>
           <button type="button" className="account__tab" aria-pressed={tab === 'blocks'} onClick={() => setTab('blocks')}>
             Blocchi
           </button>
+          <button
+            type="button"
+            className="account__tab"
+            aria-pressed={tab === 'customers'}
+            onClick={() => setTab('customers')}
+          >
+            Clienti
+          </button>
         </div>
-        {tab === 'agenda' ? <AgendaDay /> : <BlockedPeriods />}
+        {tab === 'agenda' && <AgendaDay />}
+        {tab === 'blocks' && <BlockedPeriods />}
+        {tab === 'customers' && <CustomerList />}
         {signOutError && (
           <p className="customer-form__error" role="alert">
             {signOutError}
