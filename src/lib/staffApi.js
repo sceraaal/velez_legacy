@@ -46,3 +46,47 @@ export async function fetchAgenda(day) {
     totalMinutes: row.total_minutes,
   }))
 }
+
+// --- Passo 5a: ferie, impegni e disdetta (migrazione 12) ---------------------
+
+// Trasforma un errore del database in un Error con un messaggio da mostrare.
+// P0001 = errore scritto da noi nella funzione, già in italiano.
+function toStaffError(error, fallback) {
+  if (error.code === 'P0001') return new Error(error.message)
+  console.error(fallback, error)
+  return new Error(fallback)
+}
+
+// I blocchi non ancora finiti, dal più vicino
+export async function fetchBlockedPeriods() {
+  const { data, error } = await supabase.rpc('get_blocked_periods')
+  if (error) throw toStaffError(error, 'Non siamo riusciti a caricare i blocchi.')
+  return data.map((row) => ({
+    id: row.id,
+    startsAt: new Date(row.starts_at),
+    endsAt: new Date(row.ends_at),
+    reason: row.reason,
+  }))
+}
+
+// Salva un blocco. Se nel periodo ci sono appuntamenti il database rifiuta e
+// il messaggio dice chi è prenotato.
+export async function addBlockedPeriod({ startsAt, endsAt, reason }) {
+  const { error } = await supabase.rpc('add_blocked_period', {
+    p_starts_at: startsAt.toISOString(),
+    p_ends_at: endsAt.toISOString(),
+    p_reason: reason,
+  })
+  if (error) throw toStaffError(error, 'Non siamo riusciti a salvare il blocco. Riprova.')
+}
+
+export async function deleteBlockedPeriod(id) {
+  const { error } = await supabase.rpc('delete_blocked_period', { p_id: id })
+  if (error) throw toStaffError(error, 'Non siamo riusciti a togliere il blocco. Riprova.')
+}
+
+// Nicolas disdice un appuntamento (senza il limite di un'ora dei clienti)
+export async function staffCancelBooking(bookingId) {
+  const { error } = await supabase.rpc('staff_cancel_booking', { p_booking_id: bookingId })
+  if (error) throw toStaffError(error, 'Non siamo riusciti a disdire. Riprova.')
+}

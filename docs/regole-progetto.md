@@ -23,7 +23,7 @@ livello superiore e curato.
 - Un servizio occupa la sua durata; il prossimo appuntamento parte dalla mezz'ora
   successiva libera. Esempio: un servizio da 50 minuti alle 9:00 finisce alle 9:50,
   quindi il prossimo appuntamento può iniziare alle 10:00.
-- Nicolas può bloccare a mano giorni o fasce orarie (ferie, impegni).
+- Nicolas può bloccare giorni o fasce orarie (ferie, impegni) dall'agenda.
 
 ## Servizi
 
@@ -102,6 +102,12 @@ durata indicata è un intervallo, si usa il valore più lungo.
   su oggi, con ora, cliente, servizi e prezzo; toccando un appuntamento si
   vedono telefono ed email. Nicolas entra dallo stesso "Accedi" dei clienti; il
   suo account è segnato come "staff" dal pannello Supabase.
+- Ferie e impegni si bloccano dall'agenda (linguetta Blocchi): giorni interi
+  (8:00–20:00) o una fascia oraria, con una nota facoltativa. Se nel periodo ci
+  sono già appuntamenti il blocco non si salva: Nicolas vede chi è prenotato,
+  lo avvisa e lo disdice prima.
+- Nicolas può disdire qualsiasi appuntamento non ancora finito, senza il limite
+  di un'ora. Il cliente per ora va avvisato a voce (email dal passo 6).
 - Notifica quando un cliente prenota o disdice: push dalla web app + email di
   riserva (niente SMS a Nicolas, per contenere i costi).
 - Inserimento manuale di clienti senza prenotazione, dopo il servizio (nome e

@@ -124,6 +124,17 @@ aggiunge.
   Per le prenotazioni vecchie della prova (senza cliente collegato) prende i
   dati scritti nella prenotazione.
 
+- `get_blocked_periods()` (migrazione 12) – i blocchi non ancora finiti.
+- `add_blocked_period(inizio, fine, nota)` – salva un blocco; se nel periodo ci
+  sono appuntamenti confermati non salva nulla e risponde con l'elenco ("17/11
+  ore 09:00 Mario Rossi, ..."), così Nicolas li disdice prima.
+- `delete_blocked_period(id)` – toglie un blocco.
+- `staff_cancel_booking(id)` – Nicolas disdice un appuntamento confermato,
+  senza il limite di un'ora; segna `cancelled_at`.
+
+Le funzioni dell'agenda (migrazioni 11 e 12) controllano per prima cosa
+`is_staff()`: a chi non è staff rispondono "Pagina riservata.".
+
 Sono tutte `security definer`: lavorano con i permessi di chi le ha create, così
 il cliente prenota, legge, disdice e sposta solo le sue prenotazioni senza poter
 leggere la tabella `bookings`. Le ultime tre e `create_booking` le può chiamare
@@ -165,7 +176,8 @@ modifica "riesce" ma cambia zero righe; con la migrazione 2 viene rifiutato con
   rimettilo a `true`.
 - **Vedere le prenotazioni**: Table Editor → `bookings` (i servizi di ognuna in
   `booking_services`).
-- **Bloccare ferie o un impegno**: dall'SQL Editor, scrivendo l'ora italiana in
+- **Bloccare ferie o un impegno**: dalla pagina `/agenda` → linguetta Blocchi
+  (passo 5a). In alternativa, dall'SQL Editor, scrivendo l'ora italiana in
   chiaro (il Table Editor mostra gli orari in UTC, un'ora indietro d'inverno e due
   d'estate, ed è facile sbagliare):
   ```sql
@@ -223,6 +235,8 @@ modifica "riesce" ma cambia zero righe; con la migrazione 2 viene rifiutato con
     totale nei servizi tecnici.
   - `20261109140000_area_nicolas.sql` – tabella `staff`, `is_staff`,
     `am_i_staff` e `get_agenda` per l'agenda di Nicolas.
+  - `20261110120000_blocchi_e_disdetta_nicolas.sql` – blocchi e disdetta
+    dall'agenda di Nicolas.
 - `supabase/seed.sql` – i dati iniziali del listino (2026-11-03). Serve solo per
   un database nuovo: i prezzi aggiornati stanno nel database, non qui.
   Su un database nuovo l'ordine è: migrazioni 1-8, poi `seed.sql`, poi le

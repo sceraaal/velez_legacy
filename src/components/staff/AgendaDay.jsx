@@ -16,12 +16,19 @@ function AgendaDay() {
   const [result, setResult] = useState(null)
   // Cambiando questo numero si ricarica lo stesso giorno (tasto Aggiorna)
   const [version, setVersion] = useState(0)
+  // Messaggio dopo una disdetta; sparisce cambiando giorno
+  const [notice, setNotice] = useState(null)
+
+  function changeDay(next) {
+    setNotice(null)
+    setDay(next)
+  }
 
   useEffect(() => {
     let ignore = false
     fetchAgenda(day)
       .then((list) => {
-        if (!ignore) setResult({ day, list })
+        if (!ignore) setResult({ day, list, loadedAt: new Date() })
       })
       .catch((failure) => {
         if (!ignore) setResult({ day, error: failure.message })
@@ -40,25 +47,31 @@ function AgendaDay() {
   return (
     <div className="agenda">
       <div className="agenda__nav">
-        <button type="button" className="agenda__arrow" onClick={() => setDay(addDays(day, -1))} aria-label="Giorno prima">
+        <button type="button" className="agenda__arrow" onClick={() => changeDay(addDays(day, -1))} aria-label="Giorno prima">
           ←
         </button>
         <h3 className="agenda__day" aria-live="polite">
           {formatDay(day)}
         </h3>
-        <button type="button" className="agenda__arrow" onClick={() => setDay(addDays(day, 1))} aria-label="Giorno dopo">
+        <button type="button" className="agenda__arrow" onClick={() => changeDay(addDays(day, 1))} aria-label="Giorno dopo">
           →
         </button>
       </div>
 
       <div className="agenda__tools">
-        <button type="button" className="account__secondary" onClick={() => setDay(todayInRome())}>
+        <button type="button" className="account__secondary" onClick={() => changeDay(todayInRome())}>
           Oggi
         </button>
         <button type="button" className="account__secondary" onClick={() => setVersion((v) => v + 1)}>
           Aggiorna
         </button>
       </div>
+
+      {notice && (
+        <p className="account__notice" role="status">
+          {notice}
+        </p>
+      )}
 
       {!current && <p className="booking__message">Caricamento…</p>}
 
@@ -80,7 +93,14 @@ function AgendaDay() {
           <ol className="agenda__list">
             {list.map((item) => (
               <li key={item.id}>
-                <AppointmentCard appointment={item} />
+                <AppointmentCard
+                  appointment={item}
+                  now={current.loadedAt}
+                  onCancelled={() => {
+                    setNotice("L'appuntamento è stato disdetto: l'orario è di nuovo libero.")
+                    setVersion((v) => v + 1)
+                  }}
+                />
               </li>
             ))}
           </ol>

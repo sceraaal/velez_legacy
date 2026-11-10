@@ -6,6 +6,7 @@ import logo from '../../assets/logo-velez-legacy.webp'
 import BaroqueFrame from '../BaroqueFrame.jsx'
 import Link from '../Link.jsx'
 import AgendaDay from './AgendaDay.jsx'
+import BlockedPeriods from './BlockedPeriods.jsx'
 import '../booking/Booking.css'
 import '../account/Account.css'
 import './Agenda.css'
@@ -22,6 +23,8 @@ function AgendaPage({ auth }) {
   // non vale più.
   const [check, setCheck] = useState(null)
   const [leaving, setLeaving] = useState(false)
+  // Quale linguetta è aperta: 'agenda' o 'blocks'
+  const [tab, setTab] = useState('agenda')
 
   const userId = session?.user.id
   useEffect(() => {
@@ -72,7 +75,16 @@ function AgendaPage({ auth }) {
   } else {
     content = (
       <>
-        <AgendaDay />
+        {/* Le linguette, con lo stesso stile di Accedi / Registrati */}
+        <div className="account__tabs">
+          <button type="button" className="account__tab" aria-pressed={tab === 'agenda'} onClick={() => setTab('agenda')}>
+            Agenda
+          </button>
+          <button type="button" className="account__tab" aria-pressed={tab === 'blocks'} onClick={() => setTab('blocks')}>
+            Blocchi
+          </button>
+        </div>
+        {tab === 'agenda' ? <AgendaDay /> : <BlockedPeriods />}
         {signOutError && (
           <p className="customer-form__error" role="alert">
             {signOutError}
