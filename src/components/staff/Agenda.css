@@ -2,20 +2,6 @@
    Cornice, titoli, bottoni secondari e messaggi vengono da Booking.css e
    Account.css: qui solo le parti nuove. */
 
-/* "Esci" in alto a destra, accanto al logo */
-.agenda__signout {
-  min-height: 44px;
-  padding: 0 var(--space-2);
-  border: none;
-  background: none;
-  color: var(--color-gold-light);
-  font-family: var(--font-display);
-  font-size: 0.8125rem;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  cursor: pointer;
-}
-
 .agenda__denied {
   text-align: center;
 }

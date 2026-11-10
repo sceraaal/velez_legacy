@@ -78,7 +78,7 @@ function AgendaPage({ auth }) {
             {signOutError}
           </p>
         )}
-        {/* Esci anche in fondo, ben visibile, come nell'area clienti */}
+        {/* Esci in fondo, ben visibile, come nell'area clienti */}
         <button type="button" className="account__secondary agenda__signout-bottom" onClick={handleSignOut} disabled={leaving}>
           {leaving ? 'Uscita…' : 'Esci'}
         </button>
@@ -102,11 +102,6 @@ function AgendaPage({ auth }) {
             height="56"
           />
         </Link>
-        {session && (
-          <button type="button" className="agenda__signout" onClick={handleSignOut} disabled={leaving}>
-            {leaving ? 'Uscita…' : 'Esci'}
-          </button>
-        )}
       </nav>
       <main>
         <section className="booking" aria-labelledby="agenda-titolo">
