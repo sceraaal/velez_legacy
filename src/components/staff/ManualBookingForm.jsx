@@ -1,6 +1,14 @@
 import { useEffect, useState } from 'react'
 import { fetchBusyPeriods } from '../../lib/bookingApi.js'
-import { addDays, fromRome, getFreeSlots, roundUpToSlot, todayInRome } from '../../lib/availability.js'
+import {
+  addDays,
+  formatDateTime,
+  fromRome,
+  getFreeSlots,
+  roundUpToSlot,
+  todayInRome,
+} from '../../lib/availability.js'
+import { formatDuration, formatPrice } from '../../utils/format.js'
 import { fetchPriceList } from '../../lib/priceList.js'
 import { fetchCustomers, staffCreateBooking } from '../../lib/staffApi.js'
 import MonthCalendar from '../booking/MonthCalendar.jsx'
@@ -14,6 +22,8 @@ import TimeSlots from '../booking/TimeSlots.jsx'
 // 3. giorno e ora, con lo stesso calendario dei clienti: si vedono solo i
 //    giorni e gli orari liberi per la durata dei servizi scelti
 //    (occupati = appuntamenti e blocchi, da get_busy_periods).
+// Come nella prenotazione dei clienti, ogni passo compare quando il precedente
+// è fatto, e la barra in fondo allo schermo porta al passo successivo.
 // Le regole le ricontrolla comunque il database: se nel frattempo qualcuno
 // ha preso l'orario, mostriamo il suo messaggio.
 
@@ -87,10 +97,12 @@ function ManualBookingForm({ initialDay, onDone, onCancel }) {
 
   // Durata da occupare: la somma dei servizi scelti, arrotondata alla mezz'ora
   // (senza servizi scelti, mezz'ora)
-  const totalMinutes = (categories ?? [])
+  const chosen = (categories ?? [])
     .flatMap((category) => category.services)
     .filter((service) => selectedIds.includes(service.id))
-    .reduce((sum, service) => sum + service.duration, 0)
+  const totalMinutes = chosen.reduce((sum, service) => sum + service.duration, 0)
+  const totalPrice = chosen.reduce((sum, service) => sum + service.price, 0)
+  const hasFromPrice = chosen.some((service) => service.fromPrice)
   const slotMinutes = roundUpToSlot(Math.max(totalMinutes, 1))
   const freeSlots = (someDay) => getFreeSlots(someDay, slotMinutes, busy?.list ?? [], undefined, { withLimits: false })
   const daySlots = busy?.list && day ? freeSlots(day) : []
@@ -116,6 +128,19 @@ function ManualBookingForm({ initialDay, onDone, onCancel }) {
       clearTimeout(timer)
     }
   }, [searching, search])
+
+  // La barra in fondo porta al primo passo ancora da fare (come per i clienti).
+  // Gli id nuovo-giorno, nuovo-orario e nuovo-salva sono nel modulo qui sotto.
+  const nextStep =
+    !day
+      ? { id: 'nuovo-giorno', label: 'Scegli il giorno' }
+      : chosenTime === null
+        ? { id: 'nuovo-orario', label: "Scegli l'orario" }
+        : { id: 'nuovo-salva', label: "Salva l'appuntamento" }
+
+  function goToNextStep() {
+    document.getElementById(nextStep.id)?.scrollIntoView({ block: 'start' })
+  }
 
   const results = searching && found?.search === search ? found.list : null
 
@@ -262,17 +287,17 @@ function ManualBookingForm({ initialDay, onDone, onCancel }) {
         </p>
       )}
       {!busy && <p className="booking__message">Caricamento degli orari…</p>}
-      {busy?.list && (
+      {busy?.list && chosen.length > 0 && (
         <>
           <MonthCalendar
-            id={null}
+            id="nuovo-giorno"
             first={window_.first}
             last={window_.last}
             isAvailable={(someDay) => freeSlots(someDay).length > 0}
             selectedDay={day}
             onSelect={setDay}
           />
-          {day && <TimeSlots id={null} slots={daySlots} selectedSlot={chosenTime} onSelect={setTime} />}
+          {day && <TimeSlots id="nuovo-orario" slots={daySlots} selectedSlot={chosenTime} onSelect={setTime} />}
         </>
       )}
 
@@ -282,7 +307,7 @@ function ManualBookingForm({ initialDay, onDone, onCancel }) {
         </p>
       )}
 
-      <div className="booking-card__actions">
+      <div className="booking-card__actions" id="nuovo-salva">
         <button type="button" className="account__secondary" onClick={onCancel} disabled={sending}>
           Annulla
         </button>
@@ -290,6 +315,21 @@ function ManualBookingForm({ initialDay, onDone, onCancel }) {
           {sending ? 'Salvataggio…' : 'Salva'}
         </button>
       </div>
+
+      {/* Riepilogo fisso in fondo allo schermo, come nella prenotazione dei clienti */}
+      {chosen.length > 0 && (
+        <button type="button" className="booking-summary" onClick={goToNextStep}>
+          <span className="booking-summary__row" aria-live="polite">
+            <span className="booking-summary__line">
+              {day && chosenTime !== null
+                ? formatDateTime(fromRome(day, chosenTime))
+                : `${chosen.length} ${chosen.length === 1 ? 'servizio' : 'servizi'} · ${formatDuration(totalMinutes)}`}
+            </span>
+            <span className="booking-summary__price">{formatPrice(totalPrice, hasFromPrice)}</span>
+          </span>
+          <span className="booking-summary__action">{nextStep.label} ›</span>
+        </button>
+      )}
     </form>
   )
 }
