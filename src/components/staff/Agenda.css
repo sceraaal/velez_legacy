@@ -141,3 +141,63 @@
 .agenda__signout-bottom {
   margin-top: var(--space-5);
 }
+
+/* --- Disdetta nell'agenda (passo 5a) --- */
+
+.appointment__actions {
+  padding: 0 var(--space-3) var(--space-3);
+}
+
+/* --- Linguetta Blocchi (passo 5a) --- */
+
+/* Due caselle affiancate: Dal / Al, Dalle / Alle */
+.block-form__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-2);
+}
+
+/* Nella riga affiancata niente spazio extra tra le due caselle */
+.block-form__row .customer-form__field + .customer-form__field {
+  margin-top: 0;
+}
+
+.block-form .customer-form__submit {
+  margin-top: var(--space-4);
+}
+
+.blocks__title {
+  margin-top: var(--space-6);
+}
+
+.blocks__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.block-card {
+  margin-top: var(--space-3);
+  padding: var(--space-3);
+  border-left: 2px solid var(--color-gold-dark);
+  background-color: var(--color-surface);
+}
+
+.block-card__when {
+  margin: 0;
+  color: var(--color-gold-light);
+}
+
+.block-card__when::first-letter {
+  text-transform: uppercase;
+}
+
+.block-card__reason {
+  margin: var(--space-1) 0 0;
+  font-style: italic;
+  color: var(--color-muted);
+}
+
+.block-card__remove {
+  margin-top: var(--space-3);
+}

@@ -6,6 +6,23 @@ Le voci più recenti stanno in alto.
 
 ---
 
+## 2026-11-10 – Blocchi e disdetta dall'agenda (Fase 1, passo 5a)
+
+**Decisione**
+- Il passo 5 è diviso in due: 5a (blocchi e disdetta), 5b (clienti, storico e
+  inserimento a mano).
+- Un blocco sopra appuntamenti già presi **non si salva**: il database elenca
+  chi è prenotato.
+- Nicolas può solo disdire, non spostare: per spostare disdice e reinserisce a
+  mano (5b).
+
+**Perché**
+- Due PR più piccole sono più facili da provare.
+- Così nessun cliente resta prenotato in un giorno di ferie senza saperlo.
+- Uno "Sposta" per Nicolas raddoppierebbe il lavoro per un caso raro.
+
+---
+
 ## 2026-11-10 – Area riservata di Nicolas: l'agenda (Fase 1, passo 4)
 
 **Decisione**
