@@ -98,7 +98,10 @@ durata indicata è un intervallo, si usa il valore più lungo.
 ## Lato Nicolas (area riservata)
 
 - Usabile da telefono e da computer.
-- Agenda con gli appuntamenti.
+- Agenda con gli appuntamenti (pagina `/agenda`): un giorno alla volta, si apre
+  su oggi, con ora, cliente, servizi e prezzo; toccando un appuntamento si
+  vedono telefono ed email. Nicolas entra dallo stesso "Accedi" dei clienti; il
+  suo account è segnato come "staff" dal pannello Supabase.
 - Notifica quando un cliente prenota o disdice: push dalla web app + email di
   riserva (niente SMS a Nicolas, per contenere i costi).
 - Inserimento manuale di clienti senza prenotazione, dopo il servizio (nome e

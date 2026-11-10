@@ -6,6 +6,26 @@ Le voci più recenti stanno in alto.
 
 ---
 
+## 2026-11-10 – Area riservata di Nicolas: l'agenda (Fase 1, passo 4)
+
+**Decisione**
+- Nicolas usa lo stesso "Accedi" dei clienti; il database lo riconosce dalla
+  tabella `staff`, che si riempie solo dal pannello Supabase.
+- L'agenda è la pagina `/agenda`: un giorno alla volta, si apre su oggi, solo da
+  guardare. Tocco sull'appuntamento = telefono (si chiama col dito) ed email.
+- Nicolas legge i dati dei clienti solo con la funzione `get_agenda`, non con
+  regole RLS aperte su `bookings` e `customers`.
+- Disdire o spostare dall'agenda, e vedere gli orari liberi: non ora (passo 5).
+
+**Perché**
+- Una sola pagina di accesso è più semplice da mantenere, e la tabella `staff`
+  non si può riempire dal sito.
+- Sul telefono un giorno alla volta si legge meglio di una settimana.
+- Con una funzione decidiamo esattamente quali colonne escono, e la regola
+  "solo lo staff" sta in un posto solo.
+
+---
+
 ## 2026-11-09 – Nuovo listino di Nicolas
 
 **Decisione**

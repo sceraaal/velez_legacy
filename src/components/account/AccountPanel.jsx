@@ -1,12 +1,15 @@
 import { useEffect, useState } from 'react'
 import { fetchMyProfile, signOut } from '../../lib/auth.js'
 import { loadPendingBooking } from '../../lib/pendingBooking.js'
-import { ROUTES } from '../../lib/router.js'
+import { navigate, ROUTES } from '../../lib/router.js'
+import { amIStaff } from '../../lib/staffApi.js'
 import Link from '../Link.jsx'
 import MyBookings from './MyBookings.jsx'
 
 // "Il Suo account": i dati di chi ha fatto il login e il bottone Esci.
 // Sotto i dati, per i clienti, "I miei appuntamenti" (MyBookings).
+// Se l'account non ha dati del cliente ed è di Nicolas (tabella staff,
+// migrazione 11), lo portiamo direttamente alla sua agenda.
 
 function AccountPanel({ user, notice }) {
   // undefined = sto ancora leggendo, null = profilo assente, oggetto = profilo
@@ -31,6 +34,19 @@ function AccountPanel({ user, notice }) {
       ignore = true
     }
   }, [user.id])
+
+  // Account senza profilo cliente: è Nicolas? Se sì, via all'agenda.
+  const noProfile = profile === null
+  useEffect(() => {
+    if (!noProfile) return
+    let ignore = false
+    amIStaff().then((staff) => {
+      if (!ignore && staff) navigate(ROUTES.agenda)
+    })
+    return () => {
+      ignore = true
+    }
+  }, [noProfile])
 
   async function handleSignOut() {
     setLeaving(true)
