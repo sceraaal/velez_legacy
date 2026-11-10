@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { fetchMyProfile, signOut } from '../../lib/auth.js'
 import { loadPendingBooking } from '../../lib/pendingBooking.js'
-import { navigate, ROUTES } from '../../lib/router.js'
+import { ROUTES } from '../../lib/router.js'
 import { amIStaff } from '../../lib/staffApi.js'
 import Link from '../Link.jsx'
 import MyBookings from './MyBookings.jsx'
@@ -9,7 +9,10 @@ import MyBookings from './MyBookings.jsx'
 // "Il Suo account": i dati di chi ha fatto il login e il bottone Esci.
 // Sotto i dati, per i clienti, "I miei appuntamenti" (MyBookings).
 // Se l'account non ha dati del cliente ed è di Nicolas (tabella staff,
-// migrazione 11), lo portiamo direttamente alla sua agenda.
+// migrazione 11), mostriamo il bottone per la sua agenda e il bottone Esci.
+// (Il passaggio automatico all'agenda avviene solo subito dopo l'accesso, in
+// AccountSection: se lo facessimo qui, Nicolas non potrebbe mai fermarsi in
+// questa pagina.)
 
 function AccountPanel({ user, notice }) {
   // undefined = sto ancora leggendo, null = profilo assente, oggetto = profilo
@@ -35,18 +38,20 @@ function AccountPanel({ user, notice }) {
     }
   }, [user.id])
 
-  // Account senza profilo cliente: è Nicolas? Se sì, via all'agenda.
+  // Account senza profilo cliente: è Nicolas? { userId, staff }, come in AgendaPage
+  const [staffCheck, setStaffCheck] = useState(null)
   const noProfile = profile === null
   useEffect(() => {
     if (!noProfile) return
     let ignore = false
     amIStaff().then((staff) => {
-      if (!ignore && staff) navigate(ROUTES.agenda)
+      if (!ignore) setStaffCheck({ userId: user.id, staff })
     })
     return () => {
       ignore = true
     }
-  }, [noProfile])
+  }, [noProfile, user.id])
+  const isStaff = noProfile && staffCheck?.userId === user.id && staffCheck.staff
 
   async function handleSignOut() {
     setLeaving(true)
@@ -89,8 +94,17 @@ function AccountPanel({ user, notice }) {
         </dl>
       )}
 
+      {isStaff && (
+        <>
+          <p className="account__text">Accesso effettuato come barbiere ({user.email}).</p>
+          <Link className="customer-form__submit account__return" to={ROUTES.agenda}>
+            Apri l'agenda
+          </Link>
+        </>
+      )}
+
       {/* Succede per gli account creati a mano dal pannello Supabase */}
-      {profile === null && (
+      {profile === null && staffCheck?.userId === user.id && !isStaff && (
         <p className="account__text">
           Accesso effettuato come {user.email}. Per questo account non ci sono dati del cliente.
         </p>

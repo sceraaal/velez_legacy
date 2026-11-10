@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { signOut } from '../../lib/auth.js'
-import { ROUTES } from '../../lib/router.js'
+import { navigate, ROUTES } from '../../lib/router.js'
 import { amIStaff } from '../../lib/staffApi.js'
 import logo from '../../assets/logo-velez-legacy.webp'
 import BaroqueFrame from '../BaroqueFrame.jsx'
@@ -35,10 +35,17 @@ function AgendaPage({ auth }) {
     }
   }, [userId])
 
+  // Esci: dopo l'uscita torniamo alla pagina iniziale del sito, così non
+  // resta a schermo "Pagina riservata" (che sembrerebbe un errore).
+  const [signOutError, setSignOutError] = useState(null)
   async function handleSignOut() {
     setLeaving(true)
+    setSignOutError(null)
     try {
       await signOut()
+      navigate(ROUTES.home)
+    } catch (failure) {
+      setSignOutError(failure.message)
     } finally {
       setLeaving(false)
     }
@@ -63,7 +70,20 @@ function AgendaPage({ auth }) {
       </div>
     )
   } else {
-    content = <AgendaDay />
+    content = (
+      <>
+        <AgendaDay />
+        {signOutError && (
+          <p className="customer-form__error" role="alert">
+            {signOutError}
+          </p>
+        )}
+        {/* Esci in fondo, ben visibile, come nell'area clienti */}
+        <button type="button" className="account__secondary agenda__signout-bottom" onClick={handleSignOut} disabled={leaving}>
+          {leaving ? 'Uscita…' : 'Esci'}
+        </button>
+      </>
+    )
   }
 
   return (
@@ -82,11 +102,6 @@ function AgendaPage({ auth }) {
             height="56"
           />
         </Link>
-        {session && (
-          <button type="button" className="agenda__signout" onClick={handleSignOut} disabled={leaving}>
-            {leaving ? 'Uscita…' : 'Esci'}
-          </button>
-        )}
       </nav>
       <main>
         <section className="booking" aria-labelledby="agenda-titolo">
