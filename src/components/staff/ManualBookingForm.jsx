@@ -1,20 +1,36 @@
 import { useEffect, useState } from 'react'
-import { formatTime, fromRome, OPENING } from '../../lib/availability.js'
+import { fetchBusyPeriods } from '../../lib/bookingApi.js'
+import { addDays, fromRome, getFreeSlots, roundUpToSlot, todayInRome } from '../../lib/availability.js'
 import { fetchPriceList } from '../../lib/priceList.js'
 import { fetchCustomers, staffCreateBooking } from '../../lib/staffApi.js'
+import MonthCalendar from '../booking/MonthCalendar.jsx'
 import ServicePicker from '../booking/ServicePicker.jsx'
+import TimeSlots from '../booking/TimeSlots.jsx'
 
 // "Nuovo appuntamento" inserito a mano da Nicolas (passo 5b): per chi telefona
 // o per segnare un servizio già fatto a chi non ha l'account.
 // 1. il cliente: uno dell'elenco, oppure uno nuovo (nome, cognome, telefono facoltativo)
 // 2. i servizi
-// 3. giorno e ora
-// Le regole (giorni, mezz'ore, 8:00–20:00, niente sovrapposizioni) le
-// controlla il database: qui mostriamo il suo messaggio se dice di no.
+// 3. giorno e ora, con lo stesso calendario dei clienti: si vedono solo i
+//    giorni e gli orari liberi per la durata dei servizi scelti
+//    (occupati = appuntamenti e blocchi, da get_busy_periods).
+// Le regole le ricontrolla comunque il database: se nel frattempo qualcuno
+// ha preso l'orario, mostriamo il suo messaggio.
 
-// Gli orari di inizio: 8:00, 8:30 ... 19:30
-const START_TIMES = []
-for (let m = OPENING.openMinutes; m < OPENING.closeMinutes; m += OPENING.slotStep) START_TIMES.push(m)
+// Il calendario va da 2 settimane fa (per segnare servizi già fatti) a 45
+// giorni avanti (prenotazioni al telefono)
+const DAYS_BACK = 14
+const DAYS_AHEAD = 45
+
+// get_busy_periods accetta al massimo 40 giorni per volta: due richieste
+async function fetchBusyWindow(first, last) {
+  const middle = addDays(first, 30)
+  const [a, b] = await Promise.all([
+    fetchBusyPeriods(fromRome(first, 0), fromRome(middle, 0)),
+    fetchBusyPeriods(fromRome(middle, 0), fromRome(addDays(last, 1), 0)),
+  ])
+  return [...a, ...b]
+}
 
 function ManualBookingForm({ initialDay, onDone, onCancel }) {
   // 'existing' = cliente dell'elenco, 'new' = cliente nuovo senza account
@@ -26,8 +42,15 @@ function ManualBookingForm({ initialDay, onDone, onCancel }) {
 
   const [categories, setCategories] = useState(null)
   const [selectedIds, setSelectedIds] = useState([])
+  // Il periodo del calendario, fissato all'apertura del modulo
+  const [window_] = useState(() => {
+    const today = todayInRome()
+    return { first: addDays(today, -DAYS_BACK), last: addDays(today, DAYS_AHEAD) }
+  })
+  // { list } quando arrivano i periodi occupati, { error } se qualcosa va storto
+  const [busy, setBusy] = useState(null)
   const [day, setDay] = useState(initialDay)
-  const [time, setTime] = useState(OPENING.openMinutes)
+  const [time, setTime] = useState(null)
 
   const [error, setError] = useState(null)
   const [sending, setSending] = useState(false)
@@ -46,6 +69,33 @@ function ManualBookingForm({ initialDay, onDone, onCancel }) {
       ignore = true
     }
   }, [])
+
+  // Gli orari occupati del periodo, una volta sola
+  useEffect(() => {
+    let ignore = false
+    fetchBusyWindow(window_.first, window_.last)
+      .then((list) => {
+        if (!ignore) setBusy({ list })
+      })
+      .catch(() => {
+        if (!ignore) setBusy({ error: 'Non siamo riusciti a caricare gli orari occupati.' })
+      })
+    return () => {
+      ignore = true
+    }
+  }, [window_])
+
+  // Durata da occupare: la somma dei servizi scelti, arrotondata alla mezz'ora
+  // (senza servizi scelti, mezz'ora)
+  const totalMinutes = (categories ?? [])
+    .flatMap((category) => category.services)
+    .filter((service) => selectedIds.includes(service.id))
+    .reduce((sum, service) => sum + service.duration, 0)
+  const slotMinutes = roundUpToSlot(Math.max(totalMinutes, 1))
+  const freeSlots = (someDay) => getFreeSlots(someDay, slotMinutes, busy?.list ?? [], undefined, { withLimits: false })
+  const daySlots = busy?.list && day ? freeSlots(day) : []
+  // Se cambiando servizi o giorno l'ora scelta non è più libera, non vale più
+  const chosenTime = daySlots.includes(time) ? time : null
 
   // Ricerca dei clienti mentre si scrive (almeno 2 lettere)
   const searching = customerMode === 'existing' && !customer && search.trim().length >= 2
@@ -83,6 +133,7 @@ function ManualBookingForm({ initialDay, onDone, onCancel }) {
     }
     if (selectedIds.length === 0) return setError('Scegli almeno un servizio.')
     if (!day) return setError('Scegli il giorno.')
+    if (chosenTime === null) return setError("Scegli un orario libero.")
 
     setSending(true)
     try {
@@ -90,7 +141,7 @@ function ManualBookingForm({ initialDay, onDone, onCancel }) {
         customer: customerMode === 'existing' ? customer : null,
         newCustomer: customerMode === 'new' ? newCustomer : null,
         serviceIds: selectedIds,
-        startsAt: fromRome(day, time),
+        startsAt: fromRome(day, chosenTime),
       })
       onDone(day)
     } catch (failure) {
@@ -204,41 +255,26 @@ function ManualBookingForm({ initialDay, onDone, onCancel }) {
         <p className="booking__message">Caricamento del listino…</p>
       )}
 
-      {/* 3. Giorno e ora */}
-      <fieldset className="booking-step">
-        <legend className="booking-step__title">Giorno e ora</legend>
-        <div className="block-form__row">
-          <div className="customer-form__field">
-            <label htmlFor="nuovo-giorno" className="customer-form__label">
-              Giorno
-            </label>
-            <input
-              id="nuovo-giorno"
-              className="customer-form__input"
-              type="date"
-              value={day}
-              onChange={(event) => setDay(event.target.value)}
-            />
-          </div>
-          <div className="customer-form__field">
-            <label htmlFor="nuovo-ora" className="customer-form__label">
-              Ora
-            </label>
-            <select
-              id="nuovo-ora"
-              className="customer-form__input"
-              value={time}
-              onChange={(event) => setTime(Number(event.target.value))}
-            >
-              {START_TIMES.map((m) => (
-                <option key={m} value={m}>
-                  {formatTime(m)}
-                </option>
-              ))}
-            </select>
-          </div>
-        </div>
-      </fieldset>
+      {/* 3. Giorno e ora: solo quelli liberi */}
+      {busy?.error && (
+        <p className="customer-form__error" role="alert">
+          {busy.error}
+        </p>
+      )}
+      {!busy && <p className="booking__message">Caricamento degli orari…</p>}
+      {busy?.list && (
+        <>
+          <MonthCalendar
+            id={null}
+            first={window_.first}
+            last={window_.last}
+            isAvailable={(someDay) => freeSlots(someDay).length > 0}
+            selectedDay={day}
+            onSelect={setDay}
+          />
+          {day && <TimeSlots id={null} slots={daySlots} selectedSlot={chosenTime} onSelect={setTime} />}
+        </>
+      )}
 
       {error && (
         <p className="customer-form__error" role="alert">

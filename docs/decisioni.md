@@ -12,7 +12,10 @@ Le voci più recenti stanno in alto.
 - I clienti senza account stanno in una tabella a parte, `walk_in_customers`
   (nome, cognome, telefono facoltativo), non dentro la prenotazione.
 - L'inserimento a mano vale anche nel futuro (prenotazioni al telefono) e non
-  rispetta i blocchi né il preavviso: decide Nicolas.
+  rispetta il preavviso né i 30 giorni: decide Nicolas.
+- Il modulo mostra solo giorni e orari liberi, come per i clienti (scelta di
+  Simona): meglio non vedere un orario occupato che sceglierlo e scoprirlo dopo.
+  Per prenotare dentro un blocco, Nicolas prima toglie il blocco.
 - Elenco clienti con ricerca; la scheda mostra contatti e appuntamenti.
 
 **Perché**

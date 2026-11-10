@@ -113,8 +113,11 @@ durata indicata è un intervallo, si usa il valore più lungo.
 - Inserimento a mano ("+ Nuovo appuntamento" nell'agenda): per un cliente
   dell'elenco o per uno nuovo senza account (nome, cognome, telefono
   facoltativo). Va bene sia dopo il servizio (storico) sia per chi prenota al
-  telefono (occupa l'orario). Valgono giorni, mezz'ore e niente sovrapposizioni;
-  non valgono il preavviso di un'ora, i 30 giorni e i blocchi.
+  telefono (occupa l'orario). Il calendario va da 2 settimane fa a 45 giorni
+  avanti e mostra solo giorni e orari liberi (appuntamenti e blocchi esclusi),
+  in base alla durata dei servizi scelti. Non valgono il preavviso di un'ora e
+  i 30 giorni. Il database accetterebbe anche un orario dentro un blocco, ma
+  il modulo non lo propone.
 - Lista clienti (linguetta Clienti) con ricerca e storico degli appuntamenti,
   per i clienti con e senza account.
 - Può segnare un cliente come "non presentato". **Dal secondo appuntamento saltato il
