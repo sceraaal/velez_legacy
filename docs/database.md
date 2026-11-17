@@ -390,4 +390,4 @@ con `event` = `reminder_24h` o `reminder_2h`.
   `.github/workflows/sveglia-supabase.yml` legge il listino ogni mattina, così
   il progetto non resta mai fermo. Se il lavoro diventa rosso, GitHub manda
   un'email: controllare che il progetto non sia in pausa e che i segreti
-  `SUPABASE_URL` e `SUPABASE_ANON_KEY` del repository siano giusti.
+  `SUPABASE_URL` e `SUPABASE_PUBLISHABLE_KEY` del repository siano giusti.
