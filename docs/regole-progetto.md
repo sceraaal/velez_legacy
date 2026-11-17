@@ -95,8 +95,11 @@ durata indicata è un intervallo, si usa il valore più lungo.
   gli disdice un appuntamento e quando Nicolas gli fissa un appuntamento a mano
   (Fase 1, passo 6). Mittente "Velez Legacy Barber"
   <prenotazioni@velezlegacybarber.it>; le risposte arrivano a Nicolas.
-- Promemoria **via email** 1 giorno prima e 2 ore prima (solo promemoria,
-  nessuna risposta richiesta). Niente SMS: deciso con Nicolas il 2026-11-17.
+- Promemoria **via email** 24 ore prima e 2 ore prima (solo promemoria,
+  nessuna risposta richiesta), solo ai clienti con account. Partono con al
+  massimo 15 minuti di anticipo. Se il cliente prenota (o sposta) quando
+  mancano meno di 24 ore, salta quello del giorno prima; meno di 2 ore, salta
+  anche l'altro. Niente SMS: deciso con Nicolas il 2026-11-17.
 - Pagamento solo in salone.
 
 ## Lato Nicolas (area riservata)
@@ -141,7 +144,7 @@ durata indicata è un intervallo, si usa il valore più lungo.
    prenotazione.
 1. **Fase 1:** vetrina e listino, registrazione e login, prenotazioni,
    disdette/spostamenti, area riservata di Nicolas, notifiche email, promemoria
-   via email (pezzo a parte dopo il passo 6).
+   via email.
 2. **Fase 2:** storico clienti con appuntamenti saltati, galleria foto/video.
 
 ## Fuori dalla prima versione

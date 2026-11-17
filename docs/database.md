@@ -269,6 +269,9 @@ modifica "riesce" ma cambia zero righe; con la migrazione 2 viene rifiutato con
     elenco clienti, storico e inserimento a mano.
   - `20261117120000_email_prenotazioni.sql` – pg_net, `get_booking_email_data`
     e il trigger `bookings_send_email` per le email delle prenotazioni.
+  - `20261117130000_promemoria_email.sql` – colonne `reminder_24h_done_at` e
+    `reminder_2h_done_at`, trigger `bookings_reset_reminders`,
+    `send_due_reminders` e il lavoro pg_cron `promemoria-email`.
 - `supabase/functions/booking-email/index.js` – la Edge Function che scrive e
   spedisce le email (vedi "Email delle prenotazioni").
 - `supabase/config.toml` – impostazioni della CLI per la Edge Function.
@@ -321,6 +324,25 @@ Se un'email non arriva:
   mostra le ultime risposte della funzione al database (status 200 = tutto ok).
 - Logs → Postgres: l'avviso "Email prenotazione non inviata" se mancano i
   segreti nel Vault.
+
+## Promemoria via email (migrazione 15)
+
+Il lavoro **pg_cron** `promemoria-email` (l'orologio del database) lancia ogni
+15 minuti `send_due_reminders()`, che cerca gli appuntamenti confermati di
+clienti con account che iniziano entro 24 ore (o entro 2 ore) e non hanno
+ancora avuto il promemoria, li segna e chiama la Edge Function `booking-email`
+con `event` = `reminder_24h` o `reminder_2h`.
+
+- `reminder_24h_done_at` / `reminder_2h_done_at`: quando il promemoria è stato
+  inviato o saltato. Il trigger `bookings_reset_reminders` le rimette vuote a
+  ogni prenotazione nuova o spostata, e le segna subito se mancano meno di 24
+  ore (o 2 ore): il cliente ha appena ricevuto la conferma.
+- Se il database è stato in pausa e i due promemoria sono "in ritardo" insieme,
+  parte solo quello delle 2 ore.
+- Vedere il lavoro e le sue esecuzioni: pannello Supabase → **Integrations →
+  Cron**. Provare subito a mano: `select public.send_due_reminders();` (risponde
+  quanti promemoria ha fatto partire).
+- Fermare i promemoria: `select cron.unschedule('promemoria-email');`
 
 ## Impostazioni del login (pannello Supabase)
 
