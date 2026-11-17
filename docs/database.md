@@ -280,10 +280,12 @@ modifica "riesce" ma cambia zero righe; con la migrazione 2 viene rifiutato con
 Quando cambiamo la struttura (per esempio le prenotazioni al passo 4) aggiungiamo
 un nuovo file in `supabase/migrations/`, non modifichiamo quelli già lanciati.
 
-## Email delle prenotazioni (Fase 1, passo 6b)
+## Email delle prenotazioni (Fase 1, passi 6b e 6c)
 
 Quando una prenotazione di un cliente **con account** nasce, viene disdetta o
 spostata, il cliente riceve un'email. Chi non ha account (inserito a mano) no.
+Se l'ha fatto il cliente (non Nicolas dall'agenda), anche Nicolas riceve un
+avviso breve su nicovelez97@gmail.com (passo 6c): rispondendo, scrive al cliente.
 
 Il percorso:
 1. Il trigger `bookings_send_email` (migrazione 14) nota la modifica e, con

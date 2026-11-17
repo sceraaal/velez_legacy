@@ -22,8 +22,9 @@ import { createClient } from 'npm:@supabase/supabase-js@2'
 
 const SITE_URL = 'https://velezlegacybarber.it'
 const FROM = 'Velez Legacy Barber <prenotazioni@velezlegacybarber.it>'
-// Le risposte dei clienti arrivano a Nicolas (stesso indirizzo di src/lib/contacts.js)
-const REPLY_TO = 'nicovelez97@gmail.com'
+// Le risposte dei clienti arrivano a Nicolas, e a lui arrivano gli avvisi
+// (stesso indirizzo di src/lib/contacts.js)
+const NICOLAS_EMAIL = 'nicovelez97@gmail.com'
 const PHONE = '+39 352 098 5635'
 const ADDRESS = 'Via Mario Alfani 84, 84098 Pontecagnano Faiano (SA)'
 
@@ -58,13 +59,27 @@ Deno.serve(async (request) => {
       return new Response('Prenotazione non trovata', { status: 404 })
     }
 
-    const email = buildCustomerEmail(booking, event, old_starts_at, by_staff)
-    if (!email) {
-      return new Response('Nessuna email per questo evento', { status: 200 })
+    // Fino a due email: al cliente e, se l'ha fatto il cliente, a Nicolas
+    const emails = []
+    const customerEmail = buildCustomerEmail(booking, event, old_starts_at, by_staff)
+    if (customerEmail) {
+      emails.push({ to: booking.email, replyTo: NICOLAS_EMAIL, ...customerEmail })
+    }
+    // Quello che fa Nicolas dall'agenda lo sa già: a lui niente avviso
+    const nicolasEmail = by_staff ? null : buildNicolasEmail(booking, event, old_starts_at)
+    if (nicolasEmail) {
+      // Se Nicolas risponde all'avviso, scrive direttamente al cliente
+      emails.push({ to: NICOLAS_EMAIL, replyTo: booking.email, ...nicolasEmail })
     }
 
-    await sendEmail({ to: booking.email, ...email })
-    return new Response('Inviata', { status: 200 })
+    // allSettled: se una delle due fallisce, l'altra parte comunque
+    const results = await Promise.allSettled(emails.map(sendEmail))
+    const failed = results.filter((r) => r.status === 'rejected')
+    if (failed.length > 0) {
+      failed.forEach((r) => console.error('Email prenotazione non inviata:', r.reason))
+      return new Response('Errore', { status: 500 })
+    }
+    return new Response(`Inviate: ${emails.length}`, { status: 200 })
   } catch (error) {
     console.error('Email prenotazione non inviata:', error)
     return new Response('Errore', { status: 500 })
@@ -89,14 +104,14 @@ async function loadBooking(bookingId) {
 
 // --- Spedizione con Resend --------------------------------------------------
 
-async function sendEmail({ to, subject, html, text }) {
+async function sendEmail({ to, replyTo, subject, html, text }) {
   const response = await fetch('https://api.resend.com/emails', {
     method: 'POST',
     headers: {
       Authorization: `Bearer ${Deno.env.get('RESEND_API_KEY')}`,
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ from: FROM, to, reply_to: REPLY_TO, subject, html, text }),
+    body: JSON.stringify({ from: FROM, to, reply_to: replyTo, subject, html, text }),
   })
   if (!response.ok) {
     // Resend spiega il problema nel corpo della risposta (es. chiave sbagliata)
@@ -177,6 +192,55 @@ function buildCustomerEmail(booking, event, oldStartsAt, byStaff) {
     html: layout({ body, button, footer }),
     text: plainText({ booking, intro, note, total, anyFromPrice, button, footer, showManageLink }),
   }
+}
+
+// --- Avviso a Nicolas (Fase 1, passo 6c) ------------------------------------
+
+// Breve e pratico: chi, quando, cosa. Solo per le azioni dei clienti.
+// Restituisce { subject, html, text } oppure null.
+function buildNicolasEmail(booking, event, oldStartsAt) {
+  const name = `${booking.first_name} ${booking.last_name}`
+  const when = formatDateTime(booking.starts_at)
+  let subject, intro
+
+  if (event === 'created') {
+    subject = `Nuova prenotazione: ${name}`
+    intro = `<strong>${escapeHtml(name)}</strong> ha prenotato per <strong>${when}</strong>.`
+  } else if (event === 'moved') {
+    subject = `Appuntamento spostato: ${name}`
+    intro = `<strong>${escapeHtml(name)}</strong> ha spostato l'appuntamento del ${formatDateTime(oldStartsAt)} a <strong>${when}</strong>. Il vecchio orario è di nuovo libero.`
+  } else if (event === 'cancelled') {
+    subject = `Disdetta: ${name}`
+    intro = `<strong>${escapeHtml(name)}</strong> ha disdetto l'appuntamento del <strong>${when}</strong>. L'orario è di nuovo libero.`
+  } else {
+    return null
+  }
+
+  const services = booking.services ?? []
+  const anyFromPrice = services.some((s) => s.from_price)
+  const total = services.reduce((sum, s) => sum + Number(s.price), 0)
+  const serviceList = services.map((s) => escapeHtml(s.name)).join(' · ')
+
+  const body = `
+    <p style="margin:0 0 16px;">${intro}</p>
+    <p style="margin:0 0 8px;">${serviceList} – ${formatPrice(total, anyFromPrice)}</p>
+    <p style="margin:0 0 16px;color:${COLOR.muted};font-size:15px;">
+      Tel. ${escapeHtml(booking.phone)}<br>${escapeHtml(booking.email)}
+    </p>`
+
+  const button = { label: 'APRI L\'AGENDA', url: `${SITE_URL}/agenda` }
+  const footer = 'Per scrivere al cliente basta rispondere a questa email.'
+  const text = [
+    stripTags(intro),
+    '',
+    `${services.map((s) => s.name).join(' · ')} – ${formatPrice(total, anyFromPrice)}`,
+    `Tel. ${booking.phone}`,
+    booking.email,
+    '',
+    button.url,
+  ].join('\n')
+
+  return { subject, html: layout({ body, button, footer }), text }
 }
 
 // La cornice comune: stessi colori e stesso logo delle email del login
