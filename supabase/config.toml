@@ -1,0 +1,10 @@
+# Impostazioni per la CLI di Supabase (i comandi "npx supabase ...").
+# Per ora serve solo per mettere online la Edge Function booking-email.
+project_id = "velez_legacy"
+
+[functions.booking-email]
+# Il file da eseguire: è JavaScript, non TypeScript (index.ts è il predefinito)
+entrypoint = "./functions/booking-email/index.js"
+# La chiama il database con la sua parola segreta (BOOKING_EMAIL_SECRET),
+# non un utente che ha fatto il login: il controllo del login va spento.
+verify_jwt = false
