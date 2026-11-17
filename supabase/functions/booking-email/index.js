@@ -6,7 +6,9 @@
 // e la spedisce con Resend.
 //
 // Cosa riceve dal database (JSON):
-//   { booking_id, event: 'created' | 'cancelled' | 'moved', old_starts_at, by_staff }
+//   { booking_id, event, old_starts_at, by_staff }
+//   event = 'created' | 'cancelled' | 'moved' (trigger della migrazione 14)
+//         | 'reminder_24h' | 'reminder_2h' (promemoria, migrazione 15)
 //
 // Segreti (pannello Supabase → Edge Functions → Secrets, MAI nel repository):
 //   RESEND_API_KEY        la chiave di Resend "booking-email" (solo invio)
@@ -139,6 +141,14 @@ function buildCustomerEmail(booking, event, oldStartsAt, byStaff) {
   } else if (event === 'moved') {
     subject = 'Appuntamento spostato'
     intro = `il Suo appuntamento del ${formatDateTime(oldStartsAt)} è stato spostato a <strong>${when}</strong>.`
+    showManageLink = true
+  } else if (event === 'reminder_24h') {
+    subject = 'Promemoria: il Suo appuntamento di domani'
+    intro = `Le ricordiamo il Suo appuntamento di <strong>domani, ${when}</strong>. La aspettiamo!`
+    showManageLink = true
+  } else if (event === 'reminder_2h') {
+    subject = `Promemoria: il Suo appuntamento di oggi alle ${formatTime(booking.starts_at)}`
+    intro = `La aspettiamo <strong>oggi alle ${formatTime(booking.starts_at)}</strong>.`
     showManageLink = true
   } else if (event === 'cancelled' && !byStaff) {
     subject = 'Disdetta registrata'
@@ -304,12 +314,16 @@ function formatDateTime(isoString) {
     month: 'long',
     year: 'numeric',
   }).format(date)
-  const time = new Intl.DateTimeFormat('it-IT', {
+  return `${day} alle ${formatTime(isoString)}`
+}
+
+// "2026-11-20T09:00:00+00:00" → "10:00" (ora italiana)
+function formatTime(isoString) {
+  return new Intl.DateTimeFormat('it-IT', {
     timeZone: 'Europe/Rome',
     hour: '2-digit',
     minute: '2-digit',
-  }).format(date)
-  return `${day} alle ${time}`
+  }).format(new Date(isoString))
 }
 
 // Come formatPrice di src/utils/format.js: 18 → "€18", 18.5 → "€18,50"
