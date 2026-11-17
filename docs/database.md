@@ -280,14 +280,25 @@ un nuovo file in `supabase/migrations/`, non modifichiamo quelli già lanciati.
 - Authentication → Sign In / Providers → **Email**: attivo, "Confirm email"
   acceso, lunghezza minima della password **8** (lo stesso numero sta in
   `src/lib/customer.js`).
-- Authentication → URL Configuration: **Site URL** `http://localhost:5173` finché
-  si prova in locale; in **Redirect URLs** va aggiunto ogni indirizzo dove gira il
-  sito (in locale `http://localhost:5173`, per il link di prova
-  `https://velez-legacy.pages.dev`). È
-  dove i link delle email riportano il cliente.
-- Le email di Supabase incluse nel piano Free partono solo verso gli indirizzi del
-  team del progetto e poche all'ora: bastano per le prove. Per i clienti veri
-  serve Resend (passo 6).
+- Authentication → URL Configuration: **Site URL** `https://velezlegacybarber.it`
+  (dal 2026-11-17); in **Redirect URLs** va aggiunto ogni indirizzo dove gira il
+  sito (`https://velezlegacybarber.it`, `https://www.velezlegacybarber.it`, in
+  locale `http://localhost:5173`, il link di prova
+  `https://velez-legacy.pages.dev`). È dove i link delle email riportano il
+  cliente.
+- Le email del login partono da **Resend** (passo 6a), non dal servizio di prova
+  di Supabase (che arriva solo agli indirizzi del team). Authentication → Emails →
+  **SMTP Settings** → "Enable custom SMTP":
+  - Sender email `prenotazioni@velezlegacybarber.it`, Sender name
+    `Velez Legacy Barber`
+  - Host `smtp.resend.com`, Port `465`, Username `resend`, Password = la chiave
+    API di Resend "supabase-smtp" (solo invio). La chiave non va mai nel
+    repository: se si perde, se ne crea una nuova su Resend e si incolla qui.
+- Authentication → Emails → **Templates**: "Confirm signup" e "Reset password"
+  usano i testi di `supabase/templates/` (oggetto scritto in cima a ogni file).
+  Se si cambia un testo, si cambia il file e poi si incolla di nuovo.
+  Il logo delle email è `public/email/logo.png`, servito dal sito: il nome del
+  file non va cambiato.
 
 ## Collegamento dal sito
 

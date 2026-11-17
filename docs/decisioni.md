@@ -6,6 +6,38 @@ Le voci più recenti stanno in alto.
 
 ---
 
+## 2026-11-17 – Solo email, niente SMS né notifiche push (Fase 1, passo 6)
+
+**Decisione** (proposta di Simona, accettata da Nicolas)
+- Clienti e Nicolas ricevono solo email, spedite con **Resend** dal dominio
+  velezlegacybarber.it. Anche i promemoria (1 giorno e 2 ore prima) sono email.
+- Mittente "Velez Legacy Barber" <prenotazioni@velezlegacybarber.it>; le
+  risposte dei clienti arrivano a nicovelez97@gmail.com. Resend tiene i dati in
+  Europa (Irlanda).
+- Le email del login (conferma account, password dimenticata) passano da Resend
+  tramite lo SMTP personalizzato di Supabase; i testi sono in
+  `supabase/templates/`.
+- Le email delle prenotazioni partono da un trigger nel database che chiama una
+  Edge Function (passo 6b), messa online con `npx supabase functions deploy`.
+- Un appuntamento inserito a mano da Nicolas per un cliente con account manda
+  la conferma al cliente.
+
+**Perché**
+- Costo 0 €: Resend gratis fino a 3.000 email al mese e 100 al giorno; gli SMS
+  costerebbero circa 20-30 € al mese.
+- Un servizio in meno da pagare e gestire. Le notifiche push su iPhone
+  funzionano solo se l'app è salvata sulla schermata home.
+- Partendo dal database, l'email parte anche se il cliente chiude la pagina, e
+  la chiave segreta di Resend non passa mai dal sito.
+
+**Da ricordare**
+- Se tanti clienti saltano gli appuntamenti, gli SMS si possono aggiungere più
+  avanti.
+- Nell'informativa privacy (passo 7) Resend va nominato tra i fornitori che
+  ricevono i dati dei clienti.
+
+---
+
 ## 2026-11-10 – Clienti senza account e inserimento a mano (Fase 1, passo 5b)
 
 **Decisione**
