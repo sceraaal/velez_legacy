@@ -76,7 +76,12 @@ function BookingCard({ booking, now, past = false, onChanged }) {
         <RescheduleForm
           booking={booking}
           onCancel={() => setMode('view')}
-          onDone={() => onChanged("L'appuntamento è stato spostato.")}
+          onDone={() => {
+            // La scheda resta la stessa (stesso appuntamento, orario nuovo):
+            // senza questo resterebbe aperto il calendario con "Spostamento…".
+            setMode('view')
+            onChanged("L'appuntamento è stato spostato.")
+          }}
         />
       )}
     </article>
