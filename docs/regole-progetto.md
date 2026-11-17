@@ -91,8 +91,9 @@ durata indicata è un intervallo, si usa il valore più lungo.
   di un'ora il cliente legge "per modifiche contatti il salone".
 - In "I miei appuntamenti" il cliente vede i prossimi appuntamenti e gli ultimi
   5 passati (quelli disdetti non compaiono).
-- Il cliente riceve un'email quando prenota, sposta o disdice, e quando Nicolas
-  gli disdice un appuntamento (Fase 1, passo 6). Mittente "Velez Legacy Barber"
+- Il cliente riceve un'email quando prenota, sposta o disdice, quando Nicolas
+  gli disdice un appuntamento e quando Nicolas gli fissa un appuntamento a mano
+  (Fase 1, passo 6). Mittente "Velez Legacy Barber"
   <prenotazioni@velezlegacybarber.it>; le risposte arrivano a Nicolas.
 - Promemoria **via email** 1 giorno prima e 2 ore prima (solo promemoria,
   nessuna risposta richiesta). Niente SMS: deciso con Nicolas il 2026-11-17.
@@ -110,7 +111,8 @@ durata indicata è un intervallo, si usa il valore più lungo.
   sono già appuntamenti il blocco non si salva: Nicolas vede chi è prenotato,
   lo avvisa e lo disdice prima.
 - Nicolas può disdire qualsiasi appuntamento non ancora finito, senza il limite
-  di un'ora. Il cliente per ora va avvisato a voce (email dal passo 6).
+  di un'ora. Il cliente riceve un'email che lo avvisa (se ha un account;
+  altrimenti va avvisato a voce).
 - Notifica **via email** quando un cliente prenota, sposta o disdice (non per
   le azioni che fa Nicolas stesso). Niente SMS e niente notifiche push: deciso
   con Nicolas il 2026-11-17.

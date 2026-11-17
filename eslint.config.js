@@ -18,4 +18,12 @@ export default defineConfig([
       parserOptions: { ecmaFeatures: { jsx: true } },
     },
   },
+  {
+    // Le Edge Functions girano su Deno (server di Supabase), non nel browser:
+    // lì esiste l'oggetto globale "Deno".
+    files: ['supabase/functions/**/*.js'],
+    languageOptions: {
+      globals: { ...globals.browser, Deno: 'readonly' },
+    },
+  },
 ])

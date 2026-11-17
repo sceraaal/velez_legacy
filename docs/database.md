@@ -267,6 +267,11 @@ modifica "riesce" ma cambia zero righe; con la migrazione 2 viene rifiutato con
     dall'agenda di Nicolas.
   - `20261110130000_clienti_e_inserimento_a_mano.sql` – clienti senza account,
     elenco clienti, storico e inserimento a mano.
+  - `20261117120000_email_prenotazioni.sql` – pg_net, `get_booking_email_data`
+    e il trigger `bookings_send_email` per le email delle prenotazioni.
+- `supabase/functions/booking-email/index.js` – la Edge Function che scrive e
+  spedisce le email (vedi "Email delle prenotazioni").
+- `supabase/config.toml` – impostazioni della CLI per la Edge Function.
 - `supabase/seed.sql` – i dati iniziali del listino (2026-11-03). Serve solo per
   un database nuovo: i prezzi aggiornati stanno nel database, non qui.
   Su un database nuovo l'ordine è: migrazioni 1-8, poi `seed.sql`, poi le
@@ -274,6 +279,46 @@ modifica "riesce" ma cambia zero righe; con la migrazione 2 viene rifiutato con
 
 Quando cambiamo la struttura (per esempio le prenotazioni al passo 4) aggiungiamo
 un nuovo file in `supabase/migrations/`, non modifichiamo quelli già lanciati.
+
+## Email delle prenotazioni (Fase 1, passo 6b)
+
+Quando una prenotazione di un cliente **con account** nasce, viene disdetta o
+spostata, il cliente riceve un'email. Chi non ha account (inserito a mano) no.
+
+Il percorso:
+1. Il trigger `bookings_send_email` (migrazione 14) nota la modifica e, con
+   l'estensione **pg_net**, chiama la Edge Function `booking-email`. Le passa
+   l'id della prenotazione, cosa è successo (`created`, `cancelled`, `moved`),
+   il vecchio orario se spostata e se l'ha fatto Nicolas (`by_staff`).
+2. La Edge Function (`supabase/functions/booking-email/index.js`) controlla la
+   parola segreta, legge i dati con `get_booking_email_data` (solo per il ruolo
+   `service_role`) e spedisce l'email con Resend.
+3. Se qualcosa va storto la prenotazione resta salva: l'errore finisce nei log.
+
+Segreti (mai nel repository):
+
+| Dove | Nome | Cosa |
+| --- | --- | --- |
+| Vault del database (SQL) | `booking_email_url` | `https://<codice-progetto>.supabase.co/functions/v1/booking-email` |
+| Vault del database (SQL) | `booking_email_secret` | parola segreta lunga, generata dal database |
+| Edge Functions → Secrets | `BOOKING_EMAIL_SECRET` | la stessa parola segreta del Vault |
+| Edge Functions → Secrets | `RESEND_API_KEY` | chiave Resend "booking-email" (solo invio) |
+
+Mettere online la Edge Function (dal terminale di VS Code, nella cartella del
+progetto): `npx supabase login` la prima volta, poi
+`npx supabase functions deploy booking-email --project-ref <codice-progetto> --use-api`.
+`supabase/config.toml` dice alla CLI che il file è `index.js` e che il
+controllo del login (Verify JWT) va spento. Ogni volta che si cambia
+`index.js` va rilanciato il comando.
+
+Se un'email non arriva:
+- Resend → **Emails**: se l'invio c'è, il problema è nella consegna.
+- Supabase → Edge Functions → `booking-email` → **Logs**: errori della funzione
+  (es. chiave Resend sbagliata, parola segreta diversa → 401).
+- SQL Editor: `select * from net._http_response order by created desc limit 5;`
+  mostra le ultime risposte della funzione al database (status 200 = tutto ok).
+- Logs → Postgres: l'avviso "Email prenotazione non inviata" se mancano i
+  segreti nel Vault.
 
 ## Impostazioni del login (pannello Supabase)
 
