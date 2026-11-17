@@ -91,8 +91,11 @@ durata indicata è un intervallo, si usa il valore più lungo.
   di un'ora il cliente legge "per modifiche contatti il salone".
 - In "I miei appuntamenti" il cliente vede i prossimi appuntamenti e gli ultimi
   5 passati (quelli disdetti non compaiono).
-- Promemoria SMS 1 giorno prima e 2 ore prima (Fase 2; solo promemoria, nessuna
-  risposta richiesta).
+- Il cliente riceve un'email quando prenota, sposta o disdice, e quando Nicolas
+  gli disdice un appuntamento (Fase 1, passo 6). Mittente "Velez Legacy Barber"
+  <prenotazioni@velezlegacybarber.it>; le risposte arrivano a Nicolas.
+- Promemoria **via email** 1 giorno prima e 2 ore prima (solo promemoria,
+  nessuna risposta richiesta). Niente SMS: deciso con Nicolas il 2026-11-17.
 - Pagamento solo in salone.
 
 ## Lato Nicolas (area riservata)
@@ -108,8 +111,9 @@ durata indicata è un intervallo, si usa il valore più lungo.
   lo avvisa e lo disdice prima.
 - Nicolas può disdire qualsiasi appuntamento non ancora finito, senza il limite
   di un'ora. Il cliente per ora va avvisato a voce (email dal passo 6).
-- Notifica quando un cliente prenota o disdice: push dalla web app + email di
-  riserva (niente SMS a Nicolas, per contenere i costi).
+- Notifica **via email** quando un cliente prenota, sposta o disdice (non per
+  le azioni che fa Nicolas stesso). Niente SMS e niente notifiche push: deciso
+  con Nicolas il 2026-11-17.
 - Inserimento a mano ("+ Nuovo appuntamento" nell'agenda): per un cliente
   dell'elenco o per uno nuovo senza account (nome, cognome, telefono
   facoltativo). Va bene sia dopo il servizio (storico) sia per chi prenota al
@@ -134,9 +138,9 @@ durata indicata è un intervallo, si usa il valore più lungo.
 0. **Prova:** listino in pagina + calendario che mostra gli slot liberi e salva una
    prenotazione.
 1. **Fase 1:** vetrina e listino, registrazione e login, prenotazioni,
-   disdette/spostamenti, area riservata di Nicolas, notifiche email.
-2. **Fase 2:** promemoria SMS, notifiche push, storico clienti con appuntamenti
-   saltati, galleria foto/video.
+   disdette/spostamenti, area riservata di Nicolas, notifiche email, promemoria
+   via email (pezzo a parte dopo il passo 6).
+2. **Fase 2:** storico clienti con appuntamenti saltati, galleria foto/video.
 
 ## Fuori dalla prima versione
 
@@ -146,7 +150,5 @@ durata indicata è un intervallo, si usa il valore più lungo.
 
 ## Ancora da decidere
 
-- Servizio per gli SMS e relativi costi
-- Nome del dominio
 - Testo dell'informativa privacy
 - Chi carica i contenuti della galleria
