@@ -1,0 +1,46 @@
+# Sveglia per Supabase (piano Free).
+#
+# Il piano gratuito di Supabase mette in pausa il progetto se per 7 giorni non
+# arrivano richieste dal sito (per esempio durante le ferie di Nicolas). Il
+# promemoria interno del database (pg_cron) non è detto che conti come attività.
+# Questo lavoro automatico di GitHub (GitHub Actions) legge una riga del listino
+# una volta al giorno, come farebbe un visitatore del sito. Costo: zero.
+#
+# Usa due "segreti" del repository (Settings → Secrets and variables → Actions):
+#   SUPABASE_URL       l'indirizzo del progetto (lo stesso di VITE_SUPABASE_URL)
+#   SUPABASE_ANON_KEY  la chiave pubblica (la stessa di VITE_SUPABASE_ANON_KEY)
+#
+# Se la richiesta fallisce, il lavoro risulta rosso e GitHub manda un'email:
+# è un campanello d'allarme utile (progetto in pausa, chiave cambiata...).
+#
+# Attenzione: nei repository pubblici GitHub spegne i lavori a orario dopo 60
+# giorni senza nuovi commit, e lo avvisa per email. Basta riaccenderlo da
+# Actions → "Sveglia Supabase" → "Enable workflow".
+
+name: Sveglia Supabase
+
+on:
+  schedule:
+    # Ogni giorno alle 6:17 UTC (7:17 o 8:17 in Italia). Il minuto "strano"
+    # evita l'ora piena, quando GitHub è più carico e può ritardare.
+    - cron: '17 6 * * *'
+  # Permette di lanciarlo a mano dalla scheda Actions per provarlo
+  workflow_dispatch:
+
+jobs:
+  sveglia:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - name: Legge una categoria del listino
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+        run: |
+          # --fail: se Supabase risponde con un errore, il lavoro diventa rosso
+          curl --fail --silent --show-error --max-time 30 \
+            "$SUPABASE_URL/rest/v1/service_categories?select=id&limit=1" \
+            -H "apikey: $SUPABASE_ANON_KEY" \
+            -H "Authorization: Bearer $SUPABASE_ANON_KEY"
+          echo
+          echo "Supabase è sveglio."

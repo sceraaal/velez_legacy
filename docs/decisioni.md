@@ -6,6 +6,30 @@ Le voci più recenti stanno in alto.
 
 ---
 
+## 2026-11-17 – Lancio: Supabase Free con "sveglia", stesso progetto (Fase 1, passo 7)
+
+**Decisione**
+- Per i primi mesi Supabase resta sul piano **Free** (scelta di Nicolas).
+- Contro la pausa dopo 7 giorni senza attività: un lavoro automatico gratuito di
+  GitHub Actions (`.github/workflows/sveglia-supabase.yml`) legge il listino una
+  volta al giorno.
+- Si resta sul **progetto Supabase attuale**: si cancellano solo i dati di prova
+  con `supabase/pulizia-prima-del-lancio.sql`.
+
+**Perché**
+- La documentazione di Supabase conta come attività le richieste del sito e le
+  visite al pannello; non dice nulla di pg_cron (il promemoria interno), quindi
+  non ci affidiamo a quello.
+- Sul progetto attuale sono già configurati SMTP di Resend, segreti, Edge
+  Function, promemoria e account di Nicolas: un progetto nuovo vorrebbe dire
+  rifare tutto, con più rischio di errori e nessun vantaggio vero.
+
+**Limiti da ricordare**
+- Nei repository pubblici GitHub spegne i lavori a orario dopo 60 giorni senza
+  commit (avvisa per email): si riaccende da Actions con "Enable workflow".
+
+---
+
 ## 2026-11-17 – Solo email, niente SMS né notifiche push (Fase 1, passo 6)
 
 **Decisione** (proposta di Simona, accettata da Nicolas)

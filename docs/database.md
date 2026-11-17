@@ -275,6 +275,9 @@ modifica "riesce" ma cambia zero righe; con la migrazione 2 viene rifiutato con
 - `supabase/functions/booking-email/index.js` – la Edge Function che scrive e
   spedisce le email (vedi "Email delle prenotazioni").
 - `supabase/config.toml` – impostazioni della CLI per la Edge Function.
+- `supabase/pulizia-prima-del-lancio.sql` – NON è una migrazione: cancella
+  prenotazioni, clienti a mano e account di prova (tranne Nicolas). Si lancia a
+  mano una volta sola, il giorno del lancio.
 - `supabase/seed.sql` – i dati iniziali del listino (2026-11-03). Serve solo per
   un database nuovo: i prezzi aggiornati stanno nel database, non qui.
   Su un database nuovo l'ordine è: migrazioni 1-8, poi `seed.sql`, poi le
@@ -382,5 +385,9 @@ con `event` = `reminder_24h` o `reminder_2h`.
 ## Da tenere d'occhio
 
 - **Pausa del piano Free**: dopo 7 giorni senza attività il progetto va in pausa e
-  il listino smette di caricarsi finché non lo si riattiva dal pannello. Prima di
-  andare online decidiamo se restare sul Free con un accorgimento o passare al Pro.
+  il listino smette di caricarsi finché non lo si riattiva dal pannello (Resume
+  project; i dati restano). Per i primi mesi restiamo sul Free: la "sveglia"
+  `.github/workflows/sveglia-supabase.yml` legge il listino ogni mattina, così
+  il progetto non resta mai fermo. Se il lavoro diventa rosso, GitHub manda
+  un'email: controllare che il progetto non sia in pausa e che i segreti
+  `SUPABASE_URL` e `SUPABASE_ANON_KEY` del repository siano giusti.
